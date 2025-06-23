@@ -1,11 +1,7 @@
 ---
 title: "Display and Edit DateTime Correctly with Time Zone Awareness in Blazor Server"
-description: "Learn how to handle DateTime in Blazor Server with the BlazorLocalTime library, ensuring correct display and editing of dates and times across different time zones."
-tags:
-  - "dotnet"
-  - "csharp"
-  - "blazor"
-  - "timezone"
+description: "Learn how to handle DateTime in Blazor Server with the BlazorLocalTime library"
+tags: "dotnet,csharp,blazor,timezone"
 cover_image: ''
 canonical_url: null
 published: false
