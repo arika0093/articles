@@ -7,7 +7,8 @@ topics:
   - "csharp"
   - "package"
   - "nuget"
-published: false
+published: true
+published_at: "2025-06-24 00:45"
 ---
 
 NuGetパッケージやアプリケーションのバージョン管理、手作業でやると普通に面倒ですよね。
