@@ -5,6 +5,7 @@ tags: dotnet, csharp, nuget, git
 cover_image: ''
 canonical_url: null
 published: false
+id: 20250623-gitversioning
 ---
 
 Managing NuGet package or application versions manually can be tedious. In this article, I'll explain how to automate versioning using [Nerdbank.GitVersioning](https://github.com/dotnet/Nerdbank.GitVersioning).
