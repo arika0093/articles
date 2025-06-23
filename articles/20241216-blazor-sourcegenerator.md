@@ -58,8 +58,7 @@ NavigationManager.NavigateTo(url);
 ### メニュー生成が面倒
 これも全言語で共通だと思いますが、メニュー構造を書くのは普通にめんどくさいです。
 
-<details>
-<summary>長いので折りたたみ</summary>
+:::details 長いので折りたたみ
 
 ```jsx
 <FluentStack Orientation="Orientation.Horizontal" Width="100%">
@@ -87,7 +86,7 @@ NavigationManager.NavigateTo(url);
 </FluentStack>
 ```
 
-</details>
+:::
 
 こんな感じ。ちなみにこの例は[FluentUIのサンプル](https://www.fluentui-blazor.net/NavMenu#collapsible-navigation-example)から引っ張ってきました。
 URLは分かってるはず（ページコンポーネント作成の時点で明示的に指定してる）なのだから、**そのURL構造を元に勝手にメニュー構造を作ってくれてもいいですよね？**
@@ -212,8 +211,7 @@ public record QueryRecord(string query = "hello", int page = 0, bool? opt = null
 
 上記のように書いて保存すると、以下の要素が自動で生成されます。
 
-<details>
-<summary>長いので折りたたみ</summary>
+:::details 長いので折りたたみ
 
 これでもいくつか省略してあります。
 
@@ -313,7 +311,7 @@ public partial class Counter3
 }
 ```
 
-</details>
+:::
 
 
 ### 生成されたもの①
