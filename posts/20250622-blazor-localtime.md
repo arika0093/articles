@@ -1,10 +1,11 @@
 ---
-title: "Display and Edit DateTime Correctly with Time Zone Awareness in Blazor Server"
-description: "Learn how to handle DateTime in Blazor Server with the BlazorLocalTime library"
-tags: "dotnet,csharp,blazor,timezone"
+title: Display and Edit DateTime Correctly with Time Zone Awareness in Blazor Server
+description: Learn how to handle DateTime in Blazor Server with the BlazorLocalTime library
+tags: 'dotnet,csharp,blazor,timezone'
 cover_image: ''
 canonical_url: null
 published: false
+id: 2618676
 ---
 
 Blazor Server makes it easy to build web apps with intuitive syntax, but handling dates and times (`DateTime`) requires special attention.
@@ -111,7 +112,7 @@ You can use it with component libraries like MudBlazor as well.
 
 ## How It Works
 
-The approach is similar to [this article](https://www.meziantou.net/convert-datetime-to-user-s-time-zone-with-server-side-blazor-time-provider.htm), but here's an explanation in English.
+The approach is similar to [this article](https://www.meziantou.net/convert-datetime-to-user-s-time-zone-with-server-side-blazor-time-provider.htm).
 
 First, you need to get the user's time zone. Since Blazor can't do this directly, you need to use JavaScript:
 

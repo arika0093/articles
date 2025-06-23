@@ -1,3 +1,12 @@
-# Zenn CLI
+# Articles
+## Zenn
+https://zenn.dev/arika
 
-* [📘 How to use](https://zenn.dev/zenn/articles/zenn-cli-guide)
+* `articles/`
+* `books/`
+
+## Dev.to
+https://dev.to/arika0093
+
+* `posts/`
+
