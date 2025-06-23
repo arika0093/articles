@@ -15,6 +15,11 @@ on:
   push:
     branches: [main]
 
+# be committable to the repository
+permissions:
+  contents: write
+  id-token: write  
+
 jobs:
   publish:
     runs-on: ubuntu-latest
