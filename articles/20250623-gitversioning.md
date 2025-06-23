@@ -1,5 +1,5 @@
 ---
-title: "【C#】Nerdbank.GitVersioningを使ってバージョン管理を自動化する"
+title: "【C#】バージョン管理とリリースを自動化する【Nerdbank.GitVersioning】"
 emoji: "📦️"
 type: "tech"
 topics:
