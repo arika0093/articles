@@ -1,11 +1,11 @@
 ---
 title: Automate Versioning and Releases with Nerdbank.GitVersioning
 description: Learn how to automate versioning and releases for .NET projects using Nerdbank.GitVersioning.
-tags: dotnet, csharp, nuget, git
+tags: 'dotnet, csharp, nuget, git'
 cover_image: ''
 canonical_url: null
-published: false
-id: 20250623-gitversioning
+published: true
+id: 2618835
 ---
 
 Managing NuGet package or application versions manually can be tedious. In this article, I'll explain how to automate versioning using [Nerdbank.GitVersioning](https://github.com/dotnet/Nerdbank.GitVersioning).
@@ -13,7 +13,6 @@ Managing NuGet package or application versions manually can be tedious. In this 
 ## What is Nerdbank.GitVersioning?
 
 In short, it's a tool that automatically generates version numbers based on your Git commit history. It's not just for NuGet packages—you can use it with any .NET project. As it's maintained under the `dotnet` organization, it's an official tool and is widely considered a de facto standard.
-The [official documentation](https://dotnet.github.io/Nerdbank.GitVersioning/docs/getting-started.html) can be a bit terse.
 
 ## Setup
 
@@ -163,7 +162,7 @@ nbgv prepare-release
 
 At this point, your branches will split as shown below, with each branch having its own updated `version.json`:
 
-![](/images/20250623/gitversioning.drawio.png)
+![](../images/20250623/gitversioning.drawio.png)
 
 What’s happening here is that the current branch is branched off into something like `release/v0.1`, and the `version.json` version number is updated. A commit updating `version.json` is automatically generated at this stage, so when you build in this state, the version number will be `0.1.1`. If you want your versions to start from 0, it’s a good idea to exclude `version.json` from triggering version bumps.
 
