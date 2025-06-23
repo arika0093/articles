@@ -4,7 +4,7 @@ description: Learn how to handle DateTime in Blazor Server with the BlazorLocalT
 tags: 'dotnet,csharp,blazor,timezone'
 cover_image: ''
 canonical_url: null
-published: false
+published: true
 id: 2618676
 ---
 
