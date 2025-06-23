@@ -5,8 +5,8 @@ type: "tech"
 topics:
   - "dotnet"
   - "csharp"
-  - "package"
   - "nuget"
+  - "git"
 published: true
 published_at: "2025-06-24 00:45"
 ---

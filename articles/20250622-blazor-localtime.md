@@ -4,6 +4,7 @@ emoji: "🕰️"
 type: "tech"
 topics:
   - "dotnet"
+  - "csharp"
   - "blazor"
   - "timezone"
 published: true
