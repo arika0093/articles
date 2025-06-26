@@ -57,7 +57,7 @@ This is a dual-platform blog repository that publishes technical articles to bot
   canonical_url: null
   # Whether the article is published. When generating automatically, set this to false initially.
   published: false
-  id: 2618676 # id is random-value, so execute `npx @sinedied/devto-cli publish` to get a new id
+  # id is random-value, so execute `npx @sinedied/devto-cli publish` to get a new id
   ---
   ```
 
@@ -66,6 +66,9 @@ This is a dual-platform blog repository that publishes technical articles to bot
 - First, create a draft article in Japanese under the `articles` directory.
   - Use internet searches to verify the accuracy of the information you write.
   - Always reference at least three sources (from different domains) and list all links at the end of the article under a "References" section.
-  - Include code samples whenever possible, and write in full sentences rather than using bullet points.
-- After the above is finished, create the Dev.to article by translating the Japanese draft into English.
+  - Include code samples whenever possible.
+  - Except when absolutely necessary, avoid using bullet points and instead express ideas in full sentences.
+- After completing the Japanese article, always ask the user to review the content before translating it into English.
+  - If there is any feedback, incorporate the changes and request confirmation again.
+  - Once the above steps are complete, translate the Japanese draft into English to create the Dev.to article.
   - When translating, rephrase or omit Japan-specific content as appropriate.
