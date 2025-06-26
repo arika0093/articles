@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@anthropic-ai/claude-code": "^1.0.35",
     "@sinedied/devto-cli": "^1.4.0",
     "zenn-cli": "^0.1.161"
   }
