@@ -184,7 +184,7 @@ app.Run();
 System.Net.Http.HttpRequestException: The HTTP/2 server closed the connection. HTTP/2 error code 'HTTP_1_1_REQUIRED' (0xd). (HttpProtocolError)
 ```
 
-## Client側
+### Client側
 
 まずは以下のライブラリを導入します。
 
@@ -199,7 +199,7 @@ System.Net.Http.HttpRequestException: The HTTP/2 server closed the connection. H
 
 で、ここからがポイントですが、いくつかの設定を入れる必要があります。
 
-### ServiceDiscoveryの設定
+#### ServiceDiscoveryの設定
 
 サーバーと通信するのにあたり、サーバーのIPアドレスをコード内に直書きはしたくないわけです。設置場所によって見るべきサーバーが変わったりするとか、開発・本番時の切り分けとか。。
 
@@ -218,7 +218,7 @@ services.ConfigureHttpClientDefaults(http => {
 });
 ```
 
-### IConfigurationの設定
+#### IConfigurationの設定
 
 ConsoleAppFramework側の話なのですが、標準だと`IConfiguration`(`appsettings.json`とかそのあたり)の設定が構築されていません。
 なので以下のようにします。
@@ -236,7 +236,7 @@ services.AddSingleton<IConfiguration>(_ => {
 なお、組み込みで`ConfigureDefaultConfiguration`というものも用意されていますが、こちらは環境変数を読み込んでくれない+`IConfiguration`をDIに登録してくれないため、今回は使いません。
 
 
-### ISampleServiceCoreの設定
+#### ISampleServiceCoreの設定
 
 サービスを使う側ではMagicOnionのことを考えないようにしたいところです。
 ということで、以下のようにDIで差し込みます。
@@ -305,7 +305,7 @@ services.AddMagicOnionClient<ISampleServiceCore, ISampleService>();
 
 :::
 
-### 使う側のコード
+#### 使う側のコード
 あとは普通に書けば、見た目普通のコードでいてサーバー/クライアント間通信が実現できます！
 
 ```cs
@@ -321,7 +321,7 @@ public class SampleServiceExecutor(ISampleServiceCore sampleService)
 }
 ```
 
-### 完成形のコード
+#### 完成形のコード
 
 クライアント側はこんな感じになります。
 
@@ -437,6 +437,73 @@ internal class SampleServiceMock : ISampleServiceCore
 ```
 
 :::
+
+## Swagger UIを用意する
+
+簡単な動作テスト用にSwagger UIを用意しておくと便利です。
+[公式ドキュメント](https://cysharp.github.io/MagicOnion/ja/integration/json-transcoding)を参考に導入してみます。
+
+まず`MagicOnion.Server.JsonTranscoding.Swagger`をNuGetから導入します。上記ドキュメントにはそのことが書かれていないので注意。
+
+で、`Program.cs`に以下のように追記します。
+
+```cs
+// 前略
+var magicOnion = builder.Services.AddMagicOnion();
+if (builder.Environment.IsDevelopment())
+{
+    // 開発時専用でSwaggerを有効化
+    magicOnion.AddJsonTranscoding();
+    builder.Services.AddMagicOnionJsonTranscodingSwagger();
+    builder.Services.AddSwaggerGen();
+}
+
+var app = builder.Build();
+if (app.Environment.IsDevelopment())
+{
+    // 開発時専用でSwaggerを有効化
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        // ルートパスでSwagger UIを表示する
+        c.RoutePrefix = "";
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    });
+}
+// 以下略
+```
+
+また、このままだとSwaggerUIも`HTTP2`でホストされてしまい、ブラウザからアクセスできません。なので、`appsettings.json`を次のように書き換えます。[^9]
+
+[^9]: HTTPSでホストしていれば大丈夫ですが、今回はHTTPでホストする想定です
+
+
+```diff json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "http": {
+        "Url": "http://localhost:5110",
+        "Protocols": "Http2"
++     },
++     "swagger": {
++       "Url": "http://localhost:5111",
++       "Protocols": "Http1"
+      }
+    }
+  }
+}
+```
+
+このようにしてAspireを再起動すると、以下のような表示になります。
+![](/images/20250822/aspire-server-with-swagger.png)
+
+で、`http://localhost:5111`にアクセスすると...
+
+![](/images/20250822/aspire-swagger2.png)
+
+とこのようにAPIを叩けるようになります。便利ですね！
+
 
 ## ポイント
 ### エラー: そのようなホストは不明です。
@@ -564,73 +631,6 @@ internal static partial class SampleModelConverter
     public static partial SampleModelValue Convert(SampleModel model);
 }
 ```
-
-### テスト用のOpenAPIを用意する
-
-簡単な動作テスト用にSwagger UIを用意しておくと便利です。
-[公式ドキュメント](https://cysharp.github.io/MagicOnion/ja/integration/json-transcoding)を参考に導入してみます。
-
-まず`MagicOnion.Server.JsonTranscoding.Swagger`をNuGetから導入します。上記ドキュメントにはそのことが書かれていないので注意。
-
-で、`Program.cs`に以下のように追記します。
-
-```cs
-// 前略
-var magicOnion = builder.Services.AddMagicOnion();
-if (builder.Environment.IsDevelopment())
-{
-    // 開発時専用でSwaggerを有効化
-    magicOnion.AddJsonTranscoding();
-    builder.Services.AddMagicOnionJsonTranscodingSwagger();
-    builder.Services.AddSwaggerGen();
-}
-
-var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
-    // 開発時専用でSwaggerを有効化
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        // ルートパスでSwagger UIを表示する
-        c.RoutePrefix = "";
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    });
-}
-// 以下略
-```
-
-また、このままだとSwaggerUIも`HTTP2`でホストされてしまい、ブラウザからアクセスできません。なので、`appsettings.json`を次のように書き換えます。[^9]
-
-[^9]: HTTPSでホストしていれば大丈夫ですが、今回はHTTPでホストする想定です
-
-
-```diff json
-{
-  "Kestrel": {
-    "Endpoints": {
-      "http": {
-        "Url": "http://localhost:5110",
-        "Protocols": "Http2"
-+     },
-+     "swagger": {
-+       "Url": "http://localhost:5111",
-+       "Protocols": "Http1"
-      }
-    }
-  }
-}
-```
-
-このようにしてAspireを再起動すると、以下のような表示になります。
-![](/images/20250822/aspire-server-with-swagger.png)
-
-で、`http://localhost:5111`にアクセスすると...
-
-![](/images/20250822/aspire-swagger2.png)
-
-とこのようにAPIを叩けるようになります。便利ですね！
-
 
 ## まとめ
 MagicOnionを使うと、サーバー/クライアント間の通信を意識せずに関数を呼び出すような形でAPIを利用できます。
