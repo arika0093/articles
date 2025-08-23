@@ -462,7 +462,7 @@ Also, as it stands, Swagger UI will also be hosted on `HTTP2`, making it inacces
 
 [^9]: This would be fine if hosting with HTTPS, but we're assuming HTTP hosting this time.
 
-```diff json
+```diff
 {
   "Kestrel": {
     "Endpoints": {
@@ -534,7 +534,7 @@ This looks fine, but suppose you change the `Name` definition like this and rebu
 
 [^8]: It's rare to be able to update both client and server simultaneously.
 
-```diff cs
+```diff
 [MessagePackObject(true)]
 public record SampleModel
 {
