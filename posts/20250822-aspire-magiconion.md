@@ -4,14 +4,14 @@ description: "Learn how to build server-client applications efficiently using Ma
 tags: 'dotnet,aspire,magiconion,api'
 cover_image: ''
 canonical_url: null
-published: false
+published: true
 ---
 
 ## Introduction
 
 Server-client application development is quite common (it's usually the case). However, I personally find developing the boundary interfaces quite challenging (or rather, tedious).
 
-![](/images/20250822/api-surface-en.drawio.png)
+![](../images/20250822/api-surface-en.drawio.png)
 
 While Protocol Buffers and OpenAPI exist[^1], I recently discovered [MagicOnion](https://github.com/Cysharp/MagicOnion) and thought, "If everything is in C#, why not use this?"
 
@@ -40,7 +40,7 @@ Since I'm quite fond of [tRPC](https://trpc.io/) and Next.js [server functions](
 
 First, create projects with the following structure:
 
-![](/images/20250822/aspire-vs-project.png)
+![](../images/20250822/aspire-vs-project.png)
 
 The breakdown is:
 
@@ -51,7 +51,7 @@ The breakdown is:
 * `Web`: ASP.NET API Server
 
 The dependency structure looks like this:
-![](/images/20250822/aspire-dependency.drawio.png)
+![](../images/20250822/aspire-dependency.drawio.png)
 
 The shared `Shared` library is used as schema definition, referenced by both `Client` and `Web`. `AppHost` is used to launch these two together.
 
@@ -373,14 +373,14 @@ public class SampleServiceExecutor(ISampleServiceCore sampleService)
 
 When you start the `AppHost`, you'll see this screen:
 
-![](/images/20250822/aspire-dashboard.png)
+![](../images/20250822/aspire-dashboard.png)
 
 The server side is running, but the client side hasn't started yet.
 Click the `▶` button on the right side of `client` to start the client.
 
 Looking at the logs, you can see that it's communicating with the server successfully.
 
-![](/images/20250822/aspire-execute-result.png)
+![](../images/20250822/aspire-execute-result.png)
 
 ## Writing Tests
 
@@ -478,11 +478,11 @@ Also, as it stands, Swagger UI will also be hosted on `HTTP2`, making it inacces
 ```
 
 After restarting Aspire with these changes, you'll see this display:
-![](/images/20250822/aspire-server-with-swagger.png)
+![](../images/20250822/aspire-server-with-swagger.png)
 
 Now, accessing `http://localhost:5111`...
 
-![](/images/20250822/aspire-swagger2.png)
+![](../images/20250822/aspire-swagger2.png)
 
 You can now call APIs like this. Very convenient!
 
