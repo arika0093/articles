@@ -439,6 +439,31 @@ internal class SampleServiceMock : ISampleServiceCore
 :::
 
 ## ポイント
+### エラー: そのようなホストは不明です。
+
+こんなエラーが出る場合があります。
+
+```
+Grpc.Core.RpcException: Status(StatusCode="Unavailable", Detail="Error starting gRPC call. HttpRequestException: そのようなホストは不明です。 (server:80) SocketException: そのようなホストは不明です。", DebugException="System.Net.Http.HttpRequestException: そのようなホストは不明です。 (server:80)")
+ ---> System.Net.Http.HttpRequestException: そのようなホストは不明です。 (server:80)
+ ---> System.Net.Sockets.SocketException (11001): そのようなホストは不明です。
+```
+
+だいたい以下のどれかが抜けてるので要チェック。自分はほぼ全部やった。
+
+* Aspire
+  * `WithReference`で参照しているか
+    * これがないと環境変数`services__server__http__0`が渡されない。。
+* Client
+  * `service.AddServiceDiscovery`を呼んでいるか
+    * `IConfiguration`が登録されていないとエラーが出るのでDI登録する
+  * 自前で`IConfiguration`を登録している場合、`AddEnvironmentVariables`を呼んでいるか
+    * Aspireが設定した環境変数を読み込むために必要
+  * `ConfigureHttpClientDefaults`で`AddServiceDiscovery`を呼んでいるか
+  * `GrpcChannel.ForAddress("http://server", ...)`の`server`の部分が合っているか
+    * Aspire側で登録した名前(`.AddProject<...>("server")`の部分)と合わせる
+  * `GrpcChannel.ForAddress`のオプションで`HttpClient`を指定しているか
+
 ### getter-onlyなプロパティは持たせない
 
 上記の`SampleModel`の定義をもう一度見てみます。
