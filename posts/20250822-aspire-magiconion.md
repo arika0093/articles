@@ -1,10 +1,12 @@
 ---
-title: "Streamlining App Development with Aspire + MagicOnion in C#"
-description: "Learn how to build server-client applications efficiently using MagicOnion with .NET Aspire for seamless gRPC communication"
+title: Streamlining App Development with Aspire + MagicOnion in C#
+description: Learn how to build server-client applications efficiently using MagicOnion with .NET Aspire for seamless gRPC communication
 tags: 'dotnet,aspire,magiconion,api'
 cover_image: ''
 canonical_url: null
 published: true
+id: 2791943
+date: '2025-08-23T15:49:11Z'
 ---
 
 ## Introduction
