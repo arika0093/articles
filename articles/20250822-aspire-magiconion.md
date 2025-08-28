@@ -440,69 +440,8 @@ internal class SampleServiceMock : ISampleServiceCore
 
 ## Swagger UIを用意する
 
-簡単な動作テスト用にSwagger UIを用意しておくと便利です。
-[公式ドキュメント](https://cysharp.github.io/MagicOnion/ja/integration/json-transcoding)を参考に導入してみます。
-
-まず`MagicOnion.Server.JsonTranscoding.Swagger`をNuGetから導入します。上記ドキュメントにはそのことが書かれていないので注意。
-
-で、`Program.cs`に以下のように追記します。
-
-```cs
-// 前略
-var magicOnion = builder.Services.AddMagicOnion();
-if (builder.Environment.IsDevelopment())
-{
-    // 開発時専用でSwaggerを有効化
-    magicOnion.AddJsonTranscoding();
-    builder.Services.AddMagicOnionJsonTranscodingSwagger();
-    builder.Services.AddSwaggerGen();
-}
-
-var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
-    // 開発時専用でSwaggerを有効化
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        // ルートパスでSwagger UIを表示する
-        c.RoutePrefix = "";
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    });
-}
-// 以下略
-```
-
-また、このままだとSwaggerUIも`HTTP2`でホストされてしまい、ブラウザからアクセスできません。なので、`appsettings.json`を次のように書き換えます。[^9]
-
-[^9]: HTTPSでホストしていれば大丈夫ですが、今回はHTTPでホストする想定です
-
-
-```diff json
-{
-  "Kestrel": {
-    "Endpoints": {
-      "http": {
-        "Url": "http://localhost:5110",
-        "Protocols": "Http2"
-+     },
-+     "swagger": {
-+       "Url": "http://localhost:5111",
-+       "Protocols": "Http1"
-      }
-    }
-  }
-}
-```
-
-このようにしてAspireを再起動すると、以下のような表示になります。
-![](/images/20250822/aspire-server-with-swagger.png)
-
-で、`http://localhost:5111`にアクセスすると...
-
-![](/images/20250822/aspire-swagger2.png)
-
-とこのようにAPIを叩けるようになります。便利ですね！
+こちらに移動しました。
+https://zenn.dev/arika/articles/20250828-aspire-magiconion-with-trace
 
 
 ## ポイント
