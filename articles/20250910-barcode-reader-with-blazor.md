@@ -139,11 +139,6 @@ export class BarcodeInputManager {
                 event.preventDefault();
                 component.value = component.value + "\t";
             }
-            else if (key.Length == 1) {
-                // 普通の文字なので、そのまま反映させる
-                event.preventDefault();
-                component.value = component.value + key;
-            }
             // console.log(event)
         });
     }
