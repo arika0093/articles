@@ -13,6 +13,10 @@ published: false
 DATALOGIC Gryphon 4500 Series
 
 
+バーコードにタブ文字が入っていると勝手に別部位に遷移してしまう
+末尾に改行を入れてくれるので、それを使って読み取り完了処理を呼び出したい
+→ 自作。
+
 https://w3c.github.io/uievents/tools/key-event-viewer.html
 出力確認に便利
 Optionから`ShowEvents`->`KeyDown`だけONにして読み取らせる
