@@ -112,7 +112,7 @@ MSLearnの~~超分かりづらい~~[サンプル](https://learn.microsoft.com/ja
         {
             module = await JS.InvokeAsync<IJSObjectReference>("import",
                 $"./Components/UI/{nameof(BcdInputWithJavascript)}.razor.js");
-            await module.InvokeVoidAsync("BarcodeInputManager.registor", dotnetReference, id);
+            await module.InvokeVoidAsync("BarcodeInputManager.register", dotnetReference, id);
         }
     }
 
@@ -142,7 +142,7 @@ MSLearnの~~超分かりづらい~~[サンプル](https://learn.microsoft.com/ja
 ```js
 // BcdInputWithJavascript.razor.js
 export class BarcodeInputManager {
-    static registor(ref, id) {
+    static register(ref, id) {
         const component = document.getElementById(id);
         component.addEventListener("keydown", (event) => {
             const key = event.key
