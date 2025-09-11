@@ -116,6 +116,7 @@ MSLearnの~~超分かりづらい~~[サンプル](https://learn.microsoft.com/ja
         }
     }
 
+    // [JSInvokable]属性を付与するとJS側から呼び出せるようになる
     [JSInvokable]
     public void ComponentOnEnter(string input)
     {
