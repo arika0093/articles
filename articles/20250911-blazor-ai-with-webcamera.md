@@ -1,10 +1,36 @@
 ---
-title: "【Blazor】Webカメラから画像を読み取ってAIにリクエストを投げる"
+title: "【Blazor】Webカメラから画像を読み取ってAIにOCRしてもらう"
 emoji: "🌍️"
 type: "tech"
-topics: ["dotnet", "blazor", "ai", "webcamera"]
+topics: ["dotnet", "blazor", "ai", "webcamera", "ocr"]
 published: false
 ---
+
+## AIサーバーを立てる
+
+今回は`Qwen/Qwen2-VL-7B-Instruct-AWQ`を使った。
+
+docker-compose.yml
+
+```yml
+services:
+  vllm:
+    image: 'vllm/vllm-openai'
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - capabilities: [gpu]
+            device_ids: ['2'] # 適当に指定する
+            driver: nvidia
+    volumes:
+      - './cache:/workspace/.cache'
+    command: '--model Qwen/Qwen2-VL-7B-Instruct-AWQ'
+    ports:
+      - '(port):8000'
+```
+
+## C#側の実装
 
 ```xml
 <PackageReference Include="Microsoft.Extensions.AI" Version="9.8.0" />
@@ -18,20 +44,35 @@ using OpenAI;
 using OpenAI.Chat;
 using System.ClientModel;
 
-// configure ai
+// AI設定
 IChatClient chatClient = new ChatClient(
     "Qwen/Qwen2-VL-7B-Instruct-AWQ",
     new ApiKeyCredential("test"),
-    new OpenAIClientOptions() { Endpoint = new Uri("http://172.21.46.28:11600/v1") }
+    new OpenAIClientOptions() {
+        Endpoint = new Uri("http://(self-hosting-url)/v1"),
+        NetworkTimeout = TimeSpan.FromMinutes(1),
+        //ClientLoggingOptions = new()
+        //{
+        //    EnableLogging = true,
+        //    LoggerFactory = LoggerFactory.Create(loggingBuilder =>
+        //    {
+        //        loggingBuilder.AddConsole();
+        //        loggingBuilder.SetMinimumLevel(LogLevel.Debug);
+        //    }),
+        //}
+    }
 ).AsIChatClient();
+
 builder.Services.AddChatClient(chatClient).UseLogging();
 
-//
+// JavascriptからBlazor側に画像データを投げられるようにする
 services.AddSignalR(e =>
 {
     e.MaximumReceiveMessageSize = 102400000;
 });
 ```
+
+## Webカメラから画像を読み取る
 
 ```razor
 <select @onchange="Selected">
@@ -44,7 +85,7 @@ services.AddSignalR(e =>
 <br />
 
 <video id="@idVideo" width="480" height="360" />
-<canvas  id="@idCanvas" width="320" height="240" />
+<canvas style="display:none;" id="@idCanvas" width="480" height="360" />
 <br />
 
 <button @onclick="CaptureFrame">Capture Frame</button>
@@ -87,7 +128,7 @@ services.AddSignalR(e =>
         debugger;
         let video = document.getElementById(src);
         let canvas = document.getElementById(dest);
-        canvas.getContext('2d').drawImage(video, 0, 0, 320, 240);
+        canvas.getContext('2d').drawImage(video, 0, 0, 480, 360);
 
         let dataUrl = canvas.toDataURL("image/png");
         dotNetHelper.invokeMethodAsync('RecieveImage', dataUrl);
