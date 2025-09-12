@@ -260,6 +260,7 @@ builder.Services.AddSingleton<TryOcrService>();
         var resized = await file.RequestImageFileAsync("image/png", MaxImageSize, MaxImageSize);
         var bytes = await LoadImageFromFileAsync(resized);
         ResultLotNo = await OcrService.TryOcr(bytes);
+        IsParsed = true;
     }
 }
 ```
