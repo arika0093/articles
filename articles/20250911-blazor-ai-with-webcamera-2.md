@@ -3,7 +3,7 @@ title: "【C#】Webカメラで画像を読み取ってAIにOCRしてもらう(O
 emoji: "🌍️"
 type: "tech"
 topics: ["dotnet", "csharp", "blazor", "ai", "ocr"]
-published: false
+published: true
 ---
 
 前回の記事の続きです。
