@@ -1,12 +1,17 @@
 ---
-title: "【C#】Webカメラで画像を読み取ってAIにOCRしてもらう(Webカメラ編)"
+title: "【C#】タブレットのカメラで画像を読み取ってAIにOCRしてもらう(タブレットのカメラ編)"
 emoji: "🌍️"
 type: "tech"
 topics: ["dotnet", "csharp", "blazor", "ai", "ocr"]
 published: false
 ---
 
-## Webカメラから画像を読み取る
+前回・前々回の記事の続きです。
+https://zenn.dev/arika/articles/20250911-blazor-ai-with-webcamera-1
+https://zenn.dev/arika/articles/20250911-blazor-ai-with-webcamera-2
+
+
+## タブレットのカメラから画像を読み取る
 
 ```cs
 // JavascriptからBlazor側に画像データを投げられるようにする

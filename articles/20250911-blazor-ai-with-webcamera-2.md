@@ -1,5 +1,5 @@
 ---
-title: "【C#】Webカメラで画像を読み取ってAIにOCRしてもらう(OCR編)"
+title: "【C#】タブレットのカメラで画像を読み取ってAIにOCRしてもらう(OCR編)"
 emoji: "🌍️"
 type: "tech"
 topics: ["dotnet", "csharp", "blazor", "ai", "ocr"]
@@ -106,7 +106,7 @@ await chatClient.GetResponseAsync<AnswerResponce>(responce,
 ## C#で実装してみる
 今回はBlazorアプリで組んでいきます。
 画像をユーザーのフォルダから選んでもらって、その画像をAIにOCRしてもらう形です。
-Webカメラを使おうとするとまた長くなってしまうので、それは次回。
+タブレットのカメラを使おうとするとまた長くなってしまうので、それは次回。
 
 ### Program.cs
 基本的には前回と同じですが、今回はDIを使っていきます。
@@ -284,6 +284,6 @@ builder.Services.AddSingleton<TryOcrService>();
 ここまでのコードはGitHubに置いてあります。
 https://github.com/arika0093/BlazorOcrWithAI/tree/e94595fa87d2b6d8a70ef7e0245060c66f7903f6
 
-次回はWebカメラを使って画像を読み取ります。
+次回はタブレットのカメラを使って画像を読み取ります。
 (執筆中)
 

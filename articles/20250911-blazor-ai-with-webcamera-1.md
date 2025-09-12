@@ -1,5 +1,5 @@
 ---
-title: "【C#】Webカメラで画像を読み取ってAIにOCRしてもらう(準備編)"
+title: "【C#】タブレットのカメラで画像を読み取ってAIにOCRしてもらう(準備編)"
 emoji: "🌍️"
 type: "tech"
 topics: ["dotnet", "csharp", "blazor", "ai", "ocr"]
