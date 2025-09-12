@@ -84,10 +84,11 @@ await chatClient.GetResponseAsync(responce);
 // -> {"answer": "1600"}
 ```
 
-これを所望のJson形式で固定させる方法があります。GetResponseAsyncのGenerics指定版を使うだけです。[^1]
-[^1]: summaryにも`Sends chat messages, requesting a response matching the type T`と書かれています。
-
+これを所望のJson形式で固定させる方法があります。
+GetResponseAsyncのGenerics指定版を使うだけです。[^1]
 簡単に日本語でググった範囲ではどこにも書いてなかったのですが、実はこんな便利なものが使えます！
+
+[^1]: summaryにも`Sends chat messages, requesting a response matching the type T`と書かれています。
 
 ```csharp
 public record AnswerResponce(int Answer);
