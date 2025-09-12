@@ -206,6 +206,9 @@ await foreach (
 ちなみに`NVIDIA GeForce RTX 4070 Ti SUPER`で動かしています。
 
 ## 続き
+ここまでのコードはGitHubに置いてあります。(といってもほとんど上記のコードそのままですが)
+https://github.com/arika0093/BlazorOcrWithAI/tree/9303a17c1602dde8b3be73c617b61e2114e148b8
+
 次は`Microsoft.Extensions.AI`で画像付きのリクエストを投げて、AIにOCRしてもらうところまでやります。
 
 (執筆中)
