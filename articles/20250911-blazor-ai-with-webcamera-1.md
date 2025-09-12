@@ -1,5 +1,5 @@
 ---
-title: "Webカメラで画像を読み取ってAIにOCRしてもらう(準備編)"
+title: "【C#】Webカメラで画像を読み取ってAIにOCRしてもらう(準備編)"
 emoji: "🌍️"
 type: "tech"
 topics: ["dotnet", "csharp", "blazor", "ai", "ocr"]
@@ -183,7 +183,6 @@ var chatClient = new ChatClient(
     {
         // さっき立ち上げたローカルサーバー
         Endpoint = new Uri("http://localhost:12345/v1"),
-        NetworkTimeout = TimeSpan.FromMinutes(1),
     }
 ).AsIChatClient();
 
@@ -205,12 +204,10 @@ await foreach (
 なかなかの速度で応答できていそうです。
 ちなみに`NVIDIA GeForce RTX 4070 Ti SUPER`で動かしています。
 
-## 続き
+## 次回
 ここまでのコードはGitHubに置いてあります。(といってもほとんど上記のコードそのままですが)
 https://github.com/arika0093/BlazorOcrWithAI/tree/9303a17c1602dde8b3be73c617b61e2114e148b8
 
 次は`Microsoft.Extensions.AI`で画像付きのリクエストを投げて、AIにOCRしてもらうところまでやります。
-
-(執筆中)
-
+https://zenn.dev/arika/articles/20250911-blazor-ai-with-webcamera-2
 
