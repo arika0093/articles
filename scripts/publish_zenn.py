@@ -22,7 +22,9 @@ for file in markdown_files:
     date_str = os.path.basename(dir)
     # ファイル名を yyyyMMdd-(filename).md に変更し
     # articles直下に移動する
+    # ファイル名に含まれる # は削除する
     new_file = os.path.join("articles", f"{date_str}-{os.path.basename(file)}")
+    new_file = new_file.replace("#", "")
     move_files.append((file, new_file))
     # 直下にある画像ファイルを抽出
     image_files = [
