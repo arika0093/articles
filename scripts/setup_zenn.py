@@ -44,7 +44,7 @@ for file in markdown_files:
 
 # 実際にファイルを移動する
 for before, after in move_files:
-    print(f"Moving {before} to {after}")
+    # print(f"Moving {before} to {after}")
     os.makedirs(os.path.dirname(after), exist_ok=True)
     if os.path.exists(before):
         os.rename(before, after)
