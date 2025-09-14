@@ -16,6 +16,8 @@ markdown_files = [
 
 # tuple(before, after)の形で保存する
 move_files = []
+# dict((date, newfile), [images])の形で保存する
+contain_images = {}
 for file in markdown_files:
     # フォルダ名が articles/**/yyyyMMdd/*.md となっている
     dir = os.path.dirname(file)
@@ -32,6 +34,8 @@ for file in markdown_files:
         for img in os.listdir(dir)
         if img.endswith((".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"))
     ]
+    # contains_imagesに保存する
+    contain_images[(date_str, new_file)] = image_files
     # 画像ファイルを images/yyyyMMdd/* に移動する
     for img in image_files:
         new_img = os.path.join("images", date_str, os.path.basename(img))
@@ -43,6 +47,24 @@ for before, after in move_files:
     print(f"Moving {before} to {after}")
     os.makedirs(os.path.dirname(after), exist_ok=True)
     os.rename(before, after)
+    # markdownファイル内の画像パスを修正する
+    if before.endswith(".md"):
+        with open(after, "r", encoding="utf-8") as f:
+            content = f.read()
+        # 画像パスを修正
+        contains = [
+            (date_str, md_file, images)
+            for (date_str, md_file), images in contain_images.items()
+            if md_file == after
+        ]
+        for date_str, md_file, images in contains:
+            for img in images:
+                img_name = os.path.basename(img)
+                # 例: (20231001/image.png) -> (/images/20231001/image.png)
+                # markdown内の画像パスを修正
+                content = content.replace(
+                    f"({img_name})", f"(/images/{date_str}/{img_name})"
+                )
 
 # 空のbooksフォルダを作成し、.keepファイルを置く
 os.makedirs("books", exist_ok=True)
