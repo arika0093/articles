@@ -44,6 +44,11 @@ for before, after in move_files:
     os.makedirs(os.path.dirname(after), exist_ok=True)
     os.rename(before, after)
 
+# 空のbooksフォルダを作成し、.keepファイルを置く
+os.makedirs("books", exist_ok=True)
+with open("books/.keep", "w") as f:
+    f.write("")
+
 # commitしてforce pushする
 now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 os.system("git add .")
