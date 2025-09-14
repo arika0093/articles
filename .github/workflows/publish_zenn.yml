@@ -26,5 +26,9 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Run publish_zenn.py
-        run: python scripts/publish_zenn.py
+      - name: Run setup_zenn.py
+        run: python scripts/setup_zenn.py
+
+      - name: Force push to publish/zenn branch
+        run: |
+          git push -f origin publish/zenn

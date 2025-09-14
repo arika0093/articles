@@ -9,7 +9,7 @@ os.system("git checkout -B publish/zenn main")
 # (再帰的に探す)
 markdown_files = [
     os.path.join(root, file)
-    for root, dirs, files in os.walk("articles")
+    for root, _, files in os.walk("articles")
     for file in files
     if file.endswith(".md")
 ]
@@ -76,11 +76,7 @@ os.makedirs("books", exist_ok=True)
 with open("books/.keep", "w") as f:
     f.write("")
 
-# commitしてforce pushする
+# commitする
 now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 os.system("git add .")
 os.system(f'git commit -m "Publish to Zenn at {now}"')
-os.system("git push -f origin publish/zenn")
-
-# mainブランチに戻る
-os.system("git checkout main")
