@@ -30,7 +30,7 @@ published: true
 
 この画像を素直にOCRにかけると、以下のような結果になります。
 
-![alt text](/images/20250911/snipping.png)
+![alt text](snipping.png)
 
 ```
 0259490423602-0603020900006
@@ -68,7 +68,7 @@ http://www.san-a.co.jp/
 
 試しに Qwen3に聞いてみました。
 
-![alt text](/images/20250911/qwen-scan.png)
+![alt text](qwen-scan.png)
 
 余裕ですね。
 
@@ -147,7 +147,7 @@ services:
 ```
 
 容量は全然手軽ではないですが。待ちます。
-![](/images/20250911/docker-pull-vllm.png)
+![](docker-pull-vllm.png)
 
 起動するとモデルファイルのダウンロードが始まります。これも時間がかかります。手元の環境でだいたい10分程度。
 
@@ -198,7 +198,7 @@ await foreach (
 こうすることでどのAIサービスを使おうが関係なく`IChatClient`インターフェースで扱えるようになります。
 
 実行結果:
-![](/images/20250911/ai_output.gif)
+![](ai_output.gif)
 
 
 なかなかの速度で応答できていそうです。

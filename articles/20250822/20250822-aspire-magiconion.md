@@ -10,7 +10,7 @@ published: true
 
 サーバーとクライアントが存在するようなアプリ開発、ありがちだと思います（大体はそうですね）。が。個人的に境界面の開発が結構しんどい（というか面倒）です。
 
-![](/images/20250822/api-surface.drawio.png)
+![](api-surface.drawio.png)
 
 Protocol bufferだったりOpenAPIだったりがあるわけですが[^1]、最近[MagicOnion](https://github.com/Cysharp/MagicOnion)の存在を知りまして、どうせ全部C#ならこれで良いのでは？となりました。
 
@@ -40,7 +40,7 @@ Protocol bufferだったりOpenAPIだったりがあるわけですが[^1]、最
 
 まずは以下のようにプロジェクトを作ります。
 
-![](/images/20250822/aspire-vs-project.png)
+![](aspire-vs-project.png)
 
 内訳としては
 
@@ -53,7 +53,7 @@ Protocol bufferだったりOpenAPIだったりがあるわけですが[^1]、最
 となっています。
 
 依存関係はこんな感じ。
-![](/images/20250822/aspire-dependency.drawio.png)
+![](aspire-dependency.drawio.png)
 
 共有用の`Shared`をスキーマ定義として使い、それを`Client`と`Web`で参照する形です。`AppHost`はこの2つをまとめて起動する用。
 
@@ -386,14 +386,14 @@ public class SampleServiceExecutor(ISampleServiceCore sampleService)
 
 `AppHost`を起動するとこのような画面が出てきます。
 
-![](/images/20250822/aspire-dashboard.png)
+![](aspire-dashboard.png)
 
 サーバー側は立ち上がっていますが、クライアント側はまだ起動していません。
 ここで`client`の右側にある`▶`ボタンを押すと、クライアントが起動します。
 
 ログを見てみると、正常にサーバーと通信できていることがわかります。
 
-![](/images/20250822/aspire-execute-result.png)
+![](aspire-execute-result.png)
 
 ## テストを書く
 

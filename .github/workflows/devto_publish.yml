@@ -13,7 +13,7 @@
 name: publish
 on:
   push:
-    branches: [main]
+    branches: [devto]
 
 # be committable to the repository
 permissions:

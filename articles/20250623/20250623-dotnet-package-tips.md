@@ -25,7 +25,7 @@ published: false
 * `src` - 公開するパッケージのプロジェクト + 共通設定(`Directory.Build.props`)
 * `tests` - パッケージのテストプロジェクト + 共通設定(`Directory.Build.props`)
 
-![alt text](/images/20250623/folder-structure.png)
+![alt text](folder-structure.png)
 
 このような構成にするメリットとして、`Directory.Build.props`でまとめて共通設定を書けるのが嬉しいポイントです。
 例えば `using Xunit;` とかの共通usingディレクティブを `Directory.Build.props` に書いておくとか、共通利用のライブラリを一括で定義しておくとか、そういうことができます。
@@ -234,7 +234,7 @@ public class PublicApiCheckTest
 
 試しに適当なプロパティを生やしてテストを実行すると、以下のようなdiffが得られてテストが失敗します。
 
-![alt text](/images/20250623/publicapi-diff.png)
+![alt text](publicapi-diff.png)
 
 ## ドキュメントの生成/公開
 ### docfx
@@ -247,7 +247,7 @@ public class PublicApiCheckTest
 そのため、docsフォルダに`cd`した後に実行することをお勧めします。
 
 [具体例(docfxのドキュメント)](https://dotnet.github.io/docfx/)
-![alt text](/images/20250623/docfx-image.png)
+![alt text](docfx-image.png)
 
 ### mkdocs-material
 もう一つの選択肢として、[mkdocs-material](https://squidfunk.github.io/mkdocs-material/) を使う方法もあります。
@@ -255,7 +255,7 @@ public class PublicApiCheckTest
 あと参考資料がWeb上にたくさん転がっています。
 
 [具体例(mkdocs-materialのドキュメント)](https://squidfunk.github.io/mkdocs-material/getting-started/)
-![alt text](/images/20250623/mkdocs.png)
+![alt text](mkdocs.png)
 
 ## サンプルページの生成/公開
 公開するものの種類にもよりますが、実際に動く現物があると使用感が伝わりやすいです。
@@ -263,7 +263,7 @@ public class PublicApiCheckTest
 作り方は割愛しますが、意外と簡単に書けるのでおすすめ。
 
 [具体例(BlazorLocalTimeのドキュメント)](https://arika0093.github.io/BlazorLocalTime/)
-![alt text](/images/20250623/blazor-local-time.png)
+![alt text](blazor-local-time.png)
 
 ### PublishSPAforGitHubPages.Build
 Blazor WebAssemblyのアプリケーションをGitHub Pagesにデプロイするための便利ツールです。

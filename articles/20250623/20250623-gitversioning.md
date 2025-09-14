@@ -195,7 +195,7 @@ nbgv prepare-release
 
 [^ve]: ここでは `version.json`を`pathFilters`の除外に指定していないケースで説明しています。
 
-![](/images/20250623/gitversioning.drawio.png)
+![](gitversioning.drawio.png)
 
 何をやっているかというと、現在のブランチの内容をそのまま`release/v0.1`のようなブランチに切り出し、`version.json`のバージョン番号を更新しているわけです。
 この時点で`version.json`更新のコミットが自動生成されるため、この状態でビルドするとバージョン番号が `0.1.1` となります。

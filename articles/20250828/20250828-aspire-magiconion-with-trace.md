@@ -73,18 +73,18 @@ Aspireで動かしてみます。動かし方は[こちらの記事](https://zen
 https://zenn.dev/arika/articles/20250822-aspire-magiconion
 
 起動すると以下のような表示になります。
-![](/images/20250822/aspire-server-with-swagger.png)
+![](aspire-server-with-swagger.png)
 
 で、`http://localhost:5111`にアクセスすると...
 
-![](/images/20250822/aspire-swagger2.png)
+![](aspire-swagger2.png)
 
 とこのようにAPIを叩けるようになります。これは便利。
 
 ## 例外発生時にスタックトレースを出す
 
 このままだと例外発生時にスタックトレースが表示されません。具体的には以下のようなエラーが帰ってきます。
-![](/images/20250828/swagger-err.png)
+![](swagger-err.png)
 
 Debug実行していても例外発生で止まってくれないのも相まって、なかなか不便！
 というわけで、スタックトレースを表示する方法を探しました。[^2]
@@ -105,7 +105,7 @@ var isDevelopment = builder.Environment.IsDevelopment();
 
 すると……
 
-![](/images/20250828/swagger-err-withtrace.png)
+![](swagger-err-withtrace.png)
 
 いけました。これでデバッグが捗ります。[^3]
 

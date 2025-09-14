@@ -17,12 +17,12 @@ AIにOCRをしてもらうには、画像付きのリクエストを投げる必
 
 で、`ChatMessage`とはなんぞやという話ですが、
 
-![](/images/20250912/chat-message-sample.png)
+![](chat-message-sample.png)
 これをプログラム上で表す方法です。
 
 ChatMessageは上記画像の各メッセージ+ロール(+添付ファイル)を表すものです。
 例えば上記の例を図解すると、以下のようになります。
-![](/images/20250912/chat-message-figure.drawio.png)
+![](chat-message-figure.drawio.png)
 
 要するに、これらを`ChatMessage`で表現するわけです。
 これらのオブジェクトは自分で作ることも簡単にできるので、チャット履歴を偽造してAIにサンプルを流し込むことができます。
@@ -269,15 +269,15 @@ builder.Services.AddSingleton<TryOcrService>();
 ## 実行結果
 
 前回の記事で使った写真を読ませてみます。
-![](/images/20250912/ocr-result-01.png)
+![](ocr-result-01.png)
 いけてますね！
 
 別の画像でも試してみます。
-![](/images/20250912/ocr-result-02.png)
+![](ocr-result-02.png)
 ロット番号とは書いてありませんが、きちんと識別番号を拾えています。
 
 最後に、全然関係ない画像を読ませてみます。
-![](/images/20250912/ocr-result-03.png)
+![](ocr-result-03.png)
 きちんと`null`を返してくれました。素晴らしい。
 
 ## 次回
