@@ -1,5 +1,5 @@
-import datetime
 import os
+from datetime import datetime
 
 # publish/zenn ブランチにチェックアウト
 # その際、mainの内容をそのまま持っていく
@@ -46,7 +46,9 @@ for file in markdown_files:
 for before, after in move_files:
     print(f"Moving {before} to {after}")
     os.makedirs(os.path.dirname(after), exist_ok=True)
-    os.rename(before, after)
+    if os.path.exists(before):
+        os.rename(before, after)
+
     # markdownファイル内の画像パスを修正する
     if before.endswith(".md"):
         with open(after, "r", encoding="utf-8") as f:
@@ -65,6 +67,9 @@ for before, after in move_files:
                 content = content.replace(
                     f"({img_name})", f"(/images/{date_str}/{img_name})"
                 )
+        # 修正した内容を書き戻す
+        with open(after, "w", encoding="utf-8") as f:
+            f.write(content)
 
 # 空のbooksフォルダを作成し、.keepファイルを置く
 os.makedirs("books", exist_ok=True)
