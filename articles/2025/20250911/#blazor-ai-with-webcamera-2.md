@@ -285,5 +285,5 @@ builder.Services.AddSingleton<TryOcrService>();
 https://github.com/arika0093/BlazorOcrWithAI/tree/e94595fa87d2b6d8a70ef7e0245060c66f7903f6
 
 次回はタブレットのカメラを使って画像を読み取ります。
-(執筆中)
+https://zenn.dev/arika/articles/20250911-blazor-ai-with-webcamera-3
 
