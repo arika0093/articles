@@ -34,7 +34,7 @@ markdown_files = [
     if file.endswith(".md")
 ]
 
-article_infos = []
+article_infos: list[ArticleInfo] = []
 
 for file in markdown_files:
     dir = os.path.dirname(file)
@@ -47,7 +47,7 @@ for file in markdown_files:
         for img in os.listdir(dir)
         if img.endswith((".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"))
     ]
-    contained_images = []
+    contained_images: list[ArticleImageInfo] = []
     for img in image_files:
         is_large = os.path.getsize(img) > 3 * 1024 * 1024
         after_path = (
