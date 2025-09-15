@@ -34,8 +34,6 @@ markdown_files = [
     if file.endswith(".md")
 ]
 
-
-# ArticleInfo/ArticleImageInfoのみで管理
 article_infos = []
 
 for file in markdown_files:
@@ -66,8 +64,6 @@ for file in markdown_files:
                 is_large=is_large,
             )
         )
-        if not is_large:
-            os.makedirs(os.path.dirname(after_path), exist_ok=True)
     article_infos.append(
         ArticleInfo(
             markdown_path=file,
@@ -103,6 +99,7 @@ for article in article_infos:
         for img_info in article.contained_images:
             img_name = img_info.image_name
             if img_info.is_large:
+                # 本文中に大きい画像がある場合、エラーを出す
                 if f"({img_name})" in content:
                     raise Exception(
                         f"Image {img_info.image_path} is too large to upload. Please remove it from {md_path}."
