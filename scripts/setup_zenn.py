@@ -18,6 +18,9 @@ markdown_files = [
 move_files = []
 # dict((date, newfile), [images])の形で保存する
 contain_images = {}
+# dict(newfile, [images])の形で保存する
+upload_skipped_images = {}
+
 for file in markdown_files:
     # フォルダ名が articles/**/yyyyMMdd/*.md となっている
     dir = os.path.dirname(file)
@@ -38,9 +41,17 @@ for file in markdown_files:
     contain_images[(date_str, new_file)] = image_files
     # 画像ファイルを images/yyyyMMdd/* に移動する
     for img in image_files:
-        new_img = os.path.join("images", date_str, os.path.basename(img))
-        os.makedirs(os.path.dirname(new_img), exist_ok=True)
-        move_files.append((img, new_img))
+        # ファイルサイズを確認し、3MBを超える場合はアップロードしない
+        # (Zennの制限で、3MBを超える画像はアップロードできない)
+        if os.path.getsize(img) > 3 * 1024 * 1024:
+            print(f"Skipping {img} because it is larger than 3MB")
+            upload_skipped_images[new_file] = upload_skipped_images.get(
+                new_file, []
+            ) + [img]
+        else:
+            new_img = os.path.join("images", date_str, os.path.basename(img))
+            os.makedirs(os.path.dirname(new_img), exist_ok=True)
+            move_files.append((img, new_img))
 
 # 実際にファイルを移動する
 for before, after in move_files:
@@ -62,11 +73,19 @@ for before, after in move_files:
         for date_str, md_file, images in contains:
             for img in images:
                 img_name = os.path.basename(img)
-                # 例: (20231001/image.png) -> (/images/20231001/image.png)
-                # markdown内の画像パスを修正
-                content = content.replace(
-                    f"({img_name})", f"(/images/{date_str}/{img_name})"
-                )
+                # アップロード省略済みの画像の場合
+                if img in upload_skipped_images.get(md_file, []):
+                    # 本文中にそのパスがある場合はエラー終了する
+                    if f"({img_name})" in content:
+                        raise Exception(
+                            f"Image {img} is too large to upload. Please remove it from {md_file}."
+                        )
+                else:
+                    # 例: (20231001/image.png) -> (/images/20231001/image.png)
+                    # markdown内の画像パスを修正
+                    content = content.replace(
+                        f"({img_name})", f"(/images/{date_str}/{img_name})"
+                    )
         # 修正した内容を書き戻す
         with open(after, "w", encoding="utf-8") as f:
             f.write(content)
