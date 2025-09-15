@@ -3,7 +3,7 @@ title: "【C#】タブレットのカメラで画像を読み取ってAIにOCR�
 emoji: "🌍️"
 type: "tech"
 topics: ["dotnet", "csharp", "blazor", "ai", "ocr"]
-published: true 
+published: true
 ---
 
 前回・前々回の記事の続きです。
