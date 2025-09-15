@@ -6,7 +6,7 @@ topics: ["dotnet", "magiconion", "debug"]
 published: true
 ---
 
-## まえがき
+## まえがき 
 [MagicOnion](https://github.com/Cysharp/MagicOnion)のサーバー開発を行う際に、動作確認用のUIがあると便利です。
 公式に[JsonTranscoding](https://cysharp.github.io/MagicOnion/ja/integration/json-transcoding)という機能が用意されています。
 というわけで早速これを使ってみます。[^1]

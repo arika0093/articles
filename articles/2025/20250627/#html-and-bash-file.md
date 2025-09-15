@@ -7,7 +7,7 @@ published: true
 ---
 
 ## 前置き
-皆さんは何かしらの導入スクリプトとして、このようなものを見たことがあるはずです。
+皆さんは何かしらの導入スクリプトとして、このようなものを見たことがあるはずです。 
 
 ```bash
 $ curl -sSL https://get.example.com/install.sh | bash

@@ -7,7 +7,7 @@ published: true
 ---
 
 前回の記事の続きです。
-https://zenn.dev/arika/articles/20250911-blazor-ai-with-webcamera-1
+https://zenn.dev/arika/articles/20250911-blazor-ai-with-webcamera-1 
 
 ## リクエストの投げ方を理解する
 ### 基礎編

@@ -6,7 +6,7 @@ topics: ["dotnet"]
 published: true
 ---
 
-こんな記事がTwitterに流れてきました。
+こんな記事がTwitterに流れてきました。 
 https://zenn.dev/coconala/articles/reasons-for-continuing-to-learn
 
 C#で同じようなことをやってみます。

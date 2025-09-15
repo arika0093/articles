@@ -18,7 +18,7 @@ https://zenn.dev/arika/articles/20250911-blazor-ai-with-webcamera-2
 builder.Services.AddSignalR(e =>
 {
     e.MaximumReceiveMessageSize = 102400000;
-});
+}); 
 ```
 
 ```razor

@@ -10,7 +10,7 @@ topics:
 published: false
 ---
 
-最近NuGetに公開するパッケージを作成したので、その際のTipsをまとめます。
+最近NuGetに公開するパッケージを作成したので、その際のTipsをまとめます。 
 当該パッケージは[こちらの記事](https://zenn.dev/arika/articles/20250622-blazor-localtime)で紹介しています。
 
 ## ディレクトリ構成

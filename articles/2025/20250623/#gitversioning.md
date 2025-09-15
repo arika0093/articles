@@ -11,7 +11,7 @@ published: true
 published_at: "2025-06-24 00:45"
 ---
 
-NuGetパッケージやアプリケーションのバージョン管理、手作業でやると普通に面倒ですよね。
+NuGetパッケージやアプリケーションのバージョン管理、手作業でやると普通に面倒ですよね。 
 そこで、[Nerdbank.GitVersioning](https://github.com/dotnet/Nerdbank.GitVersioning)を使用したバージョン管理の自動化について解説します。
 
 [先人による解説記事](https://zenn.dev/numani/articles/2b573c862e3bb9)も合わせてご覧ください。
