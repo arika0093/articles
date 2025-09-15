@@ -201,7 +201,7 @@ export class WebCameraActions {
 ## 動かしてみる
 まともなWebカメラを持っていないのでピントが合っていませんが、こんな感じで動きます。
 
-![](webcamera-capture.gif)
+![](https://i.imgur.com/WVBmzWp.gif)
 （ていうかこの画質で読めるのすごい。人間よりすごいんじゃないか）
 
 ## まとめ
