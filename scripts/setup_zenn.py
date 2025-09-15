@@ -1,5 +1,25 @@
 import os
-from datetime import datetime, timedelta
+from dataclasses import dataclass
+from datetime import datetime
+
+
+@dataclass
+class ArticleImageInfo:
+    image_path: str
+    after_path: str
+    image_name: str
+    date_str: str
+    is_large: bool
+
+
+@dataclass
+class ArticleInfo:
+    markdown_path: str
+    current_path: str
+    after_path: str
+    date_str: str
+    contained_images: list[ArticleImageInfo]
+
 
 # publish/zenn ブランチにチェックアウト
 # その際、mainの内容をそのまま持っていく
@@ -14,80 +34,85 @@ markdown_files = [
     if file.endswith(".md")
 ]
 
-# tuple(before, after)の形で保存する
-move_files = []
-# dict((date, newfile), [images])の形で保存する
-contain_images = {}
-# dict(newfile, [images])の形で保存する
-upload_skipped_images = {}
+
+# ArticleInfo/ArticleImageInfoのみで管理
+article_infos = []
 
 for file in markdown_files:
-    # フォルダ名が articles/**/yyyyMMdd/*.md となっている
     dir = os.path.dirname(file)
     date_str = os.path.basename(dir)
-    # ファイル名を yyyyMMdd-(filename).md に変更し
-    # articles直下に移動する
-    # ファイル名に含まれる # は削除する
-    new_file = os.path.join("articles", f"{date_str}-{os.path.basename(file)}")
-    new_file = new_file.replace("#", "")
-    move_files.append((file, new_file))
-    # 直下にある画像ファイルを抽出
+    new_file = os.path.join("articles", f"{date_str}-{os.path.basename(file)}").replace(
+        "#", ""
+    )
     image_files = [
         os.path.join(dir, img)
         for img in os.listdir(dir)
         if img.endswith((".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"))
     ]
-    # contains_imagesに保存する
-    contain_images[(date_str, new_file)] = image_files
-    # 画像ファイルを images/yyyyMMdd/* に移動する
+    contained_images = []
     for img in image_files:
-        # ファイルサイズを確認し、3MBを超える場合はアップロードしない
-        # (Zennの制限で、3MBを超える画像はアップロードできない)
-        if os.path.getsize(img) > 3 * 1024 * 1024:
-            print(f"Skipping {img} because it is larger than 3MB")
-            upload_skipped_images[new_file] = upload_skipped_images.get(
-                new_file, []
-            ) + [img]
-        else:
-            new_img = os.path.join("images", date_str, os.path.basename(img))
-            os.makedirs(os.path.dirname(new_img), exist_ok=True)
-            move_files.append((img, new_img))
+        is_large = os.path.getsize(img) > 3 * 1024 * 1024
+        after_path = (
+            os.path.join("images", date_str, os.path.basename(img))
+            if not is_large
+            else img
+        )
+        contained_images.append(
+            ArticleImageInfo(
+                image_path=img,
+                after_path=after_path,
+                image_name=os.path.basename(img),
+                date_str=date_str,
+                is_large=is_large,
+            )
+        )
+        if not is_large:
+            os.makedirs(os.path.dirname(after_path), exist_ok=True)
+    article_infos.append(
+        ArticleInfo(
+            markdown_path=file,
+            current_path=file,
+            after_path=new_file,
+            date_str=date_str,
+            contained_images=contained_images,
+        )
+    )
+
 
 # 実際にファイルを移動する
-for before, after in move_files:
-    # print(f"Moving {before} to {after}")
+for article in article_infos:
+    # markdownファイル
+    before = article.current_path
+    after = article.after_path
     os.makedirs(os.path.dirname(after), exist_ok=True)
     if os.path.exists(before):
         os.rename(before, after)
+    # 画像ファイル
+    for img_info in article.contained_images:
+        if not img_info.is_large and img_info.image_path != img_info.after_path:
+            os.makedirs(os.path.dirname(img_info.after_path), exist_ok=True)
+            if os.path.exists(img_info.image_path):
+                os.rename(img_info.image_path, img_info.after_path)
 
-    # markdownファイル内の画像パスを修正する
-    if before.endswith(".md"):
-        with open(after, "r", encoding="utf-8") as f:
+# markdownファイル内の画像パスを修正する
+for article in article_infos:
+    md_path = article.after_path
+    if os.path.exists(md_path):
+        with open(md_path, "r", encoding="utf-8") as f:
             content = f.read()
-        # 画像パスを修正
-        contains = [
-            (date_str, md_file, images)
-            for (date_str, md_file), images in contain_images.items()
-            if md_file == after
-        ]
-        for date_str, md_file, images in contains:
-            for img in images:
-                img_name = os.path.basename(img)
-                # アップロード省略済みの画像の場合
-                if img in upload_skipped_images.get(md_file, []):
-                    # 本文中にそのパスがある場合はエラー終了する
-                    if f"({img_name})" in content:
-                        raise Exception(
-                            f"Image {img} is too large to upload. Please remove it from {md_file}."
-                        )
-                else:
-                    # 例: (20231001/image.png) -> (/images/20231001/image.png)
-                    # markdown内の画像パスを修正
-                    content = content.replace(
-                        f"({img_name})", f"(/images/{date_str}/{img_name})"
+        for img_info in article.contained_images:
+            img_name = img_info.image_name
+            if img_info.is_large:
+                if f"({img_name})" in content:
+                    raise Exception(
+                        f"Image {img_info.image_path} is too large to upload. Please remove it from {md_path}."
                     )
-        # 修正した内容を書き戻す
-        with open(after, "w", encoding="utf-8") as f:
+            else:
+                # 例: (image.png) -> (/images/yyyyMMdd/image.png)
+                content = content.replace(
+                    f"({img_name})", f"(/images/{img_info.date_str}/{img_name})"
+                )
+        with open(md_path, "w", encoding="utf-8") as f:
             f.write(content)
 
 # 空のbooksフォルダを作成し、.keepファイルを置く
