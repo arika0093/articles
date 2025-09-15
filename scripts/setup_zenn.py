@@ -5,7 +5,7 @@ from datetime import datetime
 
 @dataclass
 class ArticleImageInfo:
-    image_path: str
+    current_path: str
     after_path: str
     image_name: str
     date_str: str
@@ -14,7 +14,6 @@ class ArticleImageInfo:
 
 @dataclass
 class ArticleInfo:
-    markdown_path: str
     current_path: str
     after_path: str
     date_str: str
@@ -59,7 +58,7 @@ for file in markdown_files:
         )
         contained_images.append(
             ArticleImageInfo(
-                image_path=img,
+                current_path=img,
                 after_path=after_path,
                 image_name=os.path.basename(img),
                 date_str=date_str,
@@ -68,7 +67,6 @@ for file in markdown_files:
         )
     article_infos.append(
         ArticleInfo(
-            markdown_path=file,
             current_path=file,
             after_path=new_file,
             date_str=date_str,
@@ -87,10 +85,10 @@ for article in article_infos:
         os.rename(before, after)
     # 画像ファイル
     for img_info in article.contained_images:
-        if not img_info.is_large and img_info.image_path != img_info.after_path:
+        if not img_info.is_large and img_info.current_path != img_info.after_path:
             os.makedirs(os.path.dirname(img_info.after_path), exist_ok=True)
-            if os.path.exists(img_info.image_path):
-                os.rename(img_info.image_path, img_info.after_path)
+            if os.path.exists(img_info.current_path):
+                os.rename(img_info.current_path, img_info.after_path)
 
 # markdownファイル内の画像パスを修正する
 for article in article_infos:
@@ -104,7 +102,7 @@ for article in article_infos:
                 # 本文中に大きい画像がある場合、エラーを出す
                 if f"({img_name})" in content:
                     raise Exception(
-                        f"Image {img_info.image_path} is too large to upload. Please remove it from {md_path}."
+                        f"Image {img_info.current_path} is too large to upload. Please remove it from {md_path}."
                     )
             else:
                 # 例: (image.png) -> (/images/yyyyMMdd/image.png)
