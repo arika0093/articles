@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # publish/zenn ブランチにチェックアウト
 # その際、mainの内容をそのまま持っていく
