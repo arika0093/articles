@@ -140,7 +140,7 @@ services:
           - capabilities: [gpu]
             driver: nvidia
     volumes:
-      - './cache:/workspace/.cache'
+      - './cache:/root/.cache/huggingface'
     command: '--model Qwen/Qwen2-VL-7B-Instruct-AWQ'
     ports:
       - '12345:8000' # 適当に指定する
