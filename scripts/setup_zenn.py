@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 
-@dataclass
+@dataclass(frozen=True)
 class ArticleImageInfo:
     current_path: str
     after_path: str
@@ -12,7 +12,7 @@ class ArticleImageInfo:
     is_large: bool
 
 
-@dataclass
+@dataclass(frozen=True)
 class ArticleInfo:
     current_path: str
     after_path: str
