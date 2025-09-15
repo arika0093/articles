@@ -38,7 +38,9 @@ article_infos: list[ArticleInfo] = []
 
 for file in markdown_files:
     dir = os.path.dirname(file)
+    # フォルダ名が日付になっているので、それを取得
     date_str = os.path.basename(dir)
+    # ファイル名の先頭に#を使っているので、置換しておく
     new_file = os.path.join("articles", f"{date_str}-{os.path.basename(file)}").replace(
         "#", ""
     )
