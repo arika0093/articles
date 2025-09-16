@@ -117,12 +117,7 @@ jobs:
         run: |
           dotnet tool install -g vpk
           vpk download gitea --repoUrl ${{ env.VPK_REPO_URL }}
-          vpk pack -p publish \
-            -u ${{ env.IDENTIFIER }} \
-            -v ${{ steps.nbgv.outputs.SemVer2 }} \
-            --mainExe ${{ env.APPLICATION_EXE }} \
-            --packTitle "${{ env.SHORTCUT_NAME }}" \
-            --shortcuts ${{ env.SHORTCUT_LOCATION }}
+          vpk pack -p publish -u ${{ env.IDENTIFIER }} -v ${{ steps.nbgv.outputs.SemVer2 }} --mainExe ${{ env.APPLICATION_EXE }} --packTitle "${{ env.SHORTCUT_NAME }}" --shortcuts ${{ env.SHORTCUT_LOCATION }}
           vpk upload gitea --repoUrl ${{ env.VPK_REPO_URL }}
         env:
           # ID, 重複しないようにする。
