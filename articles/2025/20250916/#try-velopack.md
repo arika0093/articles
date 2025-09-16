@@ -137,8 +137,8 @@ jobs:
           VPK_TARGET_COMMITISH: ${{ github.ref }}
           VPK_PUBLISH: true
           VPK_TOKEN: ${{ secrets.GITEA_TOKEN }}
-          # プレリリースなら含める、そうでない場合は空文字
-          VPK_PRE: ${{ contains(steps.nbgv.outputs.SemVer2, '-') && 'true' || '' }}
+          # プレリリース判定
+          VPK_PRE: ${{ contains(steps.nbgv.outputs.SemVer2, '-') }}
           # イントラネット環境で動かしてるなら、プロキシを経由しないほうが良さげ
           # (ファイルのアップロードで落ちる)
           NO_PROXY: "my-gitea-server.example.com"
