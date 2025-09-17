@@ -136,7 +136,7 @@ await client.SendAsync(message);
 
 [^4]: 中身で同じものを使ってるなら別にいいじゃんという気もしてしまいますが。
 
-## Microsoft.Extensions.Http (2018年～)
+## Microsoft.Extensions.Http (2018年)
 ### IHttpClientFactory / AddHttpClient
 これまでは`HttpClient`を直接newして使っていましたが、かなり分かりにくい間違いが頻発していました。
 例えば、以下のようなコードは**NG**です。[詳細](https://qiita.com/superriver/items/91781bca04a76aec7dc0)
@@ -203,7 +203,7 @@ var client = httpClientFactory.CreateClient("clientA");
 ちなみに、`ConfigureAdditionalHttpMessageHandler`や`AddHttpMessageHandler`もあります。
 これらは`DelegatingHandler`（ログとかのミドルウェア）を追加/編集するためのものと考えておけば良さそうです。
 
-## Microsoft.Extensions.Http.Polly (2018年～)
+## Microsoft.Extensions.Http.Polly (2018年)
 HttpClientの話をするなら避けて通れないのが`Polly`です。
 https://www.pollydocs.org/getting-started.html
 
@@ -228,7 +228,7 @@ static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
 }
 ```
 
-## .NET 8 (2023年～)
+## .NET 8 (2023年)
 `.NET 8`組み込みではなく`Microsoft.Extensions.*` 8.0の話ですが、時期的に同じなのでこの括りです。
 
 ### Microsoft.Extensions.ServiceDiscovery
