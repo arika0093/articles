@@ -181,14 +181,14 @@ public class SampleRequestService(IHttpClientFactory httpClientFactory)
 ```csharp
 // 名前をつけてもつけなくてもOK
 builder.Services.AddHttpClient("clientA")
-	// HttpClientHandlerの設定(低レベル)
+  // HttpClientHandlerの設定(低レベル)
   // SocketsHttpHandlerを使いましょう。別にHttpClientHandlerを使ってもいいけど。。
-	.ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
+  .ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
   {
       Proxy = new WebProxy("http://myproxy:8080"),
   })
-	// HttpClientの設定(高レベル)
-	.ConfigureHttpClient(http =>
+  // HttpClientの設定(高レベル)
+  .ConfigureHttpClient(http =>
   {
       http.Timeout = TimeSpan.FromSeconds(30);
   });
