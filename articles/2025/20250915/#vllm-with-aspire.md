@@ -135,7 +135,7 @@ dotnet add package Microsoft.Extensions.DependencyInjection
 dotnet add reference ../VllmWithAspire.ServiceDefaults/VllmWithAspire.ServiceDefaults.csproj
 ```
 
-## DIを設定する
+### DIを設定する
 
 最初はDIをちょちょいと設定すればOK！と思っていたのですが、実際やってみるとなかなか面倒です。というか気づきにくい。
 オプションを俯瞰しているだけだと`HttpClient`を渡す方法がまったくわからないので色々ググる……。
@@ -205,7 +205,7 @@ var provider = services.BuildServiceProvider();
 // やっと設定完了
 ```
 
-## Aspire側の設定をする
+### Aspire側の設定をする
 AppHost側にConsoleAppへの参照を追加します。
 
 ```bash
