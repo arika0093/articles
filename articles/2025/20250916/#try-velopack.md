@@ -2,7 +2,7 @@
 title: "【C#】実行ファイルの自動アップデートを提供するVelopackを試してみる"
 emoji: "🤖"
 type: "tech"
-topics: ["zenn", "csharp", "velopack"]
+topics: ["csharp", "velopack"]
 published: false
 ---
 
@@ -139,9 +139,6 @@ jobs:
           VPK_TOKEN: ${{ secrets.GITEA_TOKEN }}
           # プレリリース判定
           VPK_PRE: ${{ contains(steps.nbgv.outputs.SemVer2, '-') }}
-          # イントラネット環境で動かしてるなら、プロキシを経由しないほうが良さげ
-          # (ファイルのアップロードで落ちる)
-          NO_PROXY: "my-gitea-server.example.com"
 ```
 
 うまくいくとこうなる。
@@ -192,86 +189,153 @@ Console.WriteLine($"This Assembly Version is: {ThisAssembly.AssemblyInformationa
 ![](image-5.png)
 
 
-## 動的にレポジトリのアドレスを参照する
-
-上記ではレポジトリのURLを直接指定しているが、実際は直接参照できない(リバースプロキシ経由で参照する)ことがあり得る。また、今後のことを考えると動的にURLを切り替えたい。
-というわけでConfiguration経由の指定を試す。
-
-まずはパッケージを導入。
-
-```bash
-dotnet add package Microsoft.Extensions.Configuration
-dotnet add package Microsoft.Extensions.Configuration.Json
-```
-
-そして設定を追加。
+## IHostServiceとして常駐させてみる
+上記では起動時に更新チェックを行っていたが、`IHostService`として常駐させて、定期的に更新チェックを行うようにしてみる。
+[ここ](https://learn.microsoft.com/ja-jp/dotnet/core/extensions/timer-service)を参考にして組んでみる。
 
 ```csharp
-// レポジトリを参照する用の設定ファイルを追加
-// appsettings.jsonは使わないようにする (後述)
-var repositoryConfigFile = "repository.json";
-var defaultRepositoryUrl = "http://my-gitea-server.example.com/user/TryVelopack";
-var defaultJson = $$"""
-{"RepositoryUrl": "{{defaultRepositoryUrl}}"}
-""";
-// ファイルがなければ作成するようにする
-// (作成しなくても良いが、サンプルがあると後で弄りやすい)
-if(!File.Exists(repositoryConfigFile)){
-    File.WriteAllText(repositoryConfigFile, defaultJson);
-}
-var configuration = new ConfigurationBuilder()
-    .AddJsonFile(repositoryConfigFile, optional: true)
-    .Build() as IConfiguration;
-```
-
-わざわざ`appsettings.json`を使わず別のファイルにしているのは、頒布物に`appsettings.json`を含めてしまう可能性があるため。
-もし含まれている場合アップデートした際に設定が上書きされてしまうので、頒布物に含まれないファイルを用意してやる必要がある。
-
-
-あとはコード部分で参照するだけ。
-
-```csharp diff
--await UpdateCheck();
-+await UpdateCheck(configuration);
-
--async Task UpdateCheck()
-+async Task UpdateCheck(IConfiguration configuration)
+internal class AutoUpdateWatchService : IHostedService, IAsyncDisposable
 {
--   var RepoUrl = "http://my-gitea-server.example.com/user/TryVelopack";
-+   var RepoUrl = configuration["RepositoryUrl"]
-        ?? throw new InvalidDataException("RepositoryUrl is not set in repository.json");
+    private const string RepositoryUrl = "http://my-gitea-server.example.com/user/TryVelopack";
+    public UpdateStatus Status { get; private set; } = new(TimeSpan.Zero);
 
-    // 略
+    private readonly TimeSpan _checkSpan = TimeSpan.FromHours(1);
+    private Timer? _timer;
+
+    // IHostedService
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        // 発火自体は1分おきに行う(内部でチェックする)
+        _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+        return Task.CompletedTask;
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        _timer?.Change(Timeout.Infinite, 0);
+        return Task.CompletedTask;
+    }
+
+    // IAsyncDisposable
+    public async ValueTask DisposeAsync()
+    {
+        if(_timer is IAsyncDisposable timer) {
+            await timer.DisposeAsync();
+        }
+        _timer = null;
+    }
+
+    // タイマーで呼ばれる
+    private async void DoWork(object? _)
+    {
+        if(Status.NextCheckAt >= DateTimeOffset.Now) {
+            await UpdateCheck();
+        }
+    }
+
+    // 手動更新したい場合はこの関数を直接呼べばOK
+    public async Task UpdateCheck()
+    {
+        try {
+            var mgr = UpdateManager;
+            // check for new version
+            var newVersion = await mgr.CheckForUpdatesAsync();
+            Status = new(_checkSpan) {
+                UpdateAvailable = newVersion != null,
+                UpdateInfo = newVersion,
+            };
+        }
+        catch(NotInstalledException) {
+            // 開発中などはインストールされていないため、無視
+            Status = new(_checkSpan) {
+                UpdateAvailable = false,
+                UpdateInfo = null,
+            };
+        }
+        catch(Exception ex) {
+            // その他の例外ならエラーを通知
+            Status = new(_checkSpan) {
+                UpdateAvailable = false,
+                UpdateInfo = null,
+                ErrorMessage = ex.Message
+            };
+        }
+    }
+
+    // アプリ更新ボタンなどから呼ぶ
+    public async Task ApplicationUpdateAndRestart()
+    {
+        // すでにチェック済のはずなのでそれを使う
+        var updateInfo = Status.UpdateInfo;
+        ArgumentNullException.ThrowIfNull(updateInfo);
+        var mgr = UpdateManager;
+        await mgr.DownloadUpdatesAsync(updateInfo);
+        mgr.ApplyUpdatesAndRestart(updateInfo);
+    }
+
+    private UpdateManager UpdateManager
+    {
+        get
+        {
+            // 今回は直接レポジトリURLを指定しているが、本来は設定などから取得したほうがいい
+            var giteaSource = new GiteaSource(repoUrl: RepositoryUrl, accessToken: null, prerelease: true);
+            var mgr = new UpdateManager(giteaSource);
+            return mgr;
+        }
+    }
 }
-```
 
-動作確認するために、テスト用のリバースプロキシを用意。Caddyを使うと簡単に用意できる。
 
-```yml
-services:
-  caddy:
-    image: 'caddy:latest'
-    restart: unless-stopped
-    entrypoint: |
-      caddy reverse-proxy --from :80 --to http://my-gitea-server.example.com -r -v --internal-certs --change-host-header --insecure
-```
-
-ホストできたので、`repository.json`を書き換えて実行してみる。
-```json
+internal record UpdateStatus(TimeSpan checkspan)
 {
-  "RepositoryUrl": "http://192.168.X.Y/user/TryVelopack"
+    public bool UpdateAvailable { get; init; }
+    public string? ErrorMessage { get; init; }
+    public UpdateInfo? UpdateInfo { get; init; }
+
+    // 更新チェック+次回チェックの日時をStatus内に持たせておく
+    // ユーザー都合で遅延させたい時はここの値をいじればOK
+    public DateTimeOffset CheckedAt { get; init; } = DateTimeOffset.Now;
+    public DateTimeOffset NextCheckAt { get; init; } = DateTimeOffset.Now + checkspan;
+
+    public string? NewVersion => UpdateInfo?.TargetFullRelease.Version.ToString();
 }
 ```
 
-注意点として、2025/09/16現在では`port:80`でないと動作しない模様。
-([ここ](https://github.com/velopack/velopack/pull/697)で修正されているが、まだリリースされていない)
+Program.csで登録する。
 
-起動することを確認してから、適当なアップデートをリリースする。
+```csharp
+builder.Services.AddHostedService<AutoUpdateWatchService>();
+```
 
-すると無事リバースプロキシ経由で更新を取得することができた(わかりにくいが)。
+あとは適当にUIを作って参照すれば良い。例としてBlazorのコードを示す。
 
-![](image-7.png)
+```razor
+@inject AutoUpdateWatchService UpdateWatchService
+@{
+    var status = UpdateWatchService.Status;
+}
 
+<div>last checked at @status.CheckedAt</div>
+@if(status.ErrorMessage != null)
+{
+    // error
+    <div>@status.ErrorMessage</div>
+}
+else if(status.UpdateAvailable)
+{
+    // update available
+    <div>new version are available! :: @status.NewVersion</div>
+    <br />
+    <button @onclick="UpdateWatchService.ApplicationUpdateAndRestart">Update</button>
+}
+else
+{
+    // no update
+    <div>no update available</div>
+    <br />
+    <button @onclick="UpdateWatchService.UpdateCheck">Check Manually</button>
+}
+```
 
 
 ## まとめ
