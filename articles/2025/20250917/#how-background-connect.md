@@ -18,6 +18,7 @@ public class SampleBackgroundService : BackgroundService
     public SampleData Data { get; private set; } = new();
 
     // 1分おきに呼び出す
+    // PeriodicTimerを使うとTask.Delayよりも正確に呼び出せる
     private readonly PeriodicTimer _timer = new(TimeSpan.FromMinutes(1));
 
     // BackgroundServiceから呼び出されるので無限ループ
