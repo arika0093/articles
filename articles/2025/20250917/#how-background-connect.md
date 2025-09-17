@@ -1,6 +1,6 @@
 ---
 title: "【C#】BackgroundServiceをDIして他からデータを取得したい"
-emoji: "🤖"
+emoji: "⚙"
 type: "tech"
 topics: ["csharp", "asp.net", "background"]
 published: true
