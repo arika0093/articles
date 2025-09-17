@@ -3,31 +3,31 @@ title: "【C#】実行ファイルの自動アップデートを提供するVelo
 emoji: "🤖"
 type: "tech"
 topics: ["csharp", "velopack"]
-published: false
+published: true
 ---
 
-頒布したアプリケーションを手動で更新するのは色々と面倒なので、自動でアップデートできる仕組みを入れたい。
-調べてみたらSquirrelの後継である[Velopack](https://github.com/velopack/velopack)があったので、試してみる。
+頒布したアプリケーションを手動で更新するのは色々と面倒なので、自動でアップデートできる仕組みを入れたいと考えました。
+調べてみるとSquirrelの後継である[Velopack](https://github.com/velopack/velopack)があったので、試してみます。
 https://github.com/velopack/velopack
 
 ## 使ってみる
 ### セットアップ
-今回はコンソールアプリで試す。おそらくWPF, WinForms, ASP.NETなどでも同じようにできる。
+今回はコンソールアプリで試します。おそらくWPF, WinForms, ASP.NETなどでも同じようにできます。
 
-まずはNuGetから`velopack`をインストールする。
-また、バージョン管理のために`Nerdbank.GitVersioning`も入れておく。
+まずはNuGetから`velopack`をインストールします。
+また、バージョン管理のために`Nerdbank.GitVersioning`も入れておきます。
 
 ```bash
 dotnet add package velopack # 0.0.1298
 dotnet add package Nerdbank.GitVersioning # 3.7.115
 ```
 
-`Nerdbank.GitVersioning`の使い方は以下の記事を参照のこと。
+`Nerdbank.GitVersioning`の使い方は以下の記事を参照してください。
 https://zenn.dev/arika/articles/20250623-gitversioning
 
 ### アプリを作成する
-リリースの公開先として、今回は`gitea`を使用していく。
-`github`やファイルサーバー、S3なども使えるのでホスティング先はかなり融通が効く。
+リリースの公開先として、今回は`gitea`を使用します。
+`github`やファイルサーバー、S3なども使えるのでホスティング先はかなり融通が効きます。
 
 
 ```csharp
@@ -74,8 +74,8 @@ async Task UpdateCheck()
 ```
 
 ### Giteaに公開する
-Gitea ActionsでGiteaのリリースに自動アップロードするようにする。
-今回はGiteaだが、GitHubの場合でもほぼ同じ。(vpkの引数が`gitea`から`github`に変わるだけ)
+Gitea ActionsでGiteaのリリースに自動アップロードするようにします。
+今回はGiteaですが、GitHubの場合でもほぼ同じです。(vpkの引数が`gitea`から`github`に変わるだけ)
 
 ```yml
 name: Deploy to Gitea Releases
@@ -90,6 +90,7 @@ permissions:
 
 jobs:
   deploy-to-gitea-releases:
+    # windows向けにビルドするので windows-latest
     runs-on: windows-latest
     steps:
       - name: Checkout Repository
@@ -141,21 +142,21 @@ jobs:
           VPK_PRE: ${{ contains(steps.nbgv.outputs.SemVer2, '-') }}
 ```
 
-うまくいくとこうなる。
+うまくいくとこうなります。
 ![](image.png)
 
-`try-velopack-win-Setup.exe`をダウンロードして実行すると、デスクトップにショートカットが生える。
-ファイルの場所を開いてみると、`AppData\Local\(IDENTIFIER)\current`にインストールされる模様。
+`try-velopack-win-Setup.exe`をダウンロードして実行すると、デスクトップにショートカットが作成されます。
+ファイルの場所を開いてみると、`AppData\Local\(IDENTIFIER)\current`にインストールされるようです。
 
-実行してみる。
+実行してみます。
 ![](image-1.png)
 
-うまくリリースできていそう。
+うまくリリースできていそうです。
 
 ### アップデートしてみる
 
-ここでアップデートを入れてみる。
-区切り線をいれて、最後に`ReadKey`で待ち受けるようにしてみた。
+ここでアップデートを入れてみます。
+区切り線をいれて、最後に`ReadKey`で待ち受けるようにしてみました。
 
 ```csharp diff
 +Console.WriteLine("----------------------------------");
@@ -164,35 +165,35 @@ Console.WriteLine($"This Assembly Version is: {ThisAssembly.AssemblyInformationa
 +Console.ReadKey();
 ```
 
-これで再度コミット+Push。
+これで再度コミット+Pushします。
 
 ![](image-2.png)
-`0.1.0-alpha.9`がリリースされているのがわかる。
-また、差分パッケージ(`-delta.nupkg`)も生成されている。これを使って高速アップデートができるということらしい。
+`0.1.0-alpha.9`がリリースされているのがわかります。
+また、差分パッケージ(`-delta.nupkg`)も生成されています。これを使って高速アップデートができるようです。
 
 
-ここで、さっきインストールしたアプリを再度実行。
-すると、新バージョンを自動で検知してインストールプロセスが走る。
+ここで、さっきインストールしたアプリを再度実行します。
+すると、新バージョンを自動で検知してインストールプロセスが走ります。
 
 ![](image-3.png)
 
-そして、更新が完了すると自動で再起動してくれる。
+そして、更新が完了すると自動で再起動してくれます。
 
 
 ![](image-4.png)
-無事に更新されていることがわかる。
+無事に更新されていることがわかります。
 
-なお、格納先のフォルダ(`AppData\Local\(IDENTIFIER)\current`)を何らかのアプリが開いていると更新に失敗する。まではいいのだが、延々と再起動を繰り返すので注意が必要。
+なお、格納先のフォルダ(`AppData\Local\(IDENTIFIER)\current`)を何らかのアプリが開いていると更新に失敗します。まではいいのですが、延々と再起動を繰り返すので注意が必要です。
 
 ### アンインストール
-設定>アプリ>インストールされているアプリ にいるので、ここから簡単にアンインストールできる。
+設定>アプリ>インストールされているアプリ から簡単にアンインストールできます。
 ![](image-5.png)
 
 
-## IHostServiceとして常駐させてみる
-上記では起動時に更新チェックを行っていたが、`BackgroundService`として常駐させて、定期的に更新チェックを行うようにしてみる。
+## BackgroundServiceとして常駐させてみる
+上記では起動時に更新チェックを行っていましたが、`BackgroundService`として常駐させて、定期的に更新チェックを行うようにしてみます。
 
-まずは手動更新用のサービスを作成する。
+まずは手動更新用のサービスを作成します。
 
 ```csharp
 // アプリケーションの更新状態を確認、記録する
@@ -279,7 +280,7 @@ internal record UpdateStatusRecord
 }
 ```
 
-そしてこれを自動化する`BackgroundService`を作成する。
+そしてこれを自動化する`BackgroundService`を作成します。
 
 ```csharp
 internal class AutoUpdateWatchBackgroundService(ApplicationUpdateCheckService updateService) : BackgroundService
@@ -300,14 +301,14 @@ internal class AutoUpdateWatchBackgroundService(ApplicationUpdateCheckService up
 }
 ```
 
-これらをProgram.csで登録する。
+これらをProgram.csで登録します。
 
 ```csharp
 builder.Services.AddSingleton<ApplicationUpdateCheckService>();
 builder.Services.AddHostedService<AutoUpdateWatchBackgroundService>();
 ```
 
-あとは適当にUIを作って参照すれば良い。例としてBlazorのコードを示す。
+あとは適当にUIを作って参照すれば良いです。例としてBlazorのコードを示します。
 
 ```razor
 @inject ApplicationUpdateCheckService UpdateCheckService
@@ -339,5 +340,5 @@ else
 
 
 ## まとめ
-非常に簡単に自動アップデートの仕組みを導入できた。素晴らしい！
+非常に簡単に自動アップデートの仕組みを導入できました。素晴らしい！
 ぜひ使ってみてください。
