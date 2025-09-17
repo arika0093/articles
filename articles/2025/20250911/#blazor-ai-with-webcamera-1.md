@@ -124,7 +124,7 @@ AIサービスなんて雑な表現ですが、要するに(ChatGPTのような)
 ### どうやってAPIを提供するか
 
 モデルだけでは動きません。モデルを何らかの形で走らせて、APIとして提供するための仕組みが必要です。
-モデルを動かす仕組みはOllamaやLLM Studioなど色々ありますが、今回は[VLLM](https://github.com/vllm-project/vllm)を使います。
+モデルを動かす仕組みはOllamaやLLM Studioなど色々ありますが、今回は[vLLM](https://github.com/vllm-project/vllm)を使います。
 OpenAI互換のAPIを提供でき、比較的カンタンに設定できて、無償なのでうってつけです。
 
 というわけで docker compose でサクッと立ち上げます。(dockerセットアップ済のPCが必要です)

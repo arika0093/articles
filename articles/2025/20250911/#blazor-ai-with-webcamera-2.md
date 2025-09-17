@@ -100,7 +100,7 @@ await chatClient.GetResponseAsync<AnswerResponce>(responce,
 ```
 
 今回は`useJsonSchemaResponseFormat`を`false`にしていますが、これを`true`にするとJSON Schemaを使ったより厳密なフォーマット指定ができます。
-……のはずなのですが、VLLMからレスポンスが返ってこなかったのでもしかしたら非対応なのかも。というわけで今回は`false`。
+……のはずなのですが、vLLMからレスポンスが返ってこなかったのでもしかしたら非対応なのかも。というわけで今回は`false`。
 
 
 ## C#で実装してみる
