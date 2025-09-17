@@ -324,6 +324,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+なお、NuGetパッケージではなく実行ファイル(.exe)の場合、`velopack`が使いやすいので下記記事も合わせて確認してみてください。
+https://zenn.dev/arika/articles/20250916-try-velopack
+
 ### NuGetへ公開する
 基本的にはGitHub Releaseと同じです。
 あらかじめ`NUGET_API_KEY`をGitHub Secretsに登録しておく必要があります。
