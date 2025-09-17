@@ -190,71 +190,48 @@ Console.WriteLine($"This Assembly Version is: {ThisAssembly.AssemblyInformationa
 
 
 ## IHostServiceとして常駐させてみる
-上記では起動時に更新チェックを行っていたが、`IHostService`として常駐させて、定期的に更新チェックを行うようにしてみる。
-[ここ](https://learn.microsoft.com/ja-jp/dotnet/core/extensions/timer-service)を参考にして組んでみる。
+上記では起動時に更新チェックを行っていたが、`BackgroundService`として常駐させて、定期的に更新チェックを行うようにしてみる。
+
+まずは手動更新用のサービスを作成する。
 
 ```csharp
-internal class AutoUpdateWatchService : IHostedService, IAsyncDisposable
+// アプリケーションの更新状態を確認、記録する
+internal class ApplicationUpdateCheckService
 {
     private const string RepositoryUrl = "http://my-gitea-server.example.com/user/TryVelopack";
-    public UpdateStatus Status { get; private set; } = new(TimeSpan.Zero);
 
-    private readonly TimeSpan _checkSpan = TimeSpan.FromHours(1);
-    private Timer? _timer;
-
-    // IHostedService
-    public Task StartAsync(CancellationToken cancellationToken)
+    // アプリケーション更新状態
+    public UpdateStatusRecord Status
     {
-        // 発火自体は1分おきに行う(内部でチェックする)
-        _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
-        return Task.CompletedTask;
+        get => _status;
+        set => _status = value with {
+            CheckedAt = DateTimeOffset.Now,
+        };
     }
+    private UpdateStatusRecord _status = new();
 
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        _timer?.Change(Timeout.Infinite, 0);
-        return Task.CompletedTask;
-    }
-
-    // IAsyncDisposable
-    public async ValueTask DisposeAsync()
-    {
-        if(_timer is IAsyncDisposable timer) {
-            await timer.DisposeAsync();
-        }
-        _timer = null;
-    }
-
-    // タイマーで呼ばれる
-    private async void DoWork(object? _)
-    {
-        if(Status.NextCheckAt >= DateTimeOffset.Now) {
-            await UpdateCheck();
-        }
-    }
-
-    // 手動更新したい場合はこの関数を直接呼べばOK
+    // 手動で更新確認を行う時はこの関数を直接呼ぶ
     public async Task UpdateCheck()
     {
         try {
             var mgr = UpdateManager;
             // check for new version
             var newVersion = await mgr.CheckForUpdatesAsync();
-            Status = new(_checkSpan) {
+            Status = new() {
                 UpdateAvailable = newVersion != null,
                 UpdateInfo = newVersion,
             };
         }
         catch(NotInstalledException) {
             // 開発中などはインストールされていないため、無視
-            Status = new(_checkSpan) {
+            Status = new() {
                 UpdateAvailable = false,
                 UpdateInfo = null,
             };
         }
         catch(Exception ex) {
             // その他の例外ならエラーを通知
-            Status = new(_checkSpan) {
+            Status = new() {
                 UpdateAvailable = false,
                 UpdateInfo = null,
                 ErrorMessage = ex.Message
@@ -262,9 +239,14 @@ internal class AutoUpdateWatchService : IHostedService, IAsyncDisposable
         }
     }
 
-    // アプリ更新ボタンなどから呼ぶ
+    /// <summary>
+    /// アプリケーションを更新し、再起動します。
+    /// </summary>
     public async Task ApplicationUpdateAndRestart()
     {
+        if(!Status.UpdateAvailable) {
+            return;
+        }
         // すでにチェック済のはずなのでそれを使う
         var updateInfo = Status.UpdateInfo;
         ArgumentNullException.ThrowIfNull(updateInfo);
@@ -273,6 +255,7 @@ internal class AutoUpdateWatchService : IHostedService, IAsyncDisposable
         mgr.ApplyUpdatesAndRestart(updateInfo);
     }
 
+    // UpdateManagerのインスタンスを取得
     private UpdateManager UpdateManager
     {
         get
@@ -285,34 +268,51 @@ internal class AutoUpdateWatchService : IHostedService, IAsyncDisposable
     }
 }
 
-
-internal record UpdateStatus(TimeSpan checkspan)
+internal record UpdateStatusRecord
 {
     public bool UpdateAvailable { get; init; }
     public string? ErrorMessage { get; init; }
     public UpdateInfo? UpdateInfo { get; init; }
-
-    // 更新チェック+次回チェックの日時をStatus内に持たせておく
-    // ユーザー都合で遅延させたい時はここの値をいじればOK
-    public DateTimeOffset CheckedAt { get; init; } = DateTimeOffset.Now;
-    public DateTimeOffset NextCheckAt { get; init; } = DateTimeOffset.Now + checkspan;
+    public DateTimeOffset CheckedAt { get; init; }
 
     public string? NewVersion => UpdateInfo?.TargetFullRelease.Version.ToString();
 }
 ```
 
-Program.csで登録する。
+そしてこれを自動化する`BackgroundService`を作成する。
 
 ```csharp
-builder.Services.AddHostedService<AutoUpdateWatchService>();
+internal class AutoUpdateWatchBackgroundService(ApplicationUpdateCheckService updateService) : BackgroundService
+{
+    // アップデート確認の間隔
+    // 間隔が短いと、GitHub等ではAPI制限に引っかかる可能性があるので注意
+    private readonly PeriodicTimer _timer = new(TimeSpan.FromHours(12));
+
+    /// <inheritdoc/>
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while(!stoppingToken.IsCancellationRequested) {
+            await updateService.UpdateCheck();
+            // 次の着火を待つ
+            await _timer.WaitForNextTickAsync(stoppingToken);
+        }
+    }
+}
+```
+
+これらをProgram.csで登録する。
+
+```csharp
+builder.Services.AddSingleton<ApplicationUpdateCheckService>();
+builder.Services.AddHostedService<AutoUpdateWatchBackgroundService>();
 ```
 
 あとは適当にUIを作って参照すれば良い。例としてBlazorのコードを示す。
 
 ```razor
-@inject AutoUpdateWatchService UpdateWatchService
+@inject ApplicationUpdateCheckService UpdateCheckService
 @{
-    var status = UpdateWatchService.Status;
+    var status = UpdateCheckService.Status;
 }
 
 <div>last checked at @status.CheckedAt</div>
@@ -326,14 +326,14 @@ else if(status.UpdateAvailable)
     // update available
     <div>new version are available! :: @status.NewVersion</div>
     <br />
-    <button @onclick="UpdateWatchService.ApplicationUpdateAndRestart">Update</button>
+    <button @onclick="UpdateCheckService.ApplicationUpdateAndRestart">Update</button>
 }
 else
 {
     // no update
     <div>no update available</div>
     <br />
-    <button @onclick="UpdateWatchService.UpdateCheck">Check Manually</button>
+    <button @onclick="UpdateCheckService.UpdateCheck">Check Manually</button>
 }
 ```
 
@@ -341,7 +341,3 @@ else
 ## まとめ
 非常に簡単に自動アップデートの仕組みを導入できた。素晴らしい！
 ぜひ使ってみてください。
-
-
-TODO
-20250623/gitversioning の記事にこの記事のリンクを貼る
