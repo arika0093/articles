@@ -181,9 +181,9 @@ public class SampleRequestService(IHttpClientFactory httpClientFactory)
 ```csharp
 // 名前をつけてもつけなくてもOK
 builder.Services.AddHttpClient("clientA")
-  // HttpClientHandlerの設定(低レベル)
-  // SocketsHttpHandlerを使いましょう。別にHttpClientHandlerを使ってもいいけど。。
-  .ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
+  // SocketsHttpHandlerの設定(低レベル)
+  // HttpClientHandlerを使ってもいいけど。。
+  .ConfigurePrimaryHttpMessageHandler(provider => new SocketsHttpHandler
   {
       Proxy = new WebProxy("http://myproxy:8080"),
   })
@@ -301,6 +301,42 @@ https://blog.neno.dev/entry/2024/08/08/171524
 
 
 ## まとめ
+とりあえずこの記事で出たものを全部使うとこうなります。適宜取捨選択してください。
+
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Http.Resilience;
+
+var services = new ServiceCollection();
+// Service Discoveryを設定(全体)
+services.AddServiceDiscovery();
+// HttpClientの共通設定
+services.ConfigureHttpClientDefaults(http =>
+{
+    http.ConfigurePrimaryHttpMessageHandler(provider =>
+        // SocketsHttpHandler/HttpClientHandlerの設定
+        new SocketsHttpHandler
+        {
+            // proxy, redirect, ssl, etc...
+        })
+        // HttpClientの設定
+        .ConfigureHttpClient(http =>
+        {
+            // timeout, default header, http version, etc...
+        })
+        // Service Discoveryの設定(Client側)
+        .AddServiceDiscovery()
+        // Pollyの設定
+        .AddStandardResilienceHandler()
+        .SelectPipelineByAuthority();
+});
+
+// DIでIHttpClientFactoryを受け取って使う
+var client = httpClientFactory.CreateClient();
+var response = await client.SendAsync(new HttpRequestMessage { /* ... */ });
+```
+
+## あとがき
 軽い気持ちでまとめ始めたのですが、思いのほか長くなってしまいました。
 自分的にはいい勉強になりました！
 間違いがありましたらぜひ教えてください。
