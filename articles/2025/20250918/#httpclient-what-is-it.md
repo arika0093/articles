@@ -2,7 +2,7 @@
 title: "【C#】HttpClientとその設定方法を理解しよう"
 emoji: "🌍️"
 type: "tech"
-topics: ["csharp", "http", "httpclient"]
+topics: ["csharp", "dotnet", "http", "httpclient"]
 published: true
 ---
 
