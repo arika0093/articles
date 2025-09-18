@@ -122,7 +122,7 @@ await client.SendAsync(message);
   * 引数に詳細部分である`HttpClientHandler`を渡す。
 * `HttpClientHandler`はより**低レベルの内容**。
   * プロキシとか、SSL証明書の検証とか、リダイレクトどうするとか。
-  * 全体の挙動ではあるが、より細かい部分を指定するイメージ.
+  * 全体の挙動ではあるが、より細かい部分を指定するイメージ
 
 ![](httpclient.drawio.png)
 
@@ -306,6 +306,33 @@ builder.Services.ConfigureHttpClientDefaults(http =>
 このブログが詳しいです。
 https://blog.neno.dev/entry/2024/08/08/171524
 
+
+## 注意点
+見ての通り、現代C#では基本的にDIを使ってHttpClientの設定構成、生成を行うことになります。
+ただ、`Microsoft.Extensions.*`の名前が示す通り、これらは組み込みではなくあくまで拡張機能です。
+そうなると問題になるのが、他のライブラリとの連携です。
+
+一例として`grpc-dotnet`ライブラリを見てみます。
+gRPC通信を行うために内部で`HttpClient`を使っていますが、特に設定しないと[内部生成されたものを使います](https://github.com/grpc/grpc-dotnet/blob/f4148e8833dcedf8ef13b0817c0fc1c036921f7e/src/Grpc.Net.Client/GrpcChannel.cs#L164)。
+つまり、上記で行ったような設定が反映されません。
+
+ではどうするかというと、オプションに`HttpClient`プロパティが用意されているので、DI登録時に手動で設定する必要があります。
+
+```csharp
+// DIにGrpcChannelを登録することを想定。
+// 実際にはGrpcChannelをそのまま登録することはあまり無いでしょうが、例として。
+services.AddTransient<GrpcChannel>(provider =>
+{
+    // DIで設定したHttpClientを使いたい！(Service DiscoveryとかPollyとか)
+    // そこで、引数のproviderからIHttpClientFactoryを受け取って使う
+    var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient();
+    // 後はGrpcChannelに渡せばOK
+    return GrpcChannel.ForAddress("http://localhost:12345", new() { HttpClient = httpClient });
+});
+```
+
+面倒ですね。正直毎回これ書くのちょっと飽き飽きしているので、そろそろ組み込みにしてほしいです。
 
 ## まとめ
 改めて登場人物をまとめると以下のような感じです。
