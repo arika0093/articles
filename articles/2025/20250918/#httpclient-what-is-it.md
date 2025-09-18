@@ -241,11 +241,6 @@ static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
 ## .NET 8 (2023年)
 `.NET 8`組み込みではなく`Microsoft.Extensions.*` 8.0の話ですが、時期的に同じなのでこの括りです。
 
-<!--
-### Microsoft.Extensions.ServiceDiscovery
-TODO: あとで書く
--->
-
 ### ConfigureHttpClientDefaults
 `Microsoft.Extensions.Http`の8.0.0で新しいAPIが追加されています。
 その名も`ConfigureHttpClientDefaults`です。
