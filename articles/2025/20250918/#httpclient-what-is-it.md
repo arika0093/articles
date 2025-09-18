@@ -14,7 +14,7 @@ C#は歴史が長いので、HTTP通信を行うためのクラスも色々あ�
 それぞれの経緯を見ていくことですんなりと理解できるはず！ということでCopilotに聞きながら整理してみます。
 できる限り裏を取りながら書いていますが、間違っていたら教えてください。
 
-## .NET 1.0 (2002年)
+## .NET Framework 1.0 (2002年)
 * `HttpWebRequest`/`HttpWebResponse`
   * 低レベルで使いづらい
   * 非同期処理がBegin/Endパターン
@@ -27,7 +27,7 @@ C#は歴史が長いので、HTTP通信を行うためのクラスも色々あ�
 もう使わないので理解はしなくていいですね！
 必要になったらググってください。
 
-## .NET 4.5 (2012年)
+## .NET Framework 4.5 (2012年)
 ここで今回の主役が登場します。
 
 * `HttpClient`
@@ -124,17 +124,24 @@ await client.SendAsync(message);
   * プロキシとか、SSL証明書の検証とか、リダイレクトどうするとか。
   * 全体の挙動ではあるが、より細かい部分を指定するイメージ.
 
+![](httpclient.drawio.png)
+
 このように、**役割ごとにクラスが分かれている**のがC#のHttpClient周辺の特徴として言えそうです。
 
 ## .NET Core 2.1 (2017年)
 ### SocketsHttpHandler
 ここまで`HttpClientHandler`を使う話をしてきましたが、.NET Core 2.1で`SocketsHttpHandler`が登場しました。
-これからのコードでは`SocketsHttpHandler`を使うことが[推奨されています](https://github.com/grpc/grpc-dotnet/issues/1961)。 [^4]
+これからのコードでは`SocketsHttpHandler`を使うことが[推奨されています](https://github.com/grpc/grpc-dotnet/issues/1961)。 
+
+![](sockethandler.drawio.png)
+
+
 数行上で`HttpClientHandler`の話をしていたのになんだか即落ち2コマみたいな感じがしますが、実際は5年経ってるので許してください。
 
-`SocketsHttpHandler`は`HttpClientHandler`と同じように使えますし、実際`HttpClientHandler`の[内部で使われています](https://github.com/dotnet/runtime/blob/f518b2e533ba9c5ed9c1dce3651a77e9a1807b8b/src/libraries/System.Net.Http/src/System/Net/Http/HttpClientHandler.cs#L16)。
+`SocketsHttpHandler`は`HttpClientHandler`と同じように使えますし、実際`HttpClientHandler`の[内部で使われています](https://github.com/dotnet/runtime/blob/f518b2e533ba9c5ed9c1dce3651a77e9a1807b8b/src/libraries/System.Net.Http/src/System/Net/Http/HttpClientHandler.cs#L16)。 [^4]
 
 [^4]: 中身で同じものを使ってるなら別にいいじゃんという気もしてしまいますが。
+
 
 ## Microsoft.Extensions.Http (2018年)
 ### IHttpClientFactory / AddHttpClient
@@ -203,6 +210,9 @@ var client = httpClientFactory.CreateClient("clientA");
 ちなみに、`ConfigureAdditionalHttpMessageHandler`や`AddHttpMessageHandler`もあります。
 これらは`DelegatingHandler`（ログとかのミドルウェア）を追加/編集するためのものと考えておけば良さそうです。
 
+図解するとこんな感じ。
+![](httpclientfactory.drawio.png)
+
 ## Microsoft.Extensions.Http.Polly (2018年)
 HttpClientの話をするなら避けて通れないのが`Polly`です。
 https://www.pollydocs.org/getting-started.html
@@ -231,8 +241,10 @@ static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
 ## .NET 8 (2023年)
 `.NET 8`組み込みではなく`Microsoft.Extensions.*` 8.0の話ですが、時期的に同じなのでこの括りです。
 
+<!--
 ### Microsoft.Extensions.ServiceDiscovery
 TODO: あとで書く
+-->
 
 ### ConfigureHttpClientDefaults
 `Microsoft.Extensions.Http`の8.0.0で新しいAPIが追加されています。
@@ -301,6 +313,10 @@ https://blog.neno.dev/entry/2024/08/08/171524
 
 
 ## まとめ
+改めて登場人物をまとめると以下のような感じです。
+![](httpclient-member.drawio.png)
+
+
 とりあえずこの記事で出たものを全部使うとこうなります。適宜取捨選択してください。
 
 ```csharp
