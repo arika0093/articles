@@ -39,7 +39,6 @@ https://github.com/christianhelle/refitter
   },
   "outputFolder": "./",
   "codeGeneratorSettings": {
-    "generateOptionalPropertiesAsNullable": true,
     "generateNullableReferenceTypes": true,
     "generateNativeRecords": true
   }
