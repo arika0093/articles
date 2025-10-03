@@ -29,6 +29,26 @@ https://github.com/reactiveui/refit
 https://github.com/christianhelle/refitter
 
 ```csharp
+
+// FastEndpoints
+builder.Services.AddFastEndpoints().SwaggerDocument(o => {
+    // for generate api client
+    o.DocumentSettings = s => {
+        s.DocumentName = "v1";
+    };
+    // use short name 
+    o.ShortSchemaNames = true;
+    o.SerializerSettings = so => {
+        // support string to enum
+        so.Converters.Add(new JsonStringEnumConverter());
+    };
+});
+
+var app = builder.Build();
+app.UseDefaultExceptionHandler()
+    .UseFastEndpoints(c => c.Endpoints.ShortNames = true)
+    .UseSwaggerGen();
+
 await app.ExportSwaggerJsonAndExitAsync(
     documentName: "v1",
     destinationPath: "./OpenAPI"
@@ -46,4 +66,6 @@ await app.ExportSwaggerJsonAndExitAsync(
 ```
 
 
+
+https://github.com/RicoSuter/NSwag/issues/4503
 
