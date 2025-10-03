@@ -28,6 +28,25 @@ https://github.com/microsoft/kiota/issues/3911
 https://github.com/reactiveui/refit
 https://github.com/christianhelle/refitter
 
+```jsonc
+// https://github.com/christianhelle/refitter#refitter-file-format
+{
+  "openApiPath": "../FooBar.Server/OpenAPI/v1.json",
+  "namespace": "FooBar.Client",
+  "naming": {
+    "useOpenApiTitle": false,
+    "interfaceName": "FooBarApiClient"
+  },
+  "outputFolder": "./",
+  "codeGeneratorSettings": {
+    "generateOptionalPropertiesAsNullable": true,
+    "generateNullableReferenceTypes": true,
+    "generateNativeRecords": true
+  }
+}
+
+```
+
 ```csharp
 
 // FastEndpoints
