@@ -23,7 +23,7 @@ https://github.com/microsoft/kiota
 https://github.com/microsoft/kiota/issues/3911
 
 
-## FastEndpoints + Refit/Refitter
+## FastEndpoints + Refit + Refitter
 
 https://github.com/reactiveui/refit
 https://github.com/christianhelle/refitter
@@ -38,11 +38,14 @@ https://github.com/christianhelle/refitter
     "interfaceName": "FooBarApiClient"
   },
   "outputFolder": "./",
+  "multipleInterfaces": "ByTag",
   "codeGeneratorSettings": {
     "generateNullableReferenceTypes": true
+  },
+  "dependencyInjectionSettings": {
+
   }
 }
-
 ```
 
 ```csharp
@@ -76,7 +79,8 @@ await app.ExportSwaggerJsonAndExitAsync(
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="Refit" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.9" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
     <PackageReference Include="Refitter.MSBuild" Version="1.6.3" />
   </ItemGroup>
 </Project>
