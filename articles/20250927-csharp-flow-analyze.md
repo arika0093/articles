@@ -20,7 +20,7 @@ Console.WriteLine($"input length is {input.Length}");
 
 よくあるコードですね。
 `input`がnullのときは例外が投げられ、以降のコードは実行されません。コンパイラはこれを自動で判定して`input.Length`に警告を出しません。
-![](image.png)
+![](/images/20250927/image.png)
 
 なら、このようなコードでも同じように動いてほしいと思うかもしれません。
 
@@ -38,7 +38,7 @@ void ValidateInput(string? input){
 ```
 
 ですが、こちらは警告が出ます。
-![](image-1.png)
+![](/images/20250927/image-1.png)
 
 ところで、このようなケースのときに使える便利関数があります。`ArgumentNullException.ThrowIfNull`です。
 やっていることは上記の`ValidateInput`と全く同じです。
@@ -51,7 +51,7 @@ Console.WriteLine($"input length is {input.Length}");
 ```
 
 が、今度は警告が出ません。
-![](image-2.png)
+![](/images/20250927/image-2.png)
 
 
 どういう仕組みなのか？
@@ -96,7 +96,7 @@ void ValidateInput([NotNull] string? input)
 ```
 
 すると、警告が出なくなります！
-![alt text](image-3.png)
+![alt text](/images/20250927/image-3.png)
 
 
 ちなみに性善説で成り立っている属性なので、極論こんなこともできます。
@@ -155,15 +155,15 @@ Console.WriteLine($"input length is {input.Length}");
 
 厄介なのは、`TargetFrameworks`を`netstandard2.0;net8.0`のように複数指定しているとおかしな警告が出るところです。
 例えば上記コードをVSで見るとこうなります。nullなんだかnullじゃないんだか、どっちや！という感じですが、これは.NETのバージョン事に判定が違うためです。
-![どっちやねん](image-4.png)
+![どっちやねん](/images/20250927/image-4.png)
 
 一方、RiderだとバージョンをUIで切り替えられるので、以下のようにバージョン毎に警告が出たり出なかったりするのがわかります。
 
 **.NET 8.0**
-![alt text](image-5.png)
+![alt text](/images/20250927/image-5.png)
 
 **.NET Standard 2.0**
-![alt text](image-6.png)
+![alt text](/images/20250927/image-6.png)
 
 
 例によって定義を見ると
