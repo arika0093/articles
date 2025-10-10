@@ -3,16 +3,16 @@ title: "【C#】File.Replaceはatomicに更新を行うのか？"
 emoji: "🛠️"
 type: "tech"
 topics: ["csharp", "dotnet"]
-published: false
+published: true
 ---
 
-`File.Replace`のファイル置き換えは果たしてatomicに行われるのか？を調べてみます。
+`File.Replace`のファイル置き換えは果たしてatomicに行われるのかどうかを調べてみます。
 
 ## atomicとは
 
 端的に言うと、更新中に何らかの障害（電源OFF、アプリ異常終了など）が発生しても、ファイルが壊れないようにすることです。
-特にファイルの書き込み中に一部分だけ更新されていると不正なファイルになってしまうので、それを防ぐ処置を指します。
-`atomic`は動詞なので、呼称としては「atomicに更新する」となります。が、ちょっと長いのでここでは「atomic更新」と呼ぶことにします。
+特にファイルの書き込み中に一部分だけ更新されていると不正なファイルになってしまうので、それを防ぐ処置を指します。  
+上記を実現する更新のことを、この記事では「atomic更新」と呼ぶことにします。
 
 ## 一般的なatomic更新の方法
 普通に書き込みを行うと障害時に破損する可能性があるため、以下のような手順を踏みます。
@@ -22,7 +22,7 @@ published: false
 
 まず、一時ファイルに書き込む時点では本来のファイルは変更されていないので、障害が発生しても大元は無事です。
 次に、一時ファイルを本来のファイルに置き換える際に、OSの提供する「ファイル置き換え」APIを使います。
-このAPIは（一般的には）ディレクトリのエントリを書き換える挙動をします。OSレベルでatomic性が保証されている場合は、こちらも問題なく置き換えが完了or完全に失敗のどちらかになります。
+このAPIは（一般的には）ディレクトリのエントリを書き換える挙動をします。OSレベルでatomic性が保証されている場合は、こちらも置き換えが完了するか・完全に失敗するかのどちらかになります。
 
 ## C#でのatomic更新
 
@@ -86,11 +86,12 @@ public static void ReplaceFile(string sourceFullPath, string destFullPath, strin
 }
 ```
 
-ここで呼んでいる`Interop.Kernel32.ReplaceFile`でWindows APIの`ReplaceFile`を呼んでいます。[^3]
+ここで呼んでいる`Interop.Kernel32.ReplaceFile`でWindows APIの`ReplaceFile`を呼んでいます。
 
 この`ReplaceFile`ですが、[公式ドキュメント](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilea)に特にatomicに関する記述はありません。が、[Transactional NTFS (TxF)のページ](https://learn.microsoft.com/ja-jp/windows/win32/fileio/deprecation-of-txf)に以下のような記述があります。
 
 > (英語版ページ): Many applications which deal with "document-like" data tend to load the entire document into memory, operate on it, and then write it back out to save the changes. The needed atomicity here is that the changes either are **completely applied or not applied at all**, as an inconsistent state would render the file corrupt. A common approach is to write the document to a new file, then replace the original file with the new one. One method to do this is with the **ReplaceFile API.**
+
 > (日本語版ページ): "ドキュメントに似た" データを扱う多くのアプリケーションでは、ドキュメント全体をメモリに読み込み、操作し、書き戻して変更を保存する傾向があります。 ここで必要な原子性は、一貫性のない状態ではファイルが破損するため、**変更が完全に適用されるか、まったく適用されない**ことです。 一般的な方法は、ドキュメントを新しいファイルに書き込み、元のファイルを新しいファイルに置き換える方法です。 これを行う方法の 1 つは、 **ReplaceFile API** です。
 
 この記述から、WinAPIの`ReplaceFile`はatomic更新をサポートしていると解釈できそうです。
@@ -141,7 +142,7 @@ private static void LinkOrCopyFile (string sourceFullPath, string destFullPath)
 主な流れとしては
 
 * バックアップファイルが指定されていれば、既存のバックアップファイルを削除する
-* 本来のファイルをバックアップファイルにリンク（ハードリンク）でコピーする。リンクに失敗したら通常のコピーを行う
+* 本来のファイルをバックアップファイルにコピーする(指定があれば)
 * `rename`で一時ファイルを本来のファイルに置き換える
 
 となっており、こちらもatomic更新が実現できているように見えます。
@@ -180,11 +181,11 @@ int32_t SystemNative_Rename(const char* oldPath, const char* newPath)
 }
 ```
 
-そのまま、`rename`を呼んでいます。
-`rename`はPOSIX標準の関数で、[こちら](https://pubs.opengroup.org/onlinepubs/9699919799/functions/rename.html)に仕様が書かれています。
+そのまま、`rename`を呼んでいるだけです。`rename`はPOSIX標準の関数で、[こちら](https://pubs.opengroup.org/onlinepubs/9699919799/functions/rename.html)に仕様が書かれています。
 この中に
 
 > (原文): This rename() function is equivalent for regular files to that defined by the ISO C standard. Its inclusion here expands that definition to include actions on directories and specifies behavior when the new parameter names a file that already exists. That specification **requires that the action of the function be atomic**.
+
 > (和訳): この rename() 関数は、通常のファイルに関しては ISO C 標準で定義されているものと同等です。ここでのその定義への追加は、ディレクトリに対する操作を含むようにし、新しいパラメータが既に存在するファイルの名前を指定する場合の動作を指定します。その仕様は、**関数の動作がアトミックであること**を要求しています。
 
 とあるため、仕様上atomic更新が保証されていることが分かります。
