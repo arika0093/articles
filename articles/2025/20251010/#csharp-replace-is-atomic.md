@@ -22,7 +22,7 @@ published: true
 
 まず、一時ファイルに書き込む時点では本来のファイルは変更されていないので、障害が発生しても大元は無事です。
 次に、一時ファイルを本来のファイルに置き換える際に、OSの提供する「ファイル置き換え」APIを使います。
-このAPIは（一般的には）ディレクトリのエントリを書き換える挙動をします。OSレベルでatomic性が保証されている場合は、こちらも置き換えが完了するか・完全に失敗するかのどちらかになります。
+このAPIは（一般的には）ディレクトリのエントリを書き換える挙動をします。この操作はOSレベルでatomicに行われるため、もし障害が発生しても本来のファイルが壊れることはありません（そうでなくても直接書き込む場合よりは遥かに一瞬で終わるので、障害発生の可能性が低くなります）。
 
 ## C#でのatomic更新
 
@@ -39,8 +39,6 @@ var temp = "data.txt.tmp";
 File.WriteAllText(temp, contents);
 // 2. 一時ファイルを本来のファイルに置き換える
 File.Replace(temp, original, backup);
-// 置き換えに成功したら一時ファイルは不要なので削除
-File.Delete(temp);
 ```
 
 ここで`File.Replace`が期待通りの挙動をしていれば、上記のコードでatomic更新が実現できます。
@@ -49,7 +47,7 @@ File.Delete(temp);
 ## File.Replaceの挙動を追う
 dotnetのコードを追っていきます。
 
-まず、`File.Replace`から。 そのまんま`System.IO`にいます。[^1]
+まず、`File.Replace`から。 System.IOにいます。[^1]
 
 [^1]: https://github.com/dotnet/runtime/blob/9fb66db5ab5baae0269a0e5e2a79ee0e6f6b8f81/src/libraries/System.Private.CoreLib/src/System/IO/File.cs#L1023-L1033
 
@@ -148,7 +146,6 @@ private static void LinkOrCopyFile (string sourceFullPath, string destFullPath)
 となっており、こちらもatomic更新が実現できているように見えます。
 
 念の為更に掘り下げてみましょう。
-
 `Interop.Sys.Rename`を見てみると、以下のようになっています。[^5]
 
 [^5]: https://github.com/dotnet/runtime/blob/9fb66db5ab5baae0269a0e5e2a79ee0e6f6b8f81/src/libraries/Common/src/Interop/Unix/System.Native/Interop.Rename.cs#L20-L21
@@ -166,9 +163,7 @@ internal static partial int Rename(string oldPath, string newPath);
 internal const string SystemNative = "libSystem.Native";
 ```
 
-この`libSystem.Native.so`のコードももちろん公開されていて、[ここ](https://github.com/dotnet/runtime/tree/main/src/native/libs/System.Native)にいます。
-
-この中の`pal_io.c`に`SystemNative_Rename`の実装があります。[^7]
+この`libSystem.Native.so`のコードももちろん公開されていて、[ここ](https://github.com/dotnet/runtime/tree/main/src/native/libs/System.Native)にいます。この中の`pal_io.c`に`SystemNative_Rename`の実装があります。[^7]
 
 [^7]: https://github.com/dotnet/runtime/blob/9fb66db5ab5baae0269a0e5e2a79ee0e6f6b8f81/src/native/libs/System.Native/pal_io.c
 
