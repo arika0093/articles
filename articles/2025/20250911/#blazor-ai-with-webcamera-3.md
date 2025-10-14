@@ -58,6 +58,7 @@ builder.Services.AddSignalR(options => {
     <br />
     @* 選択したカメラを再生する画面 *@
     <video id="@idVideo" width="@VideoWidth" height="@VideoHeight" />
+    @* キャプチャ画面を転記する&結果をユーザーに見せる欄 *@
     <canvas style="@(IsCaptured ? null : "display:none;")" id="@idCanvas" width="@VideoWidth" height="@VideoHeight" />
     <br />
 
@@ -65,16 +66,20 @@ builder.Services.AddSignalR(options => {
 </div>
 
 @inject IJSRuntime JS
+@implements IDisposable
 @code {
     [Parameter]
     public EventCallback<byte[]> OnCapture { get; set; }
 
+    // ここはコンポーネントファイルの設置場所に応じて変える
+    const string ComponentDir = "./Components/";
     const string JSNamespace = "WebCameraActions";
     const int VideoWidth = 480;
     const int VideoHeight = 360;
     private string idVideo = Guid.NewGuid().ToString();
     private string idCanvas = Guid.NewGuid().ToString();
     private bool IsCaptured = false;
+    private bool IsVideoNotAvailable = false;
 
     private IJSObjectReference module = default!;
     private VideoDevices[] devices = [];
@@ -92,10 +97,18 @@ builder.Services.AddSignalR(options => {
         if (firstRender)
         {
             // 初回読み込み時にJavaScriptを読み込んでデバイス一覧を取得
-            // ここのURLは設置場所に応じて変える
-            module = await JS.InvokeAsync<IJSObjectReference>("import",
-                $"./Components/WebCam/{nameof(WebCamera)}.razor.js");
+            module = await JS.InvokeAsync<IJSObjectReference>("import", $"{ComponentDir}/{nameof(WebCamera)}.razor.js");
             devices = await module.InvokeAsync<VideoDevices[]>($"{JSNamespace}.getDevices");
+            if(devices.Length > 0)
+            {
+                // 結果が返ってきているなら、最初の1つを選択する
+                SelectedDeviceId = devices[0].deviceId;
+                await PlayStart(SelectedDeviceId);
+            }
+            else
+            {
+                IsVideoNotAvailable = true;
+            }
             StateHasChanged();
         }
     }
@@ -104,14 +117,30 @@ builder.Services.AddSignalR(options => {
     {
         // デバイスが選択されたら再生開始する
         var device = args.Value as string;
-        if (string.IsNullOrWhiteSpace(device))
+        SelectedDeviceId = device;
+        await PlayStart(device);
+    }
+
+    private async Task PlayStart(string? device)
+    {
+        if(string.IsNullOrWhiteSpace(device))
         {
             return;
         }
-        await module.InvokeVoidAsync($"{JSNamespace}.startVideo", idVideo, device);
+        try
+        {
+            await module.InvokeVoidAsync($"{JSNamespace}.startVideo", idVideo, device);
+            IsVideoNotAvailable = false;
+        }
+        catch
+        {
+            // cannot play
+            IsVideoNotAvailable = true;
+        }
     }
 
-    private async Task CaptureFrame()
+    // 他のコンポーネントからも呼び出せるようにpublic
+    public async Task CaptureFrame()
     {
         // ボタンが押されたらJS側のgetFrameを呼び出す
         // (JS側でRecieveImageが呼び出される)
@@ -119,6 +148,11 @@ builder.Services.AddSignalR(options => {
              DotNetObjectReference.Create(this),
             idVideo, idCanvas, VideoWidth, VideoHeight
         );
+    }
+
+    public void Dispose()
+    {
+        module.InvokeVoidAsync($"{JSNamespace}.stopVideo", idVideo);
     }
 
     internal record VideoDevices(string label, string deviceId);
@@ -130,10 +164,15 @@ JavaScript側は以下のようになります。
 ```js
 // WebCamera.razor.js
 export class WebCameraActions {
+    // 再生中のStream(ID: Stream)
+    static Streams = {};
     // デバイス一覧を取得
     static getDevices = async () => {
         try {
-            await navigator.mediaDevices.getUserMedia({ video: true });
+            await navigator.mediaDevices.getUserMedia({
+                // リアカメラだけを取得する。縛りをいれない場合は video: true だけでOK
+                video: { facingMode: "environment" }
+            });
             var rsts = await navigator.mediaDevices.enumerateDevices();
             return rsts.filter(d => d.kind === 'videoinput').map(device => {
                 return {
@@ -154,6 +193,8 @@ export class WebCameraActions {
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: { deviceId: { exact: device }, },
             })
+            // 再生中一覧に追加しておく(停止するときに使う)
+            WebCameraActions.Streams[id] = stream;
             if ("srcObject" in video) {
                 video.srcObject = stream;
             } else {
@@ -162,6 +203,17 @@ export class WebCameraActions {
             video.onloadedmetadata = function (e) {
                 video.play();
             };
+        }
+    }
+    // 再生を止める
+    static stopVideo = async (id) => {
+        const video = document.getElementById(id);
+        video.pause();
+        video.src = "";
+        var playStream = WebCameraActions.Streams[id];
+        if (playStream !== null) {
+            playStream.getVideoTracks().forEach(val => val.stop())
+            playStream.getAudioTracks().forEach(val => val.stop())
         }
     }
     // 現在のフレームをBlazor側に投げる
