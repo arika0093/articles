@@ -173,7 +173,7 @@ https://marketplace.visualstudio.com/items?itemName=TheronWang.TailwindCSSIntell
 
 インストールした後、class属性を編集してみると……
 
-![](image.png)
+![](/images/20251016/image.png)
 
 このように補完が効くようになりました！これで快適に開発できそうです。
 
