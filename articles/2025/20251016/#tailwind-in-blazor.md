@@ -1,10 +1,13 @@
 ---
-title: "【C#】BlazorでもTailwindcssを使おう"
+title: "【C#】BlazorでもTailwindcssを[手軽に]使おう"
 emoji: "🎨"
 type: "tech"
 topics: ["csharp", "dotnet", "blazor", "tailwindcss"]
-published: false
+published: true
 ---
+
+Blazorでtailwindcssを使っていきます。
+
 
 ## Tailwindcssとは
 https://tailwindcss.com/
@@ -43,12 +46,11 @@ CSSフレームワークです。
 ### 誤り1: nodejs/npmが必要
 
 まず、tailwindcssは大量のユーティリティクラスで構成されているため、全てのクラスを含むとCSSファイルが非常に大きくなります。
-CDNで全部入りも提供されていますがこれはあくまでも開発用という建付けで、実際使用するときにはビルドを経由して必要なクラスのみにすることが一般的です。
+CDNで全部入りも提供されていますがあくまでも開発用で、実際使用するときにはビルドを経由して必要なクラスのみにすることが一般的です。
 
-その際、ググって最初に出てくるのは`postcss`を使う方法です。実際、nodejsの場合はこれが一般的です。
+その際、ググって最初に出てくるのは`postcss`を使う方法です。これだけ見るとnodejs/npmが必要に見えます。
 
-が！ 実は公式にCLIツールが提供されており、これを使うことでnodejs/postcssは不要になります。
-(中身はpkgでexe化されたnodejsアプリケーションですが、CLIだけで独立して動くようになっています)
+が！ 実は**公式にCLIツールが提供**されており、これを使うことで**nodejs/postcssは不要**になります。(中身はpkgでexe化されたnodejsアプリケーションですが、CLIだけで独立して動くようになっています)
 
 https://tailwindcss.com/docs/installation/tailwind-cli
 https://tailwindcss.com/blog/standalone-cli
@@ -62,9 +64,10 @@ https://azukiazusa.dev/blog/tailwind-css-v4-css-first-configurations/
 `tailwind.config.js`を使うものは大体古いと思って差し支えないです。
 
 ### 誤り3: CLIをインストールしてパスを通す必要がある・別途実行させる必要がある
-これに関してはある意味正しい（そのほうが融通がきく）のですが、勝手にやってもらうこともできます。
-NuGetで探すといくつか出てきますが、自分が触った中では`mvdmio.Tailwind.NET`が一番手軽に使えます。
+これに関してはある意味正しい[^1] のですが、勝手にやってもらうこともできます。NuGetで探すといくつか出てきますが、自分が触った中では`mvdmio.Tailwind.NET`が一番手軽に使えます。
 https://www.nuget.org/packages/mvdmio.Tailwind.NET
+
+[^1]: そのほうが融通がきく。watchしたり、CIで実行したりとか。
 
 CLIをインストールしてパスを通す必要もなく、プロジェクトにPackageReferenceを追加して、入力用のCSSファイルを用意するだけでOKです（勝手にCLIをダウンロードして使ってくれます）
 
@@ -183,8 +186,7 @@ Blazorフレームワークを既に使用していて補完的にtailwindcssを
 @import "tailwindcss" prefix("tw");
 ```
 
-後は `tw:` を付けてクラスを指定すればOKです。
-先程の例だと以下のようになります。
+後は `tw:` を付けてクラスを指定すればOKです。先程の例だと以下のようになります。
 
 ```razor
 <div class="tw:flex tw:h-dvh tw:flex-col tw:items-center tw:justify-center">
