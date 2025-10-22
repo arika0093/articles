@@ -6,9 +6,6 @@ topics: ["csharp", "dotnet", "blazor", "tailwindcss"]
 published: false
 ---
 
-**追記**
-2025/10/22: `Elixus.Tailwind`を使用する方法に変更。
-
 Blazorでtailwindcssを使っていきます。
 
 ## Tailwindcssとは
@@ -210,3 +207,9 @@ Blazorフレームワークを既に使用していて補完的にtailwindcssを
 
 Blazorでtailwindcssを使う方法を紹介しました。
 思ったよりも簡単に導入できるので今後使っていこうと思います。
+
+## 追記履歴
+**2025/10/22**:  
+`Elixus.Tailwind`を使用する方法に変更。
+以前紹介していた`mvdmio.Tailwind.NET`はnodejsが必須で、記事の概要とマッチしてなかったため使用をやめました。
+
