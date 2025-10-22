@@ -3,11 +3,13 @@ title: "【C#】BlazorでもTailwindcssを[手軽に]使おう"
 emoji: "🎨"
 type: "tech"
 topics: ["csharp", "dotnet", "blazor", "tailwindcss"]
-published: true
+published: false
 ---
 
-Blazorでtailwindcssを使っていきます。
+**追記**
+2025/10/22: `Elixus.Tailwind`を使用する方法に変更。
 
+Blazorでtailwindcssを使っていきます。
 
 ## Tailwindcssとは
 https://tailwindcss.com/
@@ -64,8 +66,8 @@ https://azukiazusa.dev/blog/tailwind-css-v4-css-first-configurations/
 `tailwind.config.js`を使うものは大体古いと思って差し支えないです。
 
 ### 誤り3: CLIをインストールしてパスを通す必要がある・別途実行させる必要がある
-これに関してはある意味正しい[^1] のですが、勝手にやってもらうこともできます。NuGetで探すといくつか出てきますが、自分が触った中では`mvdmio.Tailwind.NET`が一番手軽に使えます。
-https://www.nuget.org/packages/mvdmio.Tailwind.NET
+これに関してはある意味正しい[^1] のですが、勝手にやってもらうこともできます。NuGetで探すといくつか出てきますが、自分が触った中では`Elixus.Tailwind`が一番手軽に使えます。
+https://www.nuget.org/packages/Elixus.Tailwind
 
 [^1]: そのほうが融通がきく。watchしたり、CIで実行したりとか。
 
@@ -83,18 +85,19 @@ CLIをインストールしてパスを通す必要もなく、プロジェク�
 ## 実際に使ってみる
 というわけで試してみましょう。
 
-まずは上記の`mvdmio.Tailwind.NET`を導入します。
+まずは上記の`Elixus.Tailwind`を導入します。また、合わせて設定用の`tailwind.input.css`のパスも指定します。
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="mvdmio.Tailwind.NET" Version="2.0.7" />
+  <PackageReference Include="mvdmio.Tailwind.NET" Version="1.*" />
+  <TailwindFile Include="tailwindcss.input.css" />
 </ItemGroup>
 ```
 
-次に、入力用のCSSファイルを用意します。標準では`tailwind/tailwind.input.css`に置くことになっているので、その通りに作成します。設定を追記する場合はこのファイルに書き込めばOK。
+次に、入力用のCSSファイルを用意します。
 
 ```css
-/* tailwind/tailwind.input.css */
+/* tailwind.input.css */
 @import "tailwindcss";
 ```
 
@@ -102,6 +105,12 @@ CLIをインストールしてパスを通す必要もなく、プロジェク�
 
 ```razor
 <link rel="stylesheet" href="@Assets["tailwind.output.css"]" />
+```
+
+ホットリロードを有効化させるために、`Program.cs`を編集します。
+
+```cs
+builder.Services.AddTailwindWatcher(autoDetect: true);
 ```
 
 後はコンポーネントで使ってみるだけです。
