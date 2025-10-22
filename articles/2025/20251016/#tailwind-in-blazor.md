@@ -1,9 +1,9 @@
 ---
-title: "【C#】BlazorでもTailwindcssを[手軽に]使おう"
+title: "【C#】BlazorでもTailwindcssを'手軽に'使おう"
 emoji: "🎨"
 type: "tech"
 topics: ["csharp", "dotnet", "blazor", "tailwindcss"]
-published: false
+published: true
 ---
 
 Blazorでtailwindcssを使っていきます。
@@ -63,8 +63,8 @@ https://azukiazusa.dev/blog/tailwind-css-v4-css-first-configurations/
 `tailwind.config.js`を使うものは大体古いと思って差し支えないです。
 
 ### 誤り3: CLIをインストールしてパスを通す必要がある・別途実行させる必要がある
-これに関してはある意味正しい[^1] のですが、勝手にやってもらうこともできます。NuGetで探すといくつか出てきますが、自分が触った中では`Elixus.Tailwind`が一番手軽に使えます。
-https://www.nuget.org/packages/Elixus.Tailwind
+これに関してはある意味正しい[^1] のですが、勝手にやってもらうこともできます。NuGetで探すといくつか出てきますが、自分が触った中では`Tailwind.Hosting`が一番手軽に使えます。
+https://www.nuget.org/packages/Tailwind.Hosting
 
 [^1]: そのほうが融通がきく。watchしたり、CIで実行したりとか。
 
@@ -74,7 +74,7 @@ CLIをインストールしてパスを通す必要もなく、プロジェク�
 
 * nodejs/npmは不要
 * tailwind.config.jsは不要
-* NuGetでmvdmio.Tailwind.NETを入れればCLIインストールもいらない
+* NuGetで専用のパッケージを入れればCLIインストールもいらない
 * C#のビルドに組み込んで自動生成できる
 
 素晴らしい！
@@ -82,32 +82,38 @@ CLIをインストールしてパスを通す必要もなく、プロジェク�
 ## 実際に使ってみる
 というわけで試してみましょう。
 
-まずは上記の`Elixus.Tailwind`を導入します。また、合わせて設定用の`tailwind.input.css`のパスも指定します。
+まずは上記の`Tailwind.Hosting`を導入します。また、合わせて設定用の`tailwind.css`のパスも指定します。
 
 ```xml
-<ItemGroup>
-  <PackageReference Include="mvdmio.Tailwind.NET" Version="1.*" />
-  <TailwindFile Include="tailwindcss.input.css" />
-</ItemGroup>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+      <!-- 略 -->
+  </PropertyGroup>
+  <!-- tailwind setting -->
+  <ItemGroup>
+    <PackageReference Include="Tailwind.Hosting" Version="*" />
+    <PackageReference Include="Tailwind.Hosting.Build" Version="*" />
+  </ItemGroup>
+  <PropertyGroup Label="Tailwind.Hosting.Build Props">
+    <TailwindVersion>latest</TailwindVersion>
+    <TailwindWatch>true</TailwindWatch>
+    <TailwindInputCssFile>tailwind.css</TailwindInputCssFile>
+    <TailwindOutputCssFile>wwwroot/app.css</TailwindOutputCssFile>
+  </PropertyGroup>
+  <Target Name="CleanUpTailwindStaticCache" BeforeTargets="PrepareForBuild">
+    <!-- .NET 9以降の場合必要 -->
+    <ItemGroup>
+      <Content Remove="$(TailwindOutputCssFile)" />
+    </ItemGroup>
+  </Target>
+</Project>
 ```
 
 次に、入力用のCSSファイルを用意します。
 
 ```css
-/* tailwind.input.css */
+/* tailwind.css */
 @import "tailwindcss";
-```
-
-忘れずに`App.razor`に参照を追加します。
-
-```razor
-<link rel="stylesheet" href="@Assets["tailwind.output.css"]" />
-```
-
-ホットリロードを有効化させるために、`Program.cs`を編集します。
-
-```cs
-builder.Services.AddTailwindWatcher(autoDetect: true);
 ```
 
 後はコンポーネントで使ってみるだけです。
@@ -124,9 +130,7 @@ builder.Services.AddTailwindWatcher(autoDetect: true);
 ```
 
 最後にビルドしてみます。
-
-
-すると、`wwwroot/tailwind.output.css`が生成され、以下のようにスタイルが適用されます！
+すると、`wwwroot/app.css`が生成され、以下のようにスタイルが適用されます！
 
 ![](https://imgur.com/ybCaiI1.png)
 
@@ -172,6 +176,11 @@ builder.Services.AddTailwindWatcher(autoDetect: true);
 /* 以下略 */
 ```
 
+## プロキシ環境下で使う
+場合によっては`407 Proxy Authentication Required`のエラーが表示されることがあります。
+その場合は、`HTTPS_PROXY`の値を設定してCLIから`dotnet build`を実行してあげればOKです。
+最初の一回だけ上記の手順を踏めば、2回目以降はダウンロード済みのCLIを使用してくれます。
+
 ## エディターサポートを追加する
 tailwindには大量のクラスがあるため、エディターで補完が効くと非常に便利です（というか無いと辛い！）
 幸い、VisualStudioにも拡張機能があるのでそれを入れてみます。
@@ -179,7 +188,7 @@ https://marketplace.visualstudio.com/items?itemName=TheronWang.TailwindCSSIntell
 
 インストールした後、class属性を編集してみると……
 
-![](image.png)
+![](/images/20251016/image.png)
 
 このように補完が効くようになりました！これで快適に開発できそうです。
 
@@ -210,6 +219,6 @@ Blazorでtailwindcssを使う方法を紹介しました。
 
 ## 追記履歴
 **2025/10/22**:  
-`Elixus.Tailwind`を使用する方法に変更。
+`Tailwind.Hosting`を使用する方法に変更。
 以前紹介していた`mvdmio.Tailwind.NET`はnodejsが必須で、記事の概要とマッチしてなかったため使用をやめました。
 
