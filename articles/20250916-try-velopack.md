@@ -143,13 +143,13 @@ jobs:
 ```
 
 うまくいくとこうなります。
-![](image.png)
+![](/images/20250916/image.png)
 
 `try-velopack-win-Setup.exe`をダウンロードして実行すると、デスクトップにショートカットが作成されます。
 ファイルの場所を開いてみると、`AppData\Local\(IDENTIFIER)\current`にインストールされるようです。
 
 実行してみます。
-![](image-1.png)
+![](/images/20250916/image-1.png)
 
 うまくリリースできていそうです。
 
@@ -167,7 +167,7 @@ Console.WriteLine($"This Assembly Version is: {ThisAssembly.AssemblyInformationa
 
 これで再度コミット+Pushします。
 
-![](image-2.png)
+![](/images/20250916/image-2.png)
 `0.1.0-alpha.9`がリリースされているのがわかります。
 また、差分パッケージ(`-delta.nupkg`)も生成されています。これを使って高速アップデートができるようです。
 
@@ -175,19 +175,19 @@ Console.WriteLine($"This Assembly Version is: {ThisAssembly.AssemblyInformationa
 ここで、さっきインストールしたアプリを再度実行します。
 すると、新バージョンを自動で検知してインストールプロセスが走ります。
 
-![](image-3.png)
+![](/images/20250916/image-3.png)
 
 そして、更新が完了すると自動で再起動してくれます。
 
 
-![](image-4.png)
+![](/images/20250916/image-4.png)
 無事に更新されていることがわかります。
 
 なお、格納先のフォルダ(`AppData\Local\(IDENTIFIER)\current`)を何らかのアプリが開いていると更新に失敗します。まではいいのですが、延々と再起動を繰り返すので注意が必要です。
 
 ### アンインストール
 設定>アプリ>インストールされているアプリ から簡単にアンインストールできます。
-![](image-5.png)
+![](/images/20250916/image-5.png)
 
 
 ## BackgroundServiceとして常駐させてみる

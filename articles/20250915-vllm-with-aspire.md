@@ -260,7 +260,7 @@ info: Aspire.Hosting.DistributedApplication[0]
 ```
 
 こんな感じの画面が出てきます。
-![alt text](image.png)
+![alt text](/images/20250915/image.png)
 
 初回はvLLMのモデルをダウンロードするので時間がかかります。手元環境でだいたい2分ぐらい。
 
