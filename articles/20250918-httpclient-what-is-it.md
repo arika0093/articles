@@ -124,7 +124,7 @@ await client.SendAsync(message);
   * プロキシとか、SSL証明書の検証とか、リダイレクトどうするとか。
   * 全体の挙動ではあるが、より細かい部分を指定するイメージ
 
-![](httpclient.drawio.png)
+![](/images/20250918/httpclient.drawio.png)
 
 このように、**役割ごとにクラスが分かれている**のがC#のHttpClient周辺の特徴として言えそうです。
 
@@ -133,7 +133,7 @@ await client.SendAsync(message);
 ここまで`HttpClientHandler`を使う話をしてきましたが、.NET Core 2.1で`SocketsHttpHandler`が登場しました。
 これからのコードでは`SocketsHttpHandler`を使うことが[推奨されています](https://github.com/grpc/grpc-dotnet/issues/1961)。 
 
-![](sockethandler.drawio.png)
+![](/images/20250918/sockethandler.drawio.png)
 
 
 数行上で`HttpClientHandler`の話をしていたのになんだか即落ち2コマみたいな感じがしますが、実際は5年経ってるので許してください。
@@ -211,7 +211,7 @@ var client = httpClientFactory.CreateClient("clientA");
 これらは`DelegatingHandler`（ログとかのミドルウェア）を追加/編集するためのものと考えておけば良さそうです。
 
 図解するとこんな感じ。
-![](httpclientfactory.drawio.png)
+![](/images/20250918/httpclientfactory.drawio.png)
 
 ## Microsoft.Extensions.Http.Polly (2018年)
 HttpClientの話をするなら避けて通れないのが`Polly`です。
@@ -336,7 +336,7 @@ services.AddTransient<GrpcChannel>(provider =>
 
 ## まとめ
 改めて登場人物をまとめると以下のような感じです。
-![](httpclient-member.drawio.png)
+![](/images/20250918/httpclient-member.drawio.png)
 
 
 とりあえずこの記事で出たものを全部使うとこうなります。適宜取捨選択してください。
