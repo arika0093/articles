@@ -17,7 +17,8 @@ https://github.com/arika0093/TryBlazorAuth
 まず良いところから。
 
 * 実装が楽。組み込みのIdentityを使うよりもずっとシンプル。
-* 公式のJWT実装だとHttpContextを触る関係で静的SSRにする必要があるが、Blazor.Authは専用のEndpointを用意してくれるのでInteractive Serverでも使える。
+* 専用のEndpointを用意してくれるのでInteractive Serverでも使える。
+  * Blazorで取り扱おうとするとHttpContextを触る関係で静的SSRにする必要がある。
   * 個人的にはとても嬉しい。
 
 欠点としては
@@ -336,11 +337,6 @@ Blazorコンポーネント内では
 
 ログインしてない場合はトップページ以外にアクセスできず、ログインするよう促す表示になります。
 ログインするとユーザー名とIDが表示され、権限に応じてCounter/Weatherページの表示が切り替わります。
-
-
-## さらなるカスタマイズ
-Identityなどと同じように、`[Authorize(Roles="Admin")]`のようにRoleベースでアクセス制御を行うこともできます。
-このあたりは普通のBlazorアプリケーションと同じなので割愛。適宜調べてみてください。
 
 
 ## 参考文献
