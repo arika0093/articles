@@ -145,7 +145,6 @@ await app.RunAsync();
 ForceRedirect.razorというコンポーネントを作成し、ここでリダイレクトの判定と実行を行います。
 
 ```razor
-@using BlazorForceRedirectSample.Services
 @inject SampleSettingService Service
 @inject NavigationManager Navigation
 @inject IDialogService DialogService
@@ -219,16 +218,16 @@ ForceRedirect.razorというコンポーネントを作成し、ここでリダ�
 あとは `MainLayout.razor` にでもこのコードを入れておけばOKです。
 
 ```razor diff
-@inherits LayoutComponentBase
-
-<MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
-<MudPopoverProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
-<MudLayout>
-    @* 略 *@
-</MudLayout>
-+ <ForceRedirect />
+ @inherits LayoutComponentBase
+ 
+ <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
+ <MudPopoverProvider />
+ <MudDialogProvider />
+ <MudSnackbarProvider />
+ <MudLayout>
+     @* 略 *@
+ </MudLayout>
++<ForceRedirect />
 ```
 
 検証用にログインもどきページも作成しておきます。
