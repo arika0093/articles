@@ -3,7 +3,7 @@ title: "【C#】Blazor.Authで認証認可をシンプルに実装する"
 emoji: "🔐"
 type: "tech"
 topics: ["csharp", "dotnet", "blazor", "authentication"]
-published: false
+published: true
 ---
 
 Blazorで認証を実装していく際、組み込みのASP.NET Core Identityはちょっと大げさな感じですし、何をやっているのかイマイチわかりにくくて敷居が高いと感じることがあります。
@@ -338,6 +338,10 @@ Blazorコンポーネント内では
 ログインしてない場合はトップページ以外にアクセスできず、ログインするよう促す表示になります。
 ログインするとユーザー名とIDが表示され、権限に応じてCounter/Weatherページの表示が切り替わります。
 
+
+## TODO
+- [ ] 初期設定画面へのリダイレクト
+- [ ] 設定更新の方法
 
 ## 参考文献
 ### JWT関連
