@@ -18,6 +18,7 @@ https://github.com/arika0093/TryBlazorAuth
 
 * 実装が楽。組み込みのIdentityを使うよりもずっとシンプル。
 * 公式のJWT実装だとHttpContextを触る関係で静的SSRにする必要があるが、Blazor.Authは専用のEndpointを用意してくれるのでInteractive Serverでも使える。
+  * 個人的にはとても嬉しい。
 
 欠点としては
 * 3rd-partyライブラリなので、この先使っていけるかはなんとも言えない。
@@ -26,7 +27,7 @@ https://github.com/arika0093/TryBlazorAuth
 
 といったところ。単純な認証認可を実装したい場合には良い選択肢になると思います。
 
-## 使ってみる
+## 使ってみる（サーバー側）
 ### ライブラリを追加する
 NuGetから`BitzArt.Blazor.Auth.Server`ライブラリを入れます。今回は2.1.0を使用。
 https://www.nuget.org/packages/BitzArt.Blazor.Auth.Server
@@ -227,12 +228,12 @@ public class SampleAuthService : AuthenticationService<SignInPayload>
     }
 ```
 
-完成形のコードは以下URLで確認できます。
+完成形のコードはこんな感じ。
 https://github.com/arika0093/TryBlazorAuth/blob/main/TryBlazorAuth/Auth/SampleAuthService.cs
 
 
 ### サービスを登録する
-次に、`Program.cs`に認証サービスを登録します。
+`Program.cs`に認証サービスを登録します。
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
@@ -244,9 +245,11 @@ app.MapAuthEndpoints();
 // 省略
 ```
 
-### _Imports.razorを編集する
+## 使ってみる（Blazor側）
 この時点で認証認可機能は完成しています。後はBlazor側であれこれ書くだけです。
-その前に、`_Imports.razor`に以下を追加しておきます。
+
+### _Imports.razorを編集する
+作業に移る前に、`_Imports.razor`に以下を追加しておきます。
 
 ```razor
 @* 全てのページをログイン必須にする。除外したい場合は @attribute[AllowAnonymous]を先頭に付与する *@
@@ -260,77 +263,84 @@ app.MapAuthEndpoints();
 @using SimpleLoginService = BitzArt.Blazor.Auth.IUserService<TryBlazorAuth.Auth.SignInPayload>
 ```
 
+### ルーターを編集する
+`Route.razor`を編集して、認証状態に基づいて表示を切り替えられるようにします。
+https://github.com/arika0093/TryBlazorAuth/blob/main/TryBlazorAuth/Components/Routes.razor
+
+`<AuthorizeRouteView>`を使うと、`@attribute [Authorize]`が付与されたコンポーネントにアクセスしたときに自動的に認証状態をチェックしてくれます。
+もし認証NGになると`<NotAuthorized>`セクションが表示されます。そのパターンとして
+
+* ログインしてないとき
+* ログインはしているが権限が足りないとき
+
+の2パターンがあるため、それぞれの場合に応じた表示を行うようにしています。
+
 ### ログインページを作成する
 ログインページを用意します。今回はMudBlazorを使っていますが、このあたりは自由です。
-注意点として、エラーが発生した際もページが更新されてしまうので、クエリパラメータでメッセージを受け取って表示するようにしています。
+https://github.com/arika0093/TryBlazorAuth/blob/main/TryBlazorAuth/Components/Pages/Auth/Login.razor
 
-```razor
-@* 誰でもアクセスできないといけないのでAllowAnonymousを付与 *@
-@attribute [AllowAnonymous]
-@page "/login"
+注意点として、エラーが発生した際もページが更新されてしまうので、クエリパラメータでメッセージを受け取って表示する(内部の状態で持たせない)ようにしています。
+https://github.com/arika0093/TryBlazorAuth/blob/main/TryBlazorAuth/Components/Pages/Auth/Login.razor#L41-L54
 
-<MudContainer MaxWidth="MaxWidth.Medium">
-    <MudStack Spacing="3">
-        <MudStack Row Spacing="2">
-            <MudTextField Label="Id" @bind-Value="Id" Variant="Variant.Outlined" FullWidth="true" Margin="Margin.Dense" />
-            <MudTextField Label="Password" @bind-Value="Password" Variant="Variant.Outlined" FullWidth="true" Margin="Margin.Dense" InputType="InputType.Password" />
-        </MudStack>
-        @if(!string.IsNullOrEmpty(Message))
-        {
-            <MudAlert Severity="Severity.Error">@Message</MudAlert>
-        }
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="HandleLogin">ログイン</MudButton>
-    </MudStack>
-</MudContainer>
+### ログアウトページを作成する
+ログアウトページも用意します。こちらは非常にシンプルで、`SignOutAsync`を呼び出すだけです。
+終わったらトップページにリダイレクトします。
 
-@inject NavigationManager Navigation
-@inject SimpleLoginService UserService
-@code {
-    [SupplyParameterFromQuery]
-    public string? ReturnUrl { get; set; }
+https://github.com/arika0093/TryBlazorAuth/blob/main/TryBlazorAuth/Components/Pages/Auth/Logout.razor
 
-    [SupplyParameterFromQuery]
-    public string? Message { get; set; }
+### Claim情報から必要な情報を引っ張る拡張クラスを作成する
+認証状態を取得すると`ClaimsPrincipal`が得られますが、そこから必要な情報を引っ張るのが面倒です(なぜか`Name`だけは用意されているが……)
+というわけで、拡張メソッドを用意してサクッとほしい情報にアクセスできるようにします。
+特にID(ClaimTypes.NameIdentifier)はよく使いますので、これだけでもあると便利です。
 
-    private string RedirectUrl => ReturnUrl ?? "/";
+https://github.com/arika0093/TryBlazorAuth/blob/main/TryBlazorAuth/Auth/ClaimsPrincipalUtilities.cs
 
-    // Form fields
-    private string Id = "";
-    private string Password = "";
+やっていることは単純で
+https://github.com/arika0093/TryBlazorAuth/blob/main/TryBlazorAuth/Auth/ClaimsPrincipalUtilities.cs#L22-L23
 
-    protected override async Task OnInitializedAsync()
-    {
-        // 既にログイン済みの場合は元のページへリダイレクト
-        var state = await UserService.GetAuthenticationStateAsync();
-        if(state.User.Identity?.IsAuthenticated == true)
-        {
-            Navigation.NavigateTo(RedirectUrl, forceLoad: true);
-        }
-    }
+これだけです。こんなのを毎回書きたくないので拡張メソッドにしました。
 
-    private async Task HandleLogin()
-    {
-        var payload = new SignInPayload
-        {
-            Id = Id,
-            Password = Password
-        };
-        var result = await UserService.SignInAsync(payload);
-        if(result.IsSuccess)
-        {
-            // ログイン成功時は元のページへリダイレクト
-            Navigation.NavigateTo(RedirectUrl, forceLoad: true);
-        }
-        else
-        {
-            // ログイン失敗時はエラーメッセージをクエリパラメータに付与してリダイレクト
-            // (仕組み上失敗時もページが更新されてしまうので、URLにメッセージを含めて再表示させる)
-            Navigation.NavigateTo($"/login?message={result.ErrorMessage}&returnUrl={ReturnUrl}", forceLoad: true);
-        }
-    }
-}
+### Admin専用のページを作成する
+Admin権限を持つユーザーだけがアクセスできるページを用意してみます。
+といっても、`@attribute [Authorize(Roles="Admin")]`を付与するだけです。
+今回はWeatherページをAdmin専用にしてみます。
+
+```razor diff
+ @page "/weather"
++@attribute [Authorize(Roles = "Admin")]
+ 
+ <PageTitle>Weather</PageTitle>
+ 
+ <MudText Typo="Typo.h3" GutterBottom="true">Weather forecast</MudText>
+ <MudText Typo="Typo.body1" Class="mb-8">This component demonstrates fetching data from the server.</MudText>
+
+ @* 以下略 *@
 ```
 
+
+### 認証情報を取得して表示する
+最後に、トップページを編集して、現在の認証・認可情報で表示を切り替えるようにします。
+
+https://github.com/arika0093/TryBlazorAuth/blob/main/TryBlazorAuth/Components/Pages/Home.razor
+
+Blazorコンポーネント内では
+
+* ユーザー名: `@context.User.Identity?.Name`
+* ユーザーID: `@context.User.GetUserId()`
+
+で取得できます。
+また、資格情報(`Role`)でコンポーネントの表示を切り替えたいときは`<AuthorizeView>`を使います。
+
+## 完成形
+![](https://i.imgur.com/omurMET.gif)
+
+ログインしてない場合はトップページ以外にアクセスできず、ログインするよう促す表示になります。
+ログインするとユーザー名とIDが表示され、権限に応じてCounter/Weatherページの表示が切り替わります。
+
+
+## さらなるカスタマイズ
+Identityなどと同じように、`[Authorize(Roles="Admin")]`のようにRoleベースでアクセス制御を行うこともできます。
+このあたりは普通のBlazorアプリケーションと同じなので割愛。適宜調べてみてください。
 
 
 ## 参考文献
