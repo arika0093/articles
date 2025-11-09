@@ -82,10 +82,10 @@ SAMPLE
 ### 普通のHTMLとして表示する
 さて、この状態でブラウザから開くと（当たり前ですが）以下のように`bash`スクリプトの中身がそのまま表示されます。
 
-![](dotfile-html-2.png)
+![](/images/20250627/dotfile-html-2.png)
 
 これらのテキストをDevToolsで確認すると、~~ブラウザからしたら意味不明な文章は~~ テキストノードとして取り扱われていることがわかります。
-![DevTools](bash-devtool.png)
+![DevTools](/images/20250627/bash-devtool.png)
 
 よって、JavaScriptを使って読み込み完了時に当該部分を消しにいけば良さそうです。
 HTMLにおいては改行は関係なく一つのテキストノードに突っ込まれるので
@@ -115,10 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
 https://dotfile.eclairs.cc/
 
 **ブラウザから開いた場合**
-![](dotfile-html-3.png)
+![](/images/20250627/dotfile-html-3.png)
 
 **`curl ... | bash`で実行した場合**
-![](dotfile-html-4.png)
+![](/images/20250627/dotfile-html-4.png)
 
 ## 余談
 なんでこんな形で展開したかという話ですが…
