@@ -23,3 +23,5 @@ nbgvというかgitの使い方だけど
 * 保存
 
 これで完了。
+
+でもcherry-pickのようにoriginal commit id を残したい… 要調査。
