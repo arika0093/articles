@@ -1,5 +1,5 @@
 ---
-title: "【C#】DTOクラスを自動生成するライブラリを公開しました！【Linqraft】"
+title: "【C#】Prismaのような書き心地をEFCoreでも実現するライブラリを作成しました！【Linqraft】"
 emoji: "📖"
 type: "tech"
 topics: ["csharp", "dotnet", "interceptor", "source-generator"]
