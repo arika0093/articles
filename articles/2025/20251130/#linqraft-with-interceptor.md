@@ -1,21 +1,18 @@
 ---
-title: "【C#】DTOクラスを自動生成するLinqraftライブラリを公開しました！"
+title: "【C#】DTOクラスを自動生成するライブラリを公開しました！【Linqraft】"
 emoji: "📖"
 type: "tech"
 topics: ["csharp", "dotnet", "interceptor", "source-generator"]
-published: false
+published: true
 ---
 
-先日、[Linqraft](https://arika0093.github.io/Linqraft/)というC#のライブラリを公開しました！
-![](image-1.png)
-
-この記事ではその紹介をしたいと思います。
-https://github.com/arika0093/Linqraft
+先日、[Linqraft](https://arika0093.github.io/Linqraft/)というC#のライブラリを公開しました！この記事ではその紹介をしたいと思います。
+![ちょっと頑張って作ったトップページ](image-1.png)
 
 ## 動機
 C#は[素晴らしい言語](https://blog.neno.dev/entry/2025/04/14/130323)です。強力な型安全性、分厚い標準ライブラリ、GUIアプリの開発からWEB構築まで、おおよそあらゆる用途に対応できて素晴らしい言語だと思っています。
 
-そんなC#ですが、私が日頃からフラストレーションを感じていることがあります。
+そんなC#ですが、私が日頃からフラストレーションを感じていることがあります。<br/>
 
 
 それは「**クラス定義がめんどくさい！**」そして「**Selectクエリを書くのがめんどくさい！**」ということです。
@@ -120,7 +117,7 @@ var result = dbContext.Orders
             ProductId = i.ProductId,
             Quantity = i.Quantity,
             // 配列の場合も同様。読みにくい……
-            ProductComments = i.CommentInfo != null && i.CommentInfo.Comments != null
+            ProductComments = i.CommentInfo != null
                 ? i.CommentInfo.Comments.Select(c => new ProductCommentDto
                 {
                     CommentText = c.CommentText,
@@ -151,10 +148,7 @@ Property = o.A != null && o.A.B != null && o.A.B.C != null
 
 ```csharp
 Items = o.Child != null
-    ? o.Child.Items.Select(i => new ItemDto
-    {
-        // ...
-    }).ToList()
+    ? o.Child.Items.Select(i => new ItemDto{ /* ... */ }).ToList()
     : new List<ItemDto>()
 ```
 
@@ -355,7 +349,9 @@ https://github.com/arika0093/Linqraft
 
 ## 余談
 紹介Webページもちょっと頑張ってみました。具体的にはWebページ上で動作確認ができるようになってます！
-![](image.png)
+Roslynで解読したToken情報をMonaco Editorに流し込んで色分けする機能も実装してあります。
+
+![Playground画面](image.png)
 
 こちらも合わせて見てみてください。
 https://arika0093.github.io/Linqraft/
