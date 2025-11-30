@@ -325,7 +325,13 @@ file static partial class GeneratedExpression
 }
 ```
 
-## 完成！
+## 既存コード置き換えのAnalyzer
+さて、ここまでの話を聞いて早速試してみたい！と思った方もいるかもしれません。
+そんな方のために、Linqraftでは**既存の`Select`クエリを自動的に`SelectExpr`に置き換えるRoslyn Analyzer**も提供しています。
+使うのは非常に簡単で、Selectクエリの部分で右クリック→クイックアクションから一発で置き換えが可能です。
+![](https://raw.githubusercontent.com/arika0093/Linqraft/refs/heads/main/assets/replace-codefix-sample.gif)
+
+## まとめ
 というわけで、Linqraftを使うと以下のようにシンプルにクエリを書くだけで、
 * 対応するDTOクラスが自動生成され、
 * nullチェックも気にせずに書けるようになります。
