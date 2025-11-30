@@ -100,12 +100,14 @@ CLIをインストールしてパスを通す必要もなく、プロジェク�
     <TailwindInputCssFile>tailwind.css</TailwindInputCssFile>
     <TailwindOutputCssFile>wwwroot/app.css</TailwindOutputCssFile>
   </PropertyGroup>
+  <!--  Windowsの場合で、ビルドエラーが出たらコメントアウトする
   <Target Name="CleanUpTailwindStaticCache" BeforeTargets="PrepareForBuild">
-    <!-- .NET 9以降の場合必要 -->
+    .NET 9以降の場合必要 
     <ItemGroup>
       <Content Remove="$(TailwindOutputCssFile)" />
     </ItemGroup>
   </Target>
+  -->
 </Project>
 ```
 
@@ -176,11 +178,6 @@ CLIをインストールしてパスを通す必要もなく、プロジェク�
 /* 以下略 */
 ```
 
-## プロキシ環境下で使う
-場合によっては`407 Proxy Authentication Required`のエラーが表示されることがあります。
-その場合は、`HTTPS_PROXY`の値を設定してCLIから`dotnet build`を実行してあげればOKです。
-最初の一回だけ上記の手順を踏めば、2回目以降はダウンロード済みのCLIを使用してくれます。
-
 ## エディターサポートを追加する
 tailwindには大量のクラスがあるため、エディターで補完が効くと非常に便利です（というか無いと辛い！）
 幸い、VisualStudioにも拡張機能があるのでそれを入れてみます。
@@ -188,11 +185,45 @@ https://marketplace.visualstudio.com/items?itemName=TheronWang.TailwindCSSIntell
 
 インストールした後、class属性を編集してみると……
 
-![](/images/20251016/image.png)
+![](image.png)
 
 このように補完が効くようになりました！これで快適に開発できそうです。
 
-## prefixを付ける
+そのままだと拡張機能側でもビルドが走ってしまうのが気になる場合は、オプションからBuild Typeを`None`にしておくと良さそうです。
+
+![](image-2.png)
+
+## 開発時のみCDNを使う
+
+ここまででビルド時にはtailwindcssを使って最適化されたCSSを生成できるようになりました。
+が、実際にはDevToolsでちょっとクラス名をいじって表示をサクッと確認したい、ということもあると思います。
+このような場合、ビルド済のCSSには全てのクラスが含まれているわけではないため、うまく反映されないことがあり不便です。
+
+そこで、自分は開発時用だけCDNを使うようにしてみました。以下の内容で適当にコンポーネントを作成して`App.razor`などに追加するだけです！
+
+```razor
+@* Tailwind CSS CDN for Development Only *@
+@if (IS_USE_TAILWIND_CDN)
+{
+	<script src="@("https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4")"></script>
+}
+
+@code {
+#if DEBUG
+		private const bool IS_USE_TAILWIND_CDN = true;
+#else
+		private const bool IS_USE_TAILWIND_CDN = false;
+#endif
+}
+```
+
+## 細かいTIPS
+### プロキシ環境下で使う
+場合によっては`407 Proxy Authentication Required`のエラーが表示されることがあります。
+その場合は、`HTTPS_PROXY`の値を設定してCLIから`dotnet build`を実行してあげればOKです。
+最初の一回だけ上記の手順を踏めば、2回目以降はダウンロード済みのCLIを使用してくれます。
+
+### prefixを付ける
 Blazorフレームワークを既に使用していて補完的にtailwindcssを導入したい場合、既存のクラス名と衝突する可能性があります。
 その場合、tailwindcssのクラスにprefixを付けることができます。
 
@@ -222,3 +253,5 @@ Blazorでtailwindcssを使う方法を紹介しました。
 `Tailwind.Hosting`を使用する方法に変更。
 以前紹介していた`mvdmio.Tailwind.NET`はnodejsが必須で、記事の概要とマッチしてなかったため使用をやめました。
 
+**2025/11/30**:
+`CleanUpTailwindStaticCache`の記述を変更。開発時のみCDNを使う方法を追加。
