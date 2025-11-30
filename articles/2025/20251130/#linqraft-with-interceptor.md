@@ -6,7 +6,10 @@ topics: ["csharp", "dotnet", "interceptor", "source-generator"]
 published: false
 ---
 
-先日、[Linqraft](https://arika0093.github.io/Linqraft/)というC#のライブラリを公開しました。この記事ではその紹介をしたいと思います。
+先日、[Linqraft](https://arika0093.github.io/Linqraft/)というC#のライブラリを公開しました！
+![](image-1.png)
+
+この記事ではその紹介をしたいと思います。
 https://github.com/arika0093/Linqraft
 
 ## 動機
@@ -352,6 +355,8 @@ https://github.com/arika0093/Linqraft
 
 ## 余談
 紹介Webページもちょっと頑張ってみました。具体的にはWebページ上で動作確認ができるようになってます！
+![](image.png)
+
 こちらも合わせて見てみてください。
 https://arika0093.github.io/Linqraft/
 
