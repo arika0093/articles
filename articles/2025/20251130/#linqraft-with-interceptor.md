@@ -323,6 +323,57 @@ file static partial class GeneratedExpression
 
 これにより、使い手は普通の`Select`感覚で手軽にクエリを書けるようになっています！
 
+### そしてゼロ依存へ
+ここまでの対応で基本的に`SelectExpr`の呼び出しは全て別個生成されるコードで全てインターセプトされるようになっています。
+ということは`SelectExpr`本体でやることは全く無く、ただエディター補完のために存在している状態です。
+
+であれば、そのダミーのメソッド自体もソースジェネレータで吐き出せば、もはやLinqraftの参照自体が不必要になるはずです。
+というわけで、そのように吐き出します。
+
+```csharp
+public static void ExportAll(IncrementalGeneratorPostInitializationContext context)
+{
+    context.AddSource("SelectExprExtensions.g.cs", SelectExprExtensions);
+}
+
+const string SelectExprExtensions = $$""""
+    {{CommonHeader}}
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    /// <summary>
+    /// Dummy expression methods for Linqraft to compile correctly.
+    /// </summary>
+    internal static class SelectExprExtensions
+    {
+        /// <summary>
+        /// Create select expression method, usable nullable operators, and generate instance DTOs.
+        /// </summary>
+        public static IQueryable<TResult> SelectExpr<TIn, TResult>(this IQueryable<TIn> query, Func<TIn, TResult> selector)
+            where TIn : class => throw InvalidException;
+
+        // その他、派生形もこの中に含める
+    }
+    """";
+```
+
+後は`DevelopmentDependency`を有効にすれば、実際の生成物には一切含まれないパッケージとすることができます！
+```xml
+<PropertyGroup>
+  <DevelopmentDependency>true</DevelopmentDependency>
+</PropertyGroup>
+```
+
+実際、Linqraftをnuget等で導入すると以下のような記述になるはずです。これは開発時専用のパッケージであることを意味しています。
+```xml
+<PackageReference Include="Linqraft" Version="0.4.0">
+  <PrivateAssets>all</PrivateAssets>
+  <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+</PackageReference>
+```
+
 ## 既存コード置き換えのAnalyzer
 さて、ここまでの話を聞いて早速試してみたい！と思った方もいるかもしれません。
 そんな方のために、Linqraftでは**既存の`Select`クエリを自動的に`SelectExpr`に置き換えるRoslyn Analyzer**も提供しています。
@@ -333,6 +384,7 @@ file static partial class GeneratedExpression
 というわけで、Linqraftを使うと以下のようにシンプルにクエリを書くだけで、
 * 対応するDTOクラスが自動生成され、
 * nullチェックも気にせずに書けるようになります。
+* ついでにゼロ依存なので、手書きと一切変わらない状態になります。
 
 ```csharp
 var orders = dbContext.Orders
