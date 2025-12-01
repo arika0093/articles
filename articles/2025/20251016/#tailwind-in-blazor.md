@@ -100,13 +100,12 @@ CLIをインストールしてパスを通す必要もなく、プロジェク�
     <TailwindInputCssFile>tailwind.css</TailwindInputCssFile>
     <TailwindOutputCssFile>wwwroot/app.css</TailwindOutputCssFile>
   </PropertyGroup>
-  <!--  Windowsの場合で、ビルドエラーが出たらコメントアウトする
-  <Target Name="CleanUpTailwindStaticCache" BeforeTargets="PrepareForBuild">
+  <!--  Windows/.NET 9以降の場合必要 -->
+  <Target Name="CleanUpTailwindStaticCache" BeforeTargets="PrepareForBuild" Condition="'$(OS)' == 'Windows_NT'">
     <ItemGroup>
       <Content Remove="$(TailwindOutputCssFile)" />
     </ItemGroup>
   </Target>
-  -->
 </Project>
 ```
 
