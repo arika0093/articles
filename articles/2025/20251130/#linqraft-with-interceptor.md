@@ -324,11 +324,9 @@ file static partial class GeneratedExpression
 これにより、使い手は普通の`Select`感覚で手軽にクエリを書けるようになっています！
 
 ### そしてゼロ依存へ
-ここまでの対応で基本的に`SelectExpr`の呼び出しは全て別個生成されるコードで全てインターセプトされるようになっています。
-ということは`SelectExpr`本体でやることは全く無く、ただエディター補完のために存在している状態です。
+ここまでの対応で基本的に`SelectExpr`の呼び出しは全て別個生成されるコードで全てインターセプトされるようになっています。結果として大本の`SelectExpr`本体でやることは全く無く、ただエディター補完のために存在している状態です。
 
-であれば、そのダミーのメソッド自体もソースジェネレータで吐き出せば、もはやLinqraftの参照自体が不必要になるはずです。
-というわけで、そのように吐き出します。
+であれば、そのダミーのメソッド自体もソースジェネレータで吐き出せば、もはやLinqraftの参照自体が不要になるはずです！ というわけで、そのように吐き出します。
 
 ```csharp
 public static void ExportAll(IncrementalGeneratorPostInitializationContext context)
@@ -385,13 +383,15 @@ const string SelectExprExtensions = $$""""
 * 対応するDTOクラスが自動生成され、
 * nullチェックも気にせずに書けるようになります。
 * ついでにゼロ依存なので、手書きと一切変わらない状態になります。
+* お引越しもそこそこ簡単です。
 
 ```csharp
+// ゼロ依存！
 var orders = dbContext.Orders
     .SelectExpr<Order, OrderDto>(o => new
     {
         Id = o.Id,
-        // nullチェックを気にせずに?.で書ける！
+        // ?.で書ける！
         CustomerName = o.Customer?.Name,
         CustomerAddress = o.Customer?.Address?.Location,
     })
