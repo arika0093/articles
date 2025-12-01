@@ -200,17 +200,14 @@ https://marketplace.visualstudio.com/items?itemName=TheronWang.TailwindCSSIntell
 そこで、開発時だけCDNを使うようにしてみました。以下の内容で適当にコンポーネントを作成して`App.razor`などに追加するだけです。
 
 ```razor
-@* Tailwind CSS CDN for Development Only *@
-@if (IS_USE_TAILWIND_CDN)
-{
-    <script src="@("https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4")"></script>
-}
+@TAILWIND_CDN_FRAGMENT
 
 @code {
 #if DEBUG
-    private const bool IS_USE_TAILWIND_CDN = true;
+	private static RenderFragment? TAILWIND_CDN_FRAGMENT = @<script src="@TAILWIND_CDN_URL"></script>;
+	private const string TAILWIND_CDN_URL = "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4";
 #else
-    private const bool IS_USE_TAILWIND_CDN = false;
+	private static RenderFragment? TAILWIND_CDN_FRAGMENT = null;
 #endif
 }
 ```
