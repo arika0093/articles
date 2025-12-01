@@ -102,7 +102,6 @@ CLIをインストールしてパスを通す必要もなく、プロジェク�
   </PropertyGroup>
   <!--  Windowsの場合で、ビルドエラーが出たらコメントアウトする
   <Target Name="CleanUpTailwindStaticCache" BeforeTargets="PrepareForBuild">
-    .NET 9以降の場合必要 
     <ItemGroup>
       <Content Remove="$(TailwindOutputCssFile)" />
     </ItemGroup>
@@ -195,27 +194,29 @@ https://marketplace.visualstudio.com/items?itemName=TheronWang.TailwindCSSIntell
 
 ## 開発時のみCDNを使う
 
-ここまででビルド時にはtailwindcssを使って最適化されたCSSを生成できるようになりました。
-が、実際にはDevToolsでちょっとクラス名をいじって表示をサクッと確認したい、ということもあると思います。
-このような場合、ビルド済のCSSには全てのクラスが含まれているわけではないため、うまく反映されないことがあり不便です。
+ここまででビルド時にはtailwindcssを使って最適化されたCSSを生成できるようになりました。が、実際にはDevToolsでちょっとクラス名をいじって表示をサクッと確認したい、ということもあると思います。
+このような場合、ビルド済のCSSには全てのクラスが含まれているわけではないため、うまく反映されず不便です。
 
-そこで、自分は開発時用だけCDNを使うようにしてみました。以下の内容で適当にコンポーネントを作成して`App.razor`などに追加するだけです！
+上記Tailwind.Hostingにもwatchで監視する方法が紹介されていますが、自分の場合どうにも機能しなかったこと、そもそも`dotnet watch`じゃないと動かないこと等が気になりました。
+そこで、開発時だけCDNを使うようにしてみました。以下の内容で適当にコンポーネントを作成して`App.razor`などに追加するだけです。
 
 ```razor
 @* Tailwind CSS CDN for Development Only *@
 @if (IS_USE_TAILWIND_CDN)
 {
-	<script src="@("https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4")"></script>
+    <script src="@("https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4")"></script>
 }
 
 @code {
 #if DEBUG
-		private const bool IS_USE_TAILWIND_CDN = true;
+    private const bool IS_USE_TAILWIND_CDN = true;
 #else
-		private const bool IS_USE_TAILWIND_CDN = false;
+    private const bool IS_USE_TAILWIND_CDN = false;
 #endif
 }
 ```
+
+これで、DevToolsで編集した場合でも(開発時のみ)自動反映されるようになります。
 
 ## 細かいTIPS
 ### プロキシ環境下で使う
