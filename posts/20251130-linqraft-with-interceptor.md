@@ -1,11 +1,12 @@
 ---
 title: Achieve Prisma-like Developer Experience in EF Core! Introduction to Linqraft
-description: Learn about Linqraft, a C# library that enhances EF Core with Prisma-like features using interceptors and source generators.
+description: 'Learn about Linqraft, a C# library that enhances EF Core with Prisma-like features using interceptors and source generators.'
 tags: 'dotnet,csharp,efcore,interceptor'
 cover_image: ''
 canonical_url: null
 published: true
 date: '2025-12-02T00:49:11Z'
+id: 3077987
 ---
 
 
