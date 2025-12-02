@@ -6,6 +6,7 @@ cover_image: ''
 canonical_url: null
 published: true
 id: 2618835
+date: '2025-06-23T19:05:02Z'
 ---
 
 Managing NuGet package or application versions manually can be tedious. In this article, I'll explain how to automate versioning using [Nerdbank.GitVersioning](https://github.com/dotnet/Nerdbank.GitVersioning).
