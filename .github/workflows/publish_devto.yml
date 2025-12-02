@@ -12,6 +12,7 @@
 
 name: publish
 on:
+  workflow_dispatch:
   push:
     branches: [publish/devto]
 
