@@ -5,6 +5,7 @@ tags: 'dotnet,csharp,efcore,interceptor'
 cover_image: ''
 canonical_url: null
 published: true
+date: '2025-12-02T00:49:11Z'
 ---
 
 
