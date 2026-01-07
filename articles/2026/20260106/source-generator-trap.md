@@ -6,42 +6,28 @@ topics: ["csharp", "dotnet", "sourcegenerator"]
 published: false
 ---
 
+皆さん、Source Generator作ってますか？まだの方はぜひ作ってみてください。AIに頼めば意外と簡単に作れます。
+
+が！注意事項がいくつかあり、個人的にそれに気づきにくかったので、ここにまとめておきます。
+このページの[markdown版](https://github.com/arika0093/articles/blob/publish/zenn/articles/20260106-source-generator-trap.md)をAIに読ませればOKという状態を目指していきます。
 
 ## 最初に
 ### ドキュメントを読み込む
-個人的おすすめは以下のあたり。
+絶対読むべき！なんですが、初見で読んでいくのも厳しい(しAIに読ませるという趣旨から外れる)ので[文末](#文献)にまとめておきます。
 
-#### 公式
-https://github.com/dotnet/roslyn/blob/main/docs/features/incremental-generators.md
-https://github.com/dotnet/roslyn/blob/main/docs/features/incremental-generators.cookbook.md
-https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/source-generator-guidelines.md
-https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/libraries-packaging.md#analyzers--source-generators
+### Increment Source Generatorについて
+**要約: 「Increment」の概念を抑えて、効率の良いコードを書く。**
 
-#### 参考文献
-https://andrewlock.net/series/creating-a-source-generator/
-https://neue.cc/2022/12/16_IncrementalSourceGenerator.html
-https://qiita.com/ry18847/items/15c979b67e0372c22f1d
-
-このあたりを抑えておけば間違いない。が、初見だとあまりに未知の概念なので(普通のC#プログラミングとは性質が違う！)、これを理解するというのは難しいと思う。
-なのでハマった落とし穴をこの下につらつらと書いていきます。上記の記事の目次代わりにはなるはず。。
-
-### Increment Source Generatorについての基礎を抑える
-**要約: 「Increment」の概念を抑えると後が楽になる。**
-
-Incrementとはなんぞやという話。
+Incrementとはなんですかという話。
 
 
-https://andrewlock.net/creating-a-source-generator-part-9-avoiding-performance-pitfalls-in-incremental-generators/
 
 ### プロジェクト構造を決める
 
 
-https://andrewlock.net/creating-a-source-generator-part-7-solving-the-source-generator-marker-attribute-problem-part1/
-https://andrewlock.net/creating-a-source-generator-part-8-solving-the-source-generator-marker-attribute-problem-part2/
-
 ## コード記述時
 ### コード整形に`NormalizeWhitespace`を使わない
-
+**要約: コード整形を行うヘルパーを作るべき。**
 
 
 https://github.com/dotnet/roslyn/issues/52914
@@ -54,8 +40,6 @@ https://github.com/dotnet/roslyn/issues/52914
 * このスキャンがカーソル動かしたり1文字入力するたびに走って最悪になる
 
 で、パフォーマンスド安定の`ForAttributeWithMetadataName`がいるのでそいつを使うべき。ということがcookbookに書いてある(2025/06に追加された模様)
-https://github.com/dotnet/roslyn/blob/main/docs/features/incremental-generators.cookbook.md#do-not-scan-for-types-that-indirectly-implement-interfaces-indirectly-inherit-from-types-or-are-indirectly-marked-by-an-attribute-from-an-interface-or-base-type
-
 
 ### 3rd-partyライブラリを使うときは要注意
 **要約: 外部ライブラリは使わないほうが無難。**
@@ -104,8 +88,15 @@ csprojに書くべきおまじないが大量にあるので、それらを抑�
 
 ```
 
-https://andrewlock.net/creating-a-source-generator-part-3-integration-testing-and-packaging/
+## 文献
+### 公式
+https://github.com/dotnet/roslyn/blob/main/docs/features/incremental-generators.md
+https://github.com/dotnet/roslyn/blob/main/docs/features/incremental-generators.cookbook.md
+https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/source-generator-guidelines.md
+https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/libraries-packaging.md#analyzers--source-generators
 
-
-
+### ブログ等
+https://andrewlock.net/series/creating-a-source-generator/
+https://neue.cc/2022/12/16_IncrementalSourceGenerator.html
+https://qiita.com/ry18847/items/15c979b67e0372c22f1d
 
