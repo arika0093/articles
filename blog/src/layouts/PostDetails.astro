@@ -111,7 +111,7 @@ const nextPost =
       {tags.length > 0 && (
         <>
           <span aria-hidden="true" class="max-sm:hidden">|</span>
-          <ul class="mt-4 mb-8 flex flex-wrap gap-2 sm:my-8">
+          <ul class="flex flex-wrap gap-2 opacity-80">
             {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
           </ul>
         </>
