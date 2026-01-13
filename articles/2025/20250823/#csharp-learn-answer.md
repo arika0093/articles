@@ -1,10 +1,13 @@
 ---
 title: "【C#】同じ5行のコードが全く違って見える12の瞬間、に対するC#での回答"
-emoji: "🚢"
-type: "tech"
-topics: ["dotnet"]
 published: true
+zenn:
+  published: true
+  emoji: "🚢"
+  type: "tech"
+  topics: ["dotnet"]
 ---
+
 
 こんな記事がTwitterに流れてきました。 
 https://zenn.dev/coconala/articles/reasons-for-continuing-to-learn

@@ -1,10 +1,13 @@
 ---
 title: "【C#】vLLMをAspireで動かしてAIを使える開発環境を作ってみる"
-emoji: "🤖"
-type: "tech"
-topics: ["AI", "vllm", "aspire", "csharp"]
 published: true
+zenn:
+  published: true
+  emoji: "🤖"
+  type: "tech"
+  topics: ["AI", "vllm", "aspire", "csharp"]
 ---
+
 
 Aspireを使って、C#簡潔でAIを使うための開発環境を作ってみます。
 

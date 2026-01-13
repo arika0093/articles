@@ -1,10 +1,13 @@
 ---
 title: "【C#】File.Replaceはatomicに更新を行うのか？"
-emoji: "🛠️"
-type: "tech"
-topics: ["csharp", "dotnet"]
 published: true
+zenn:
+  published: true
+  emoji: "🛠️"
+  type: "tech"
+  topics: ["csharp", "dotnet"]
 ---
+
 
 `File.Replace`のファイル置き換えは果たしてatomicに行われるのかどうかを調べてみます。
 

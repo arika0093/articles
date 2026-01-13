@@ -1,15 +1,13 @@
 ---
 title: "【BlazorLocalTime】Blazor Serverでタイムゾーンを考慮した日時を正しく表示/編集する"
-emoji: "🕰️"
-type: "tech"
-topics:
-  - "dotnet"
-  - "csharp"
-  - "blazor"
-  - "timezone"
 published: true
-published_at: "2025-06-22 00:10"
+zenn:
+  published: true
+  emoji: "🕰️"
+  type: "tech"
+  topics: []
 ---
+
 
 サーバーサイドBlazor（以下、Blazor Server）は直感的な記法でWebアプリを作成しやすいのですが、日時(`DateTime`)の取り扱いに注意が必要です。
 

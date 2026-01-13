@@ -1,10 +1,13 @@
 ---
 title: "【C#】SourceGeneratorを作成するときに気をつけるポイント"
-emoji: "⚠️"
-type: "tech"
-topics: ["csharp", "dotnet", "sourcegenerator"]
 published: false
+zenn:
+  published: false
+  emoji: "⚠️"
+  type: "tech"
+  topics: ["csharp", "dotnet", "sourcegenerator"]
 ---
+
 
 皆さん、Source Generator作ってますか？まだの方はぜひ作ってみてください。AIに頼めば意外と簡単に作れます。
 

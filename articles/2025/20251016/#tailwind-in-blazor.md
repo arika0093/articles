@@ -1,10 +1,13 @@
 ---
 title: "【C#】BlazorでもTailwindcssを'手軽に'使おう"
-emoji: "🎨"
-type: "tech"
-topics: ["csharp", "dotnet", "blazor", "tailwindcss"]
 published: true
+zenn:
+  published: true
+  emoji: "🎨"
+  type: "tech"
+  topics: ["csharp", "dotnet", "blazor", "tailwindcss"]
 ---
+
 
 Blazorでtailwindcssを使っていきます。
 

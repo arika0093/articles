@@ -1,10 +1,13 @@
 ---
 title: "drizzleでできることをprismaと比較しながら確認する"
-emoji: "😎"
-type: "tech"
-topics: []
 published: false
+zenn:
+  published: false
+  emoji: "😎"
+  type: "tech"
+  topics: []
 ---
+
 
 drizzleを使っていきます。
 https://orm.drizzle.team/

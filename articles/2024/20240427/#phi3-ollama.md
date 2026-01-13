@@ -1,15 +1,13 @@
 ---
 title: "phi3とollamaを使ってローカルでデータ処理を行ってみる① 文章分類"
-emoji: "🦙"
-type: "tech"
-topics:
-  - "python"
-  - "polars"
-  - "ollama"
-  - "phi3"
 published: true
-published_at: "2024-04-27 16:29"
+zenn:
+  published: true
+  emoji: "🦙"
+  type: "tech"
+  topics: []
 ---
+
 
 LLMをまともに使ったことがなかったので、勉強がてら。
 

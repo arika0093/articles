@@ -1,10 +1,13 @@
 ---
 title: "【C#】Blazorで強制リダイレクトを実装する方法"
-emoji: "🚀"
-type: "tech"
-topics: ["csharp", "dotnet", "blazor"]
 published: true
+zenn:
+  published: true
+  emoji: "🚀"
+  type: "tech"
+  topics: ["csharp", "dotnet", "blazor"]
 ---
+
 
 例えばユーザーログイン後に初期設定ページに強制的に転移させるなど、特定の条件に基づいてBlazorアプリケーション内で強制リダイレクトを実装したい場合があります。
 この場合、どのページを開こうとしても指定したページにリダイレクトしてほしいわけです。

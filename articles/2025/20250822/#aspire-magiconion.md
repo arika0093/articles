@@ -1,10 +1,13 @@
 ---
 title: "【C#】Aspire+MagicOnionで快適にアプリ開発する"
-emoji: "🧅"
-type: "tech"
-topics: ["dotnet", "aspire", "magiconion", "api"]
 published: true
+zenn:
+  published: true
+  emoji: "🧅"
+  type: "tech"
+  topics: ["dotnet", "aspire", "magiconion", "api"]
 ---
+
 
 ## 前置き
 

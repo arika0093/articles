@@ -1,15 +1,13 @@
 ---
 title: "【C#】バージョン管理とリリースを自動化する【Nerdbank.GitVersioning】"
-emoji: "📦️"
-type: "tech"
-topics:
-  - "dotnet"
-  - "csharp"
-  - "nuget"
-  - "git"
 published: true
-published_at: "2025-06-24 00:45"
+zenn:
+  published: true
+  emoji: "📦️"
+  type: "tech"
+  topics: []
 ---
+
 
 NuGetパッケージやアプリケーションのバージョン管理、手作業でやると普通に面倒ですよね。 
 そこで、[Nerdbank.GitVersioning](https://github.com/dotnet/Nerdbank.GitVersioning)を使用したバージョン管理の自動化について解説します。

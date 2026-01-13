@@ -1,10 +1,13 @@
 ---
 title: "Bashで実行可能なHTMLファイルを作成する"
-emoji: "🔥"
-type: "tech"
-topics: ["html", "bash", "dotfiles"]
 published: true
+zenn:
+  published: true
+  emoji: "🔥"
+  type: "tech"
+  topics: ["html", "bash", "dotfiles"]
 ---
+
 
 ## 前置き
 皆さんは何かしらの導入スクリプトとして、このようなものを見たことがあるはずです。 

@@ -1,10 +1,13 @@
 ---
 title: "【C#】実行ファイルの自動アップデートを提供するVelopackを試してみる"
-emoji: "🤖"
-type: "tech"
-topics: ["csharp", "dotnet", "velopack"]
 published: true
+zenn:
+  published: true
+  emoji: "🤖"
+  type: "tech"
+  topics: ["csharp", "dotnet", "velopack"]
 ---
+
 
 頒布したアプリケーションを手動で更新するのは色々と面倒なので、自動でアップデートできる仕組みを入れたいと考えました。
 調べてみるとSquirrelの後継である[Velopack](https://github.com/velopack/velopack)があったので、試してみます。
