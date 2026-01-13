@@ -108,14 +108,6 @@ const nextPost =
         ]}>|</span
       >
       <EditPost {post} class="max-sm:hidden" />
-      {tags.length > 0 && (
-        <>
-          <span aria-hidden="true" class="max-sm:hidden">|</span>
-          <ul class="flex flex-wrap gap-2 opacity-80">
-            {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
-          </ul>
-        </>
-      )}
     </div>
     <article
       id="article"
