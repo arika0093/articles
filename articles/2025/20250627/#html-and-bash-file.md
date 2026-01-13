@@ -1,6 +1,7 @@
 ---
 title: "Bashで実行可能なHTMLファイルを作成する"
 published: true
+tags: ["html", "bash", "dotfiles"]
 zenn:
   published: true
   emoji: "🔥"

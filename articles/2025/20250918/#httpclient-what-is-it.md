@@ -1,6 +1,7 @@
 ---
 title: "【C#】HttpClientとその設定方法を理解しよう"
 published: true
+tags: ["csharp", "dotnet", "http", "httpclient"]
 zenn:
   published: true
   emoji: "🌍️"

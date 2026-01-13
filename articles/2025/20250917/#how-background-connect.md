@@ -1,6 +1,7 @@
 ---
 title: "【C#】BackgroundServiceをDIして他からデータを取得したい"
 published: true
+tags: ["csharp", "dotnet", "asp.net", "background"]
 zenn:
   published: true
   emoji: "⚙"

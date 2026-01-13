@@ -1,6 +1,7 @@
 ---
 title: "【C#】タブレットのカメラで画像を読み取ってAIにOCRしてもらう(カメラ編)"
 published: true
+tags: ["dotnet", "csharp", "blazor", "ai", "ocr"]
 zenn:
   published: true
   emoji: "🌍️"

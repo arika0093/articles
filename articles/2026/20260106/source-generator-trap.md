@@ -1,6 +1,7 @@
 ---
 title: "【C#】SourceGeneratorを作成するときに気をつけるポイント"
 published: false
+tags: ["csharp", "dotnet", "sourcegenerator"]
 zenn:
   published: false
   emoji: "⚠️"

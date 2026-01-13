@@ -1,6 +1,7 @@
 ---
 title: "【C#】Blazorで強制リダイレクトを実装する方法"
 published: true
+tags: ["csharp", "dotnet", "blazor"]
 zenn:
   published: true
   emoji: "🚀"

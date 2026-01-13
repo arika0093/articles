@@ -1,6 +1,7 @@
 ---
 title: "dependabotのエラーを解決する備忘録"
 published: true
+tags: ["dotnet", "github", "dependabot"]
 zenn:
   published: true
   emoji: "🔧"

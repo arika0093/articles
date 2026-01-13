@@ -1,6 +1,7 @@
 ---
 title: "【C#】同じ5行のコードが全く違って見える12の瞬間、に対するC#での回答"
 published: true
+tags: ["dotnet"]
 zenn:
   published: true
   emoji: "🚢"

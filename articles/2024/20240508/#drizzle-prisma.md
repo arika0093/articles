@@ -1,6 +1,7 @@
 ---
 title: "drizzleでできることをprismaと比較しながら確認する"
 published: false
+tags: []
 zenn:
   published: false
   emoji: "😎"

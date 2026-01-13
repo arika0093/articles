@@ -1,6 +1,7 @@
 ---
 title: "【C#】実行ファイルの自動アップデートを提供するVelopackを試してみる"
 published: true
+tags: ["csharp", "dotnet", "velopack"]
 zenn:
   published: true
   emoji: "🤖"

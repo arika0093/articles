@@ -1,6 +1,7 @@
 ---
 title: "ZennのGitHub連携で柔軟なフォルダ構成を使う"
 published: true
+tags: ["zenn", "python"]
 zenn:
   published: true
   emoji: "🤖"

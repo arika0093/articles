@@ -1,6 +1,7 @@
 ---
 title: "phi3とollamaを使ってローカルでデータ処理を行ってみる① 文章分類"
 published: true
+tags: []
 zenn:
   published: true
   emoji: "🦙"

@@ -1,6 +1,7 @@
 ---
 title: "【C#】MagicOnionのJsonTranscodingを使ってみる"
 published: true
+tags: ["dotnet", "magiconion", "debug"]
 zenn:
   published: true
   emoji: "🧅"

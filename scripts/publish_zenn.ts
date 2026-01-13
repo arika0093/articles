@@ -15,6 +15,7 @@ interface ArticleFrontmatter {
   emoji?: string;
   type?: 'tech' | 'idea';
   topics?: string[];
+  tags?: string[];
   zenn?: ZennMetadata;
 }
 
@@ -82,7 +83,7 @@ function parseFrontmatter(content: string): { frontmatter: ArticleFrontmatter; b
         const [, key, value] = keyValueMatch;
         currentKey = key;
         
-        if (key === 'topics') {
+        if (key === 'topics' || key === 'tags') {
           const topicsMatch = value.match(/\[(.*)\]/);
           if (topicsMatch) {
             frontmatter[key] = topicsMatch[1].split(',').map(t => t.trim().replace(/['"]/g, ''));
@@ -109,7 +110,8 @@ function generateZennFrontmatter(frontmatter: ArticleFrontmatter): string {
   const title = frontmatter.title || '';
   const emoji = zenn.emoji || frontmatter.emoji || '📝';
   const type = zenn.type || frontmatter.type || 'tech';
-  const topics = zenn.topics || frontmatter.topics || [];
+  // Use zenn.topics if available, otherwise fall back to tags field
+  const topics = zenn.topics || frontmatter.tags || frontmatter.topics || [];
   const published = zenn.published !== undefined ? zenn.published : (frontmatter.published || false);
   
   const topicsStr = topics.length > 0 ? `["${topics.join('", "')}"]` : '[]';

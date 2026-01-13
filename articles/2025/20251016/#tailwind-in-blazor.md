@@ -1,6 +1,7 @@
 ---
 title: "【C#】BlazorでもTailwindcssを'手軽に'使おう"
 published: true
+tags: ["csharp", "dotnet", "blazor", "tailwindcss"]
 zenn:
   published: true
   emoji: "🎨"

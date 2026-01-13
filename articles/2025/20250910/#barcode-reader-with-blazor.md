@@ -1,6 +1,7 @@
 ---
 title: "【Blazor】バーコードリーダー対応の入力フォームを作成する"
 published: true
+tags: ["dotnet", "blazor", "barcode"]
 zenn:
   published: true
   emoji: "🌍️"

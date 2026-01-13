@@ -1,6 +1,7 @@
 ---
 title: "【C#】NuGet公開パッケージを作る際のTips"
 published: false
+tags: []
 zenn:
   published: false
   emoji: "📦️"

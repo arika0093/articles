@@ -1,6 +1,7 @@
 ---
 title: "【C#】Blazor.Authで認証認可をシンプルに実装する"
 published: true
+tags: ["csharp", "dotnet", "blazor", "authentication"]
 zenn:
   published: true
   emoji: "🔐"

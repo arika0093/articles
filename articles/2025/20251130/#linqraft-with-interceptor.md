@@ -1,6 +1,7 @@
 ---
 title: "【C#】Prismaのような書き心地をEFCoreでも実現！Linqraftの紹介"
 published: true
+tags: ["csharp", "dotnet", "interceptor", "source-generator"]
 zenn:
   published: true
   emoji: "📖"

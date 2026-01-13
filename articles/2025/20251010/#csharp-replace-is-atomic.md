@@ -1,6 +1,7 @@
 ---
 title: "【C#】File.Replaceはatomicに更新を行うのか？"
 published: true
+tags: ["csharp", "dotnet"]
 zenn:
   published: true
   emoji: "🛠️"

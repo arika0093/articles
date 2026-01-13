@@ -1,6 +1,7 @@
 ---
 title: "【C#】バージョン管理とリリースを自動化する【Nerdbank.GitVersioning】"
 published: true
+tags: []
 zenn:
   published: true
   emoji: "📦️"
