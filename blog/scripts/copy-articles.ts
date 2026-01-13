@@ -93,7 +93,7 @@ async function main() {
       
       // Update image references in markdown
       const imgRegex = new RegExp(`\\(${img.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\)`, 'g');
-      content = content.replace(imgRegex, `(/articles/images/${dateFolder}/${img})`);
+      content = content.replace(imgRegex, `(/images/${dateFolder}/${img})`);
     }
     
     // Remove references to non-existent images

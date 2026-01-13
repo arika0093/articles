@@ -95,7 +95,10 @@ const nextPost =
     >
       {title}
     </h1>
-    <div class="my-2 flex items-center gap-2">
+    {description && (
+      <p class="mt-2 text-base opacity-80">{description}</p>
+    )}
+    <div class="my-2 flex flex-wrap items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
       <span
         aria-hidden="true"
@@ -105,10 +108,18 @@ const nextPost =
         ]}>|</span
       >
       <EditPost {post} class="max-sm:hidden" />
+      {tags.length > 0 && (
+        <>
+          <span aria-hidden="true" class="max-sm:hidden">|</span>
+          <div class="flex flex-wrap gap-1.5 text-xs max-sm:hidden">
+            {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
+          </div>
+        </>
+      )}
     </div>
     <article
       id="article"
-      class="app-prose mt-8 w-full max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
+      class="app-prose mt-8 w-full max-w-app"
     >
       <Content />
     </article>
