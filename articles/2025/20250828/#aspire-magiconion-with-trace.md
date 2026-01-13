@@ -1,10 +1,14 @@
 ---
 title: "【C#】MagicOnionのJsonTranscodingを使ってみる"
-emoji: "🧅"
-type: "tech"
-topics: ["dotnet", "magiconion", "debug"]
 published: true
+tags: ["dotnet", "magiconion", "debug"]
+zenn:
+  published: true
+  emoji: "🧅"
+  type: "tech"
+  topics: ["dotnet", "magiconion", "debug"]
 ---
+
 
 ## まえがき 
 [MagicOnion](https://github.com/Cysharp/MagicOnion)のサーバー開発を行う際に、動作確認用のUIがあると便利です。

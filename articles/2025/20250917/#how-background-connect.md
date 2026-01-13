@@ -1,10 +1,14 @@
 ---
 title: "【C#】BackgroundServiceをDIして他からデータを取得したい"
-emoji: "⚙"
-type: "tech"
-topics: ["csharp", "dotnet", "asp.net", "background"]
 published: true
+tags: ["csharp", "dotnet", "asp.net", "background"]
+zenn:
+  published: true
+  emoji: "⚙"
+  type: "tech"
+  topics: ["csharp", "dotnet", "asp.net", "background"]
 ---
+
 
 タイトルが意味不明だと思った方、正解です。
 

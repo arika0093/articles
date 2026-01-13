@@ -1,10 +1,14 @@
 ---
 title: "【C#】null判定をコンパイラに適切に伝える[NotNull]"
-emoji: "🛡️"
-type: "tech"
-topics: ["csharp", "dotnet"]
 published: true
+tags: ["csharp", "dotnet"]
+zenn:
+  published: true
+  emoji: "🛡️"
+  type: "tech"
+  topics: ["csharp", "dotnet"]
 ---
+
 
 ## 前置き
 

@@ -1,10 +1,14 @@
 ---
 title: "【Blazor】バーコードリーダー対応の入力フォームを作成する"
-emoji: "🌍️"
-type: "tech"
-topics: ["dotnet", "blazor", "barcode"]
 published: true
+tags: ["dotnet", "blazor", "barcode"]
+zenn:
+  published: true
+  emoji: "🌍️"
+  type: "tech"
+  topics: ["dotnet", "blazor", "barcode"]
 ---
+
 
 表題の通り、バーコードリーダーで読み取った文字列を入力するテキストボックスをBlazorで作成していきます。
 

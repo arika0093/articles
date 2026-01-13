@@ -1,14 +1,14 @@
 ---
 title: "【C#】NuGet公開パッケージを作る際のTips"
-emoji: "📦️"
-type: "tech"
-topics:
-  - "dotnet"
-  - "csharp"
-  - "package"
-  - "nuget"
 published: false
+tags: []
+zenn:
+  published: false
+  emoji: "📦️"
+  type: "tech"
+  topics: []
 ---
+
 
 最近NuGetに公開するパッケージを作成したので、その際のTipsをまとめます。 
 当該パッケージは[こちらの記事](https://zenn.dev/arika/articles/20250622-blazor-localtime)で紹介しています。

@@ -1,10 +1,14 @@
 ---
 title: "【C#】HttpClientとその設定方法を理解しよう"
-emoji: "🌍️"
-type: "tech"
-topics: ["csharp", "dotnet", "http", "httpclient"]
 published: true
+tags: ["csharp", "dotnet", "http", "httpclient"]
+zenn:
+  published: true
+  emoji: "🌍️"
+  type: "tech"
+  topics: ["csharp", "dotnet", "http", "httpclient"]
 ---
+
 
 HttpClientの周辺に色々クラスやらなんやらがあって、どれを使えばいいのか正直よくわからない！
 そのあたりの知識整理をしていきます。

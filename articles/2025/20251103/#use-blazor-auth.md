@@ -1,10 +1,14 @@
 ---
 title: "【C#】Blazor.Authで認証認可をシンプルに実装する"
-emoji: "🔐"
-type: "tech"
-topics: ["csharp", "dotnet", "blazor", "authentication"]
 published: true
+tags: ["csharp", "dotnet", "blazor", "authentication"]
+zenn:
+  published: true
+  emoji: "🔐"
+  type: "tech"
+  topics: ["csharp", "dotnet", "blazor", "authentication"]
 ---
+
 
 Blazorで認証を実装していく際、組み込みのASP.NET Core Identityはちょっと大げさな感じですし、何をやっているのかイマイチわかりにくくて敷居が高いと感じることがあります。
 そんなときに役立つのが`Blazor.Auth`ライブラリです。このライブラリを使うことで、認証機能をシンプルかつサクッと実装できます。

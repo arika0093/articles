@@ -1,15 +1,17 @@
 ---
 title: "docker-composeでプロキシ環境を再現する"
-emoji: "🌐"
-type: "tech"
-topics:
-  - "docker"
-  - "proxy"
-  - "dockercompose"
-  - "squid"
 published: true
-published_at: "2023-08-28 00:45"
+zenn:
+  published: true
+  emoji: "🌐"
+  type: "tech"
+  topics:
+    - "docker"
+    - "proxy"
+    - "dockercompose"
+    - "squid"
 ---
+
 
 ## TL;DR
 1. squidを追加で建てる

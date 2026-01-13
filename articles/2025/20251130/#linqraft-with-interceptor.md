@@ -1,10 +1,14 @@
 ---
 title: "【C#】Prismaのような書き心地をEFCoreでも実現！Linqraftの紹介"
-emoji: "📖"
-type: "tech"
-topics: ["csharp", "dotnet", "interceptor", "source-generator"]
 published: true
+tags: ["csharp", "dotnet", "interceptor", "source-generator"]
+zenn:
+  published: true
+  emoji: "📖"
+  type: "tech"
+  topics: ["csharp", "dotnet", "interceptor", "source-generator"]
 ---
+
 
 先日、[Linqraft](https://arika0093.github.io/Linqraft/)というC#のライブラリを公開しました！この記事ではその紹介をしたいと思います。
 ![ちょっと頑張って作ったトップページ](image-1.png)

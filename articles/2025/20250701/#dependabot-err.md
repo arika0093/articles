@@ -1,10 +1,14 @@
 ---
 title: "dependabotのエラーを解決する備忘録"
-emoji: "🔧"
-type: "tech"
-topics: ["dotnet", "github", "dependabot"]
 published: true
+tags: ["dotnet", "github", "dependabot"]
+zenn:
+  published: true
+  emoji: "🔧"
+  type: "tech"
+  topics: ["dotnet", "github", "dependabot"]
 ---
+
 
 本当にしょうもない内容なのですが、ちょっとハマったので。 
 
