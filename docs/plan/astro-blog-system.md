@@ -10,7 +10,7 @@ Astroを使用したブログシステムを構築し、既存の記事資産を
 
 ## ディレクトリとセットアップ方針
 - ルート直下の既存フォルダ（`articles/`, `draft/`, `scripts/` など）はそのまま保持する。
-- Astro は `blog/` 配下に新規作成する。例: `npm create astro@latest -- --template blog --root blog`（既存 package.json のスクリプトを壊さないように独立させる）。
+- Astro は `blog/` 配下に新規作成する。公式 CLI の最新推奨コマンドで作成する（例: `npm create astro@latest blog --template=blog`。テンプレート名は blog/minimal など公式ドキュメントのテンプレート一覧に合わせて随時更新する）。
 - Astro 側の記事参照は必要に応じて `../articles/**` を読むようにし、ビルド成果物は `blog/dist` に出力する。
 
 ## frontmatter スキーマ
@@ -36,12 +36,19 @@ zenn:
 ## GitHub Actions (Astro + GitHub Pages)
 - `.github/workflows/astro-build.yml`（名称は任意）を追加する。
   - トリガー: `push` to `main` と `workflow_dispatch`。
-  - ステップ例: `actions/checkout` → `setup-node@v4` (Node 20) → `npm ci` (必要なら `working-directory: blog`) → `npm run build` → `actions/configure-pages` → `actions/upload-pages-artifact`（`blog/dist` をアップロード）→ `actions/deploy-pages`。
+  - ステップ例:
+    - `actions/checkout@v4`
+    - `actions/setup-node@v4` (Node 20)
+    - `npm ci`（必要なら `working-directory: blog` を指定）
+    - `npm run build`
+    - `actions/configure-pages@v4`
+    - `actions/upload-pages-artifact@v4`（`blog/dist` をアップロード）
+    - `actions/deploy-pages@v4`
   - キャッシュは `npm` または `pnpm` を使用する（プロジェクトに合わせる）。
   - `pages` 権限と `id-token` 権限を付与し、`environment: github-pages` を設定する。
 
 ## Zenn 公開スクリプト (TypeScript 版)
-- 既存の Python スクリプト（`scripts/setup_zenn.py` または新設する `publish_zenn.ts`）を TypeScript(Node.js) に書き換える。
+- 現行の Python スクリプト `scripts/setup_zenn.py` を廃止し、後継の TypeScript 版 `scripts/publish_zenn.ts` にリネーム・実装する（元 TODO で言及されていた `publish_zenn.py` を TS で置き換える位置付け）。
 - 役割:
   - `articles/` 以下の markdown を走査し、frontmatter から Zenn 用 metadata を生成。
   - 変換後の Zenn frontmatter は以下の対応で出力する:
