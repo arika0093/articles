@@ -14,7 +14,7 @@ export const SITE = {
   editPost: {
     enabled: true,
     text: "Edit on GitHub",
-    url: "https://github.com/arika0093/articles/edit/main/articles/",
+    url: "https://github.com/arika0093/articles/edit/main/",
   },
   dynamicOgImage: true,
   dir: "ltr",
