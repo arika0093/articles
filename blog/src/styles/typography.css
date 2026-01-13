@@ -13,10 +13,6 @@
       @apply mb-3 text-foreground;
     }
 
-    h3 {
-      @apply italic;
-    }
-
     p,
     strong,
     ol,
@@ -110,11 +106,7 @@
     line-height: 1.4;
   }
   
-  /* Light mode: light gray background */
-  :root .astro-code,
-  html[data-theme="light"] .astro-code {
-    background-color: #f5f5f5 !important;
-  }
+
 
   html[data-theme="dark"] .astro-code {
     @apply bg-(--shiki-dark-bg) text-(--shiki-dark) [&_span]:text-(--shiki-dark);
