@@ -1,26 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-
-function findMarkdownFiles(dir: string): string[] {
-  const files: string[] = [];
-  
-  function walk(directory: string) {
-    const entries = fs.readdirSync(directory, { withFileTypes: true });
-    
-    for (const entry of entries) {
-      const fullPath = path.join(directory, entry.name);
-      
-      if (entry.isDirectory()) {
-        walk(fullPath);
-      } else if (entry.isFile() && entry.name.endsWith('.md')) {
-        files.push(fullPath);
-      }
-    }
-  }
-  
-  walk(dir);
-  return files;
-}
+import { findMarkdownFiles } from '../../lib/markdown.js';
 
 async function main() {
   const articlesDir = path.join(process.cwd(), '..', 'articles');
@@ -84,7 +64,7 @@ async function main() {
     }
     
     // Copy existing images to public directory and update references
-    for (const img of existingImages) {
+    for (const img of Array.from(existingImages)) {
       const imgSource = path.join(sourceDir, img);
       const imgPublicDir = path.join(publicImagesDir, dateFolder);
       fs.mkdirSync(imgPublicDir, { recursive: true });
