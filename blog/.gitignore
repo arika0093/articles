@@ -19,5 +19,5 @@ pnpm-debug.log*
 .DS_Store
 
 # copied content from articles
-src/content/blog/
+src/data/blog/
 public/images/

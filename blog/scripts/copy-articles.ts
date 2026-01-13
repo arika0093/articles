@@ -24,7 +24,7 @@ function findMarkdownFiles(dir: string): string[] {
 
 async function main() {
   const articlesDir = path.join(process.cwd(), '..', 'articles');
-  const blogContentDir = path.join(process.cwd(), 'src', 'content', 'blog');
+  const blogContentDir = path.join(process.cwd(), 'src', 'data', 'blog');
   const publicImagesDir = path.join(process.cwd(), 'public', 'images');
   
   // Clear blog content directory
@@ -56,6 +56,15 @@ async function main() {
     const parts = relativePath.split(path.sep);
     const dateFolder = parts.length >= 2 ? parts[1] : path.basename(path.dirname(file));
     
+    // Parse date from folder name (YYYYMMDD format)
+    let pubDatetime = '';
+    if (dateFolder.match(/^\d{8}$/)) {
+      const year = dateFolder.substring(0, 4);
+      const month = dateFolder.substring(4, 6);
+      const day = dateFolder.substring(6, 8);
+      pubDatetime = `${year}-${month}-${day}`;
+    }
+    
     // Copy and process markdown file
     let content = fs.readFileSync(file, 'utf-8');
     
@@ -84,24 +93,36 @@ async function main() {
       
       // Update image references in markdown
       const imgRegex = new RegExp(`\\(${img.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\)`, 'g');
-      content = content.replace(imgRegex, `(/images/${dateFolder}/${img})`);
+      content = content.replace(imgRegex, `(/articles/images/${dateFolder}/${img})`);
     }
     
     // Remove references to non-existent images
-    // Find all ![...](filename.ext) patterns where filename doesn't exist
     const imageRefPattern = /!\[([^\]]*)\]\(([^)]+\.(png|jpg|jpeg|gif|svg|webp))\)/gi;
     content = content.replace(imageRefPattern, (match, alt, filename) => {
-      // Extract just the filename without path
       const justFilename = path.basename(filename);
       
-      // If this image exists (we processed it above), keep the reference
-      // Otherwise, comment it out
       if (existingImages.has(justFilename)) {
-        return match; // Keep as-is (already updated above)
+        return match;
       } else {
         return `<!-- Missing image: ${match} -->`;
       }
     });
+    
+    // Add pubDatetime to frontmatter if it doesn't exist
+    if (pubDatetime && !content.match(/^pubDatetime:/m)) {
+      content = content.replace(/^---\n/, `---\npubDatetime: ${pubDatetime}\n`);
+    }
+    
+    // Convert zenn.topics to tags if not already present
+    if (!content.match(/^tags:/m)) {
+      const topicsMatch = content.match(/topics:\s*\[(.*?)\]/);
+      if (topicsMatch) {
+        const topics = topicsMatch[1].split(',').map(t => t.trim().replace(/['"]/g, '')).filter(t => t);
+        if (topics.length > 0) {
+          content = content.replace(/^---\n/, `---\ntags: [${topics.map(t => `"${t}"`).join(', ')}]\n`);
+        }
+      }
+    }
     
     fs.writeFileSync(finalPath, content, 'utf-8');
   }
