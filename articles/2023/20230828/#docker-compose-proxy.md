@@ -5,7 +5,11 @@ zenn:
   published: true
   emoji: "🌐"
   type: "tech"
-  topics: []
+  topics:
+    - "docker"
+    - "proxy"
+    - "dockercompose"
+    - "squid"
 ---
 
 
