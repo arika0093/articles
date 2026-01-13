@@ -1,9 +1,9 @@
 export const SITE = {
-  website: "https://arika0093.github.io/articles/",
+  website: "https://eclairs.cc",
   author: "arika0093",
   profile: "https://github.com/arika0093",
   desc: "A blog about programming and technology.",
-  title: "arika0093's blog",
+  title: "eclair's note",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
   postPerIndex: 10,
