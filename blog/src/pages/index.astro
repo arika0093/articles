@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => {
+  return data.published === true;
+});
+
+// Sort posts by date (newest first)
+const sortedPosts = allPosts.sort((a, b) => {
+  const dateA = new Date(a.id.split('/')[0]);
+  const dateB = new Date(b.id.split('/')[0]);
+  return dateB.getTime() - dateA.getTime();
+});
+---
+
+<Layout title="Blog">
+  <main>
+    <h1>記事一覧</h1>
+    <ul class="post-list">
+      {sortedPosts.map((post) => (
+        <li>
+          <a href={`/articles/blog/${post.slug}/`}>
+            <h2>{post.data.title}</h2>
+            {post.data.description && <p>{post.data.description}</p>}
+            <time>{post.id.split('/')[0]}</time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Layout>
+
+<style>
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .post-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .post-list li {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .post-list a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .post-list h2 {
+    margin: 0 0 0.5rem 0;
+    color: #0066cc;
+  }
+  
+  .post-list p {
+    margin: 0.5rem 0;
+    color: #666;
+  }
+  
+  .post-list time {
+    font-size: 0.875rem;
+    color: #999;
+  }
+</style>

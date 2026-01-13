@@ -2,10 +2,16 @@
   "name": "zenn-blog",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "article": "zenn new:article",
     "book": "zenn new:book",
-    "preview": "zenn preview"
+    "preview": "zenn preview",
+    "publish:zenn": "tsx scripts/publish_zenn.ts",
+    "update:frontmatter": "tsx scripts/update_frontmatter.ts",
+    "blog:dev": "cd blog && npm run dev",
+    "blog:build": "cd blog && npm run build",
+    "blog:preview": "cd blog && npm run preview"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +21,10 @@
     "@anthropic-ai/claude-code": "^1.0.89",
     "@sinedied/devto-cli": "^1.4.0",
     "zenn-cli": "^0.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
   }
 }
