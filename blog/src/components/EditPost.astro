@@ -4,12 +4,11 @@ import IconEdit from "@/assets/icons/IconEdit.svg";
 import { SITE } from "@/config";
 
 type Props = {
-  hideEditPost?: CollectionEntry<"blog">["data"]["hideEditPost"];
   class?: string;
   post: CollectionEntry<"blog">;
 };
 
-const { hideEditPost, post, class: className = "" } = Astro.props;
+const { post, class: className = "" } = Astro.props;
 
 // Transform the filePath from copied blog to original articles directory
 // Example: src/data/blog/2026/20260106/source-generator-trap.md -> articles/2026/20260106/#source-generator-trap.md
@@ -31,8 +30,7 @@ const transformFilePath = (filePath?: string): string => {
 };
 
 const href = `${SITE.editPost.url}${transformFilePath(post.filePath)}`;
-const showEditPost =
-  SITE.editPost.enabled && !hideEditPost && href.trim() !== "";
+const showEditPost = SITE.editPost.enabled && href.trim() !== "";
 ---
 
 {

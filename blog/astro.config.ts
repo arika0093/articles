@@ -2,7 +2,8 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
-import remarkCollapse from "remark-collapse";
+import remarkBreaks from "remark-breaks";
+import remarkLinkCardPlus from "remark-link-card-plus";
 import rehypeExternalLinks from "rehype-external-links";
 import {
   transformerNotationDiff,
@@ -10,6 +11,7 @@ import {
   transformerNotationWordHighlight,
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
+import { rehypeGist } from "./src/utils/rehype/rehypeGist";
 import { SITE } from "./src/config";
 
 // https://astro.build/config
@@ -22,7 +24,11 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
+    remarkPlugins: [
+      remarkBreaks,
+      [remarkToc, { heading: "目次|Table of contents" }],
+      remarkLinkCardPlus,
+    ],
     rehypePlugins: [
       [
         rehypeExternalLinks,
@@ -31,6 +37,7 @@ export default defineConfig({
           rel: ["noopener", "noreferrer"],
         },
       ],
+      rehypeGist,
     ],
     shikiConfig: {
       themes: {

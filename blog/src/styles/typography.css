@@ -29,6 +29,7 @@
 
     a {
       @apply wrap-break-word text-foreground decoration-dashed underline-offset-4 hover:text-accent focus-visible:no-underline;
+      text-decoration: underline;
     }
 
     ul {
@@ -68,10 +69,16 @@
 
     code {
       @apply rounded bg-muted/75 p-1 wrap-break-word text-foreground before:content-none after:content-none;
+      font-family: 'JetBrains Mono', Consolas, 'Hiragino Kaku Gothic ProN', Meiryo, serif;
+      font-size: 14px;
+      line-height: 1.4;
     }
 
     .astro-code code {
       @apply flex-[1_0_100%] bg-inherit p-0;
+      font-family: 'JetBrains Mono', Consolas, 'Hiragino Kaku Gothic ProN', Meiryo, serif;
+      font-size: 14px;
+      line-height: 1.4;
     }
 
     blockquote {
@@ -89,11 +96,24 @@
     pre {
       @apply focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-dashed;
     }
+
+    /* Footnotes styling */
+    .footnotes {
+      @apply mt-8 pt-4 border-t border-border text-[0.8rem];
+    }
   }
 
   /* ===== Code Blocks & Syntax Highlighting ===== */
   .astro-code {
     @apply flex border bg-(--shiki-light-bg) text-(--shiki-light) outline-border [&_span]:text-(--shiki-light);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  
+  /* Light mode: light gray background */
+  :root .astro-code,
+  html[data-theme="light"] .astro-code {
+    background-color: #f5f5f5 !important;
   }
 
   html[data-theme="dark"] .astro-code {
