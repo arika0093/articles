@@ -234,7 +234,9 @@ async function main() {
           // Check if large image is referenced
           if (content.includes(`(${imgName})`)) {
             throw new Error(
-              `Image ${imgInfo.currentPath} is too large to upload. Please remove it from ${mdPath}.`
+              `Image ${imgInfo.currentPath} is too large to upload (${(imgInfo.isLarge ? '>3MB' : '')}). ` +
+              `Please compress the image or remove it from ${mdPath}. ` +
+              `Consider using tools like ImageOptim, TinyPNG, or converting to WebP format.`
             );
           }
         } else {
