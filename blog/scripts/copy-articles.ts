@@ -80,13 +80,14 @@ async function main() {
     const imageRefPattern = /!\[([^\]]*)\]\(([^)]+\.(png|jpg|jpeg|gif|svg|webp))\)/gi;
     content = content.replace(imageRefPattern, (match, alt, filename) => {
       const justFilename = path.basename(filename);
-      
+
+      if (match.includes("http")) {
+        return match;
+      }
       if (existingImages.has(justFilename)) {
         return match;
-      } else {
-        return match;
-        // return `<!-- Missing image: ${match} -->`;
       }
+      return `<!-- Missing image: ${match} -->`;
     });
     
     // Add pubDatetime to frontmatter if it doesn't exist
