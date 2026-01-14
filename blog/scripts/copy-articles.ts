@@ -84,7 +84,8 @@ async function main() {
       if (existingImages.has(justFilename)) {
         return match;
       } else {
-        return `<!-- Missing image: ${match} -->`;
+        return match;
+        // return `<!-- Missing image: ${match} -->`;
       }
     });
     
