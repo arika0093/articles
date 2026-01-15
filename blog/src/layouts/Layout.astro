@@ -1,6 +1,7 @@
 ---
 // import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
+import { GoogleAnalytics } from 'astro-google-analytics';
 // import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { SITE } from "@/config";
 import "@/styles/global.css";
@@ -17,6 +18,7 @@ type Props = {
   scrollSmooth?: boolean;
 };
 
+const isProd = import.meta.env.PROD;
 const {
   title = SITE.title,
   author = SITE.author,
@@ -132,6 +134,9 @@ const structuredData = {
       //   />
       // )
     }
+
+    <!-- Google tag (gtag.js) -->
+    { isProd && <GoogleAnalytics id={SITE.googleAnalyticsId} /> }
 
     <ClientRouter />
 
