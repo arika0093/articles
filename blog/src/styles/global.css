@@ -1,5 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@100..900&family=JetBrains+Mono:wght@400;700&display=swap");
 @import "tailwindcss";
 @import "./typography.css";
+
+@theme {
+  --font-sans: 'M PLUS 1', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Meiryo, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: 'JetBrains Mono', 'Consolas', 'Hiragino Kaku Gothic ProN', 'M PLUS 2', 'Meiryo', sans-serif;
+} 
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
@@ -60,8 +66,15 @@ html[data-theme="dark"] {
 }
 
 .active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-8;
+  @apply underline decoration-2 underline-offset-8;
+  color: var(--accent);
 }
+
+p {
+  @apply font-normal dark:font-light;
+  letter-spacing: 0.5px;
+}
+
 
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
 /* Anything that has been anchored to should have extra scroll margin */

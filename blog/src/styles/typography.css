@@ -1,10 +1,5 @@
 @plugin "@tailwindcss/typography";
 
-@theme {
-  --font-sans: 'Noto Sans Japanese', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Meiryo, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-mono: 'JetBrains Mono', 'Consolas', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-}
-
 @layer base {
   /* ===== Override default Tailwind Typography styles ===== */
   .app-prose {
