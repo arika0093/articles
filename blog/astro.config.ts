@@ -42,7 +42,7 @@ export default defineConfig({
     shikiConfig: {
       themes: {
         light: "light-plus",
-        dark: "dark-plus" 
+        dark: "dark-plus",
       },
       defaultColor: false,
       wrap: false,

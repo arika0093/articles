@@ -93,7 +93,7 @@
 
     /* Footnotes styling */
     .footnotes {
-      @apply mt-8 pt-4 border-t border-border text-[0.8rem];
+      @apply mt-8 border-t border-border pt-4 text-[0.8rem];
     }
   }
 
@@ -103,8 +103,6 @@
     font-size: 14px;
     line-height: 1.4;
   }
-  
-
 
   html[data-theme="dark"] .astro-code {
     @apply bg-(--shiki-dark-bg) text-(--shiki-dark) [&_span]:text-(--shiki-dark);
@@ -112,7 +110,7 @@
 
   /* ===== Link Card Styling ===== */
   .rlc-container {
-    @apply my-6 mx-auto flex max-h-32 w-full max-w-full items-stretch rounded-lg border border-border bg-background no-underline transition-all duration-200;
+    @apply mx-auto my-6 flex max-h-32 w-full max-w-full items-stretch rounded-lg border border-border bg-background no-underline transition-all duration-200;
     text-decoration: none !important;
   }
 
@@ -126,7 +124,7 @@
   }
 
   .rlc-title {
-    @apply overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-foreground sm:text-lg;
+    @apply overflow-hidden text-base font-semibold text-ellipsis whitespace-nowrap text-foreground sm:text-lg;
   }
 
   .rlc-description {
@@ -147,7 +145,7 @@
   }
 
   .rlc-url {
-    @apply overflow-hidden text-ellipsis whitespace-nowrap text-xs text-foreground/60 sm:text-sm;
+    @apply overflow-hidden text-xs text-ellipsis whitespace-nowrap text-foreground/60 sm:text-sm;
   }
 
   .rlc-image-container {
