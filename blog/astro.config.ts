@@ -27,7 +27,7 @@ export default defineConfig({
     remarkPlugins: [
       remarkBreaks,
       [remarkToc, { heading: "目次|Table of contents" }],
-      remarkLinkCard,
+      [remarkLinkCard, { shortenUrl: true }],
     ],
     rehypePlugins: [
       [
