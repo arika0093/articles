@@ -2,11 +2,11 @@ export const SITE = {
   website: "https://eclairs.cc",
   author: "arika0093",
   profile: "https://github.com/arika0093",
-  desc: "A blog about programming and technology.",
+  desc: "テックの世界をてくてく歩く",
   title: "eclair's note",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
-  postPerIndex: 10,
+  postPerIndex: 5,
   postPerPage: 20,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
   showArchives: true,
