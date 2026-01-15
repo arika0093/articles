@@ -8,7 +8,6 @@
     "book": "zenn new:book",
     "preview": "zenn preview",
     "publish:zenn": "tsx scripts/publish_zenn.ts",
-    "update:frontmatter": "tsx scripts/update_frontmatter.ts",
     "blog:dev": "cd blog && npm run dev",
     "blog:build": "cd blog && npm run build",
     "blog:preview": "cd blog && npm run preview"
