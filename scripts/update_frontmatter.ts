@@ -55,9 +55,6 @@ function parseFrontmatter(content: string): { frontmatter: ArticleFrontmatter; b
 // Generate updated frontmatter
 function generateFrontmatter(frontmatter: ArticleFrontmatter): string {
   const title = frontmatter.title || '';
-  const description = frontmatter.description || '';
-  const published = frontmatter.published !== undefined ? frontmatter.published : false;
-
   const zennPublished = frontmatter.zenn?.published !== undefined ? frontmatter.zenn.published : frontmatter.published !== undefined ? frontmatter.published : false;
   const emoji = frontmatter.zenn?.emoji || frontmatter.emoji || '📝';
   const type = frontmatter.zenn?.type || frontmatter.type || 'tech';
