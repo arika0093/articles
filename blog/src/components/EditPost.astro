@@ -13,11 +13,11 @@ const { post, class: className = "" } = Astro.props;
 // Transform the filePath from copied blog to original articles directory
 // Example: src/data/blog/2026/20260106/source-generator-trap.md -> articles/2026/20260106/#source-generator-trap.md
 const transformFilePath = (filePath?: string): string => {
-  if (!filePath) return '';
+  if (!filePath) return "";
   // Remove 'src/data/blog/' prefix
-  const relativePath = filePath.replace(/^src\/data\/blog\//, '');
+  const relativePath = filePath.replace(/^src\/data\/blog\//, "");
   // Split into directory and filename
-  const parts = relativePath.split('/');
+  const parts = relativePath.split("/");
   if (parts.length >= 3) {
     const year = parts[0];
     const date = parts[1];

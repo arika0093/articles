@@ -1,11 +1,11 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import { findMarkdownFiles } from '../../lib/markdown.js';
+import * as fs from "fs";
+import * as path from "path";
+import { findMarkdownFiles } from "../../lib/markdown.js";
 
 async function main() {
-  const articlesDir = path.join(process.cwd(), '..', 'articles');
-  const blogContentDir = path.join(process.cwd(), 'src', 'data', 'blog');
-  const publicImagesDir = path.join(process.cwd(), 'public', 'images');
+  const articlesDir = path.join(process.cwd(), "..", "articles");
+  const blogContentDir = path.join(process.cwd(), "src", "data", "blog");
+  const publicImagesDir = path.join(process.cwd(), "public", "images");
 
   // Clear blog content directory
   if (fs.existsSync(blogContentDir)) {
@@ -27,17 +27,18 @@ async function main() {
 
     // Remove # from filename
     const targetDir = path.dirname(targetPath);
-    const targetFile = path.basename(targetPath).replace(/^#/, '');
+    const targetFile = path.basename(targetPath).replace(/^#/, "");
     const finalPath = path.join(targetDir, targetFile);
 
     fs.mkdirSync(targetDir, { recursive: true });
 
     // Get date from directory structure (e.g., 2025/20250828)
     const parts = relativePath.split(path.sep);
-    const dateFolder = parts.length >= 2 ? parts[1] : path.basename(path.dirname(file));
+    const dateFolder =
+      parts.length >= 2 ? parts[1] : path.basename(path.dirname(file));
 
     // Parse date from folder name (YYYYMMDD format)
-    let pubDatetime = '';
+    let pubDatetime = "";
     if (dateFolder.match(/^\d{8}$/)) {
       const year = dateFolder.substring(0, 4);
       const month = dateFolder.substring(4, 6);
@@ -46,7 +47,7 @@ async function main() {
     }
 
     // Copy and process markdown file
-    let content = fs.readFileSync(file, 'utf-8');
+    let content = fs.readFileSync(file, "utf-8");
 
     // Find all existing images in the source directory
     const sourceDir = path.dirname(file);
@@ -72,12 +73,16 @@ async function main() {
       fs.copyFileSync(imgSource, imgTarget);
 
       // Update image references in markdown
-      const imgRegex = new RegExp(`\\(${img.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\)`, 'g');
+      const imgRegex = new RegExp(
+        `\\(${img.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\)`,
+        "g"
+      );
       content = content.replace(imgRegex, `(/images/${dateFolder}/${img})`);
     }
 
     // Remove references to non-existent images
-    const imageRefPattern = /!\[([^\]]*)\]\(([^)]+\.(png|jpg|jpeg|gif|svg|webp))\)/gi;
+    const imageRefPattern =
+      /!\[([^\]]*)\]\(([^)]+\.(png|jpg|jpeg|gif|svg|webp))\)/gi;
     content = content.replace(imageRefPattern, (match, alt, filename) => {
       const justFilename = path.basename(filename);
 
@@ -112,7 +117,7 @@ async function main() {
         content = `---\npubDatetime: ${pubDatetime}\n---\n\n${normalized}`;
       }
       // Restore original CRLF if the file originally used it
-      if (/\r\n/.test(fs.readFileSync(file, 'utf-8'))) {
+      if (/\r\n/.test(fs.readFileSync(file, "utf-8"))) {
         content = content.replace(/\n/g, "\r\n");
       }
     }
@@ -121,17 +126,25 @@ async function main() {
     if (!content.match(/^tags:/m)) {
       const topicsMatch = content.match(/topics:\s*\[(.*?)\]/);
       if (topicsMatch) {
-        const topics = topicsMatch[1].split(',').map(t => t.trim().replace(/['"]/g, '')).filter(t => t);
+        const topics = topicsMatch[1]
+          .split(",")
+          .map(t => t.trim().replace(/['"]/g, ""))
+          .filter(t => t);
         if (topics.length > 0) {
-          content = content.replace(/^---\n/, `---\ntags: [${topics.map(t => `"${t}"`).join(', ')}]\n`);
+          content = content.replace(
+            /^---\n/,
+            `---\ntags: [${topics.map(t => `"${t}"`).join(", ")}]\n`
+          );
         }
       }
     }
 
-    fs.writeFileSync(finalPath, content, 'utf-8');
+    fs.writeFileSync(finalPath, content, "utf-8");
   }
 
-  console.log(`Copied ${markdownFiles.length} articles to blog content directory`);
+  console.log(
+    `Copied ${markdownFiles.length} articles to blog content directory`
+  );
 }
 
 main().catch(console.error);

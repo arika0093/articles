@@ -3,6 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
 import remarkBreaks from "remark-breaks";
+import remarkLinkCard from "remark-link-card";
 import rehypeExternalLinks from "rehype-external-links";
 import {
   transformerNotationDiff,
@@ -26,6 +27,7 @@ export default defineConfig({
     remarkPlugins: [
       remarkBreaks,
       [remarkToc, { heading: "目次|Table of contents" }],
+      [remarkLinkCard, { shortenUrl: true }],
     ],
     rehypePlugins: [
       [
@@ -40,7 +42,7 @@ export default defineConfig({
     shikiConfig: {
       themes: {
         light: "light-plus",
-        dark: "dark-plus" 
+        dark: "dark-plus",
       },
       defaultColor: false,
       wrap: false,

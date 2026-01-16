@@ -96,24 +96,17 @@ const nextPost =
     >
       {title}
     </h1>
-    {description && (
-      <p class="mt-2 text-base opacity-80">{description}</p>
-    )}
+    {description && <p class="mt-2 text-base opacity-80">{description}</p>}
     <div class="my-2 flex flex-wrap items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
       <span
         aria-hidden="true"
-        class:list={[
-          "max-sm:hidden",
-          { hidden: !SITE.editPost.enabled },
-        ]}>|</span
+        class:list={["max-sm:hidden", { hidden: !SITE.editPost.enabled }]}
+        >|</span
       >
       <EditPost {post} class="max-sm:hidden" />
     </div>
-    <article
-      id="article"
-      class="app-prose mt-8 w-full max-w-app"
-    >
+    <article id="article" class="app-prose mt-8 w-full max-w-app">
       <Content />
     </article>
 

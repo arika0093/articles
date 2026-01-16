@@ -93,7 +93,7 @@
 
     /* Footnotes styling */
     .footnotes {
-      @apply mt-8 pt-4 border-t border-border text-[0.8rem];
+      @apply mt-8 border-t border-border pt-4 text-[0.8rem];
     }
   }
 
@@ -103,11 +103,57 @@
     font-size: 14px;
     line-height: 1.4;
   }
-  
-
 
   html[data-theme="dark"] .astro-code {
     @apply bg-(--shiki-dark-bg) text-(--shiki-dark) [&_span]:text-(--shiki-dark);
+  }
+
+  /* ===== Link Card Styling ===== */
+  .app-prose .rlc-container {
+    @apply mx-auto my-6 flex max-h-32 w-full max-w-full items-stretch rounded-lg border border-border bg-background no-underline transition-all duration-200;
+  }
+
+  .app-prose .rlc-container:hover {
+    @apply bg-muted/30 shadow-lg;
+  }
+
+  .rlc-info {
+    @apply flex flex-1 flex-col justify-between overflow-hidden p-3 text-left;
+    flex: 4 1 100px;
+  }
+
+  .rlc-title {
+    @apply overflow-hidden text-base font-semibold text-ellipsis whitespace-nowrap text-foreground sm:text-lg;
+  }
+
+  .rlc-description {
+    @apply overflow-hidden text-sm text-foreground/75;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.2rem;
+    max-height: 2.4rem;
+  }
+
+  .rlc-url-container {
+    @apply flex items-center gap-1;
+  }
+
+  .rlc-favicon {
+    @apply h-4 w-4 flex-shrink-0;
+  }
+
+  .rlc-url {
+    @apply overflow-hidden text-xs text-ellipsis whitespace-nowrap text-foreground/60 sm:text-sm;
+  }
+
+  .rlc-image-container {
+    @apply relative flex-shrink-0;
+    flex: 1 1 100px;
+  }
+
+  .rlc-image {
+    @apply h-full w-full rounded-r-lg object-cover;
   }
 
   /* Styles for Shiki transformers */
