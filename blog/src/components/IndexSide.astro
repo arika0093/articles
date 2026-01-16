@@ -5,13 +5,12 @@ import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
 ---
 
-<!-- md以上なら横に2分割 -->
-<div class="border-bolder mb-6 grid gap-8 border-b pb-4 md:grid-cols-5">
-  <section id="hero" class="py-4 md:col-span-3">
-    <h2 class="my-2 inline-block text-4xl font-bold sm:my-4 sm:text-2xl">
+<div id="side" class="md:col-span-2">
+  <section>
+    <h2 class="inline-block text-2xl font-semibold">
       About This Blog
     </h2>
-    <p>
+    <p class="opacity-80 mt-3">
       自分用のメモ。C#の内容を中心に、目標や学習記録を書いていきます。<br />
       一部記事はそのまま
       <LinkButton
@@ -24,12 +23,12 @@ import { SOCIALS } from "@/constants";
       にも掲載されるようにしています。<br />
     </p>
   </section>
-  <section id="authors" class="py-4 md:col-span-2">
-    <h2 class="my-2 inline-block text-2xl font-bold sm:my-4">
+  <section id="authors" class="py-4">
+    <h2 class="my-4 inline-block text-2xl font-semibold sm:text-xl">
       Written by
     </h2>
     <div class="flex flex-row items-center gap-4">
-      <img src="https://avatars.githubusercontent.com/u/4524647?v=4" alt="arika0093" class="mb-2 h-24 w-24 rounded-full object-cover" />
+      <img src="https://avatars.githubusercontent.com/u/4524647?v=4" alt="arika0093" class="mb-2 h-20 w-20 rounded-full object-cover" />
       <div class="flex flex-col items-start w-full flex-1">
         <div class="font-medium">
           <a target="_blank" href={SITE.profile}>{SITE.author}</a>
