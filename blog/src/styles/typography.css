@@ -109,52 +109,49 @@
   }
 
   /* ===== Link Card Styling ===== */
-  .app-prose {
-    .rlc-container {
-      @apply mx-auto my-6 flex w-full max-w-full items-stretch rounded-lg border border-border bg-background no-underline transition-all duration-200;
-    }
+  .remark-link-card-plus__container {
+    @apply pb-5 w-full;
+  }
 
-    .rlc-container:hover {
-      @apply bg-muted/30 shadow-sm;
-    }
+  .remark-link-card-plus__card {
+    @apply bg-muted/30 hover:bg-muted/70 dark:bg-muted/30 dark:hover:bg-muted/50;
+    @apply border border-border transition-colors duration-200 ease-in-out;
+    @apply flex w-full flex-row items-stretch gap-3 !no-underline;
+  }
 
-    .rlc-info {
-      @apply flex flex-1 flex-col justify-between overflow-hidden p-3 text-left;
-      flex: 4 1 100px;
-    }
+  .remark-link-card-plus__thumbnail {
+    @apply hidden md:block;
+  }
 
-    .rlc-title {
-      @apply overflow-hidden text-base font-semibold text-ellipsis whitespace-nowrap text-foreground sm:text-lg;
-    }
+  .remark-link-card-plus__image {
+    @apply h-full object-cover mt-0 mb-0 max-w-[250px];
+  }
 
-    .rlc-description {
-      @apply overflow-hidden text-foreground/75 dark:font-light;
-      line-height: 1.3rem;
-      letter-spacing: 0.5px;
-    }
+  .remark-link-card-plus__main {
+    @apply flex flex-1 flex-col justify-between px-2 py-4;
+    @apply overflow-hidden;
+  }
 
-    .rlc-url-container {
-      @apply flex items-center gap-2 self-start mt-2;
-    }
+  .remark-link-card-plus__title {
+    @apply font-semibold text-lg no-underline decoration-0;
+    @apply text-nowrap text-ellipsis overflow-hidden;
+  }
 
-    .rlc-favicon {
-      @apply h-4 w-4 flex-shrink-0 m-0;
-    }
+  .remark-link-card-plus__description {
+    @apply mt-1 mb-2 text-sm opacity-75 font-normal dark:font-light;
+    @apply text-nowrap text-ellipsis overflow-hidden;
+  }
 
-    .rlc-url {
-      @apply overflow-hidden text-xs text-ellipsis whitespace-nowrap text-foreground/60 sm:text-sm;
-    }
+  .remark-link-card-plus__meta {
+    @apply flex flex-row items-end gap-2 text-sm;
+  }
 
-    .rlc-image-container {
-      @apply relative flex-shrink-0;
-      flex: 1 1 100px;
-    }
+  .remark-link-card-plus__favicon {
+    @apply mt-0 mb-0 mr-0;
+  }
 
-    .rlc-image {
-      @apply h-full w-full rounded-r-lg object-cover mt-0 mb-0;
-      max-height: 128px;
-      max-width: 256px;
-    }
+  .remark-link-card-plus__url {
+    @apply  opacity-70 font-normal dark:font-light;
   }
 
   /* Styles for Shiki transformers */
