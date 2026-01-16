@@ -7,7 +7,7 @@ interface ArticleFrontmatter {
   published?: boolean;
   emoji?: string;
   type?: 'tech' | 'idea';
-  topics?: string[];
+  tags?: string[];
   zenn?: {
     published?: boolean;
     emoji?: string;
@@ -58,7 +58,7 @@ function generateFrontmatter(frontmatter: ArticleFrontmatter): string {
   const zennPublished = frontmatter.zenn?.published !== undefined ? frontmatter.zenn.published : frontmatter.published !== undefined ? frontmatter.published : false;
   const emoji = frontmatter.zenn?.emoji || frontmatter.emoji || '📝';
   const type = frontmatter.zenn?.type || frontmatter.type || 'tech';
-  const topics = frontmatter.zenn?.topics || frontmatter.topics || [];
+  const topics = frontmatter.zenn?.topics || frontmatter.tags || [];
 
   const topicsStr = topics.length > 0 ? `["${topics.join('", "')}"]` : '[]';
 
