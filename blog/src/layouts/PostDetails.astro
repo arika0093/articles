@@ -15,6 +15,7 @@ import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import { SITE } from "@/config";
+import Toc from "@/components/Toc.astro";
 
 type Props = {
   post: CollectionEntry<"blog">;
@@ -35,7 +36,7 @@ const {
   tags,
 } = post.data;
 
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 
 let ogImageUrl: string | undefined;
 
@@ -106,9 +107,13 @@ const nextPost =
       >
       <EditPost {post} class="max-sm:hidden" />
     </div>
-    <article id="article" class="app-prose mt-8 w-full max-w-3xl">
-      <Content />
-    </article>
+
+    <div class="lg:flex flex-row lg:gap-8">
+      <article id="article" class="app-prose w-full max-w-3xl">
+        <Content />
+      </article>
+      <Toc {headings} />
+    </div>
 
     <hr class="my-8 border-dashed" />
 

@@ -19,8 +19,8 @@ const recentPosts = sortedPosts;
 <Layout>
   <Header />
   <main id="main-content" data-layout="index" class="app-layout">
-    <div class="mt-8 grid gap-8 md:grid-cols-5">
-      <div class="md:col-span-3 border-r md:pb-8">
+    <div class="mt-8 md:flex flex-row gap-8">
+      <div class="md:flex-1 border-r md:pb-8">
         {
           recentPosts.length > 0 && (
             <section id="recent-posts" class="pb-2">

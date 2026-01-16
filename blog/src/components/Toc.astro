@@ -1,0 +1,86 @@
+---
+import type { MarkdownHeading } from 'astro'
+
+type Props = {
+  headings: MarkdownHeading[]
+}
+
+const { headings } = Astro.props;
+const headWithoutFootNotes = headings
+  .filter(heading => heading.text !== 'Footnotes');
+
+---
+
+{headWithoutFootNotes.length > 0 && (
+  <aside id="toc" class:list={[
+    "hidden xl:block shrink-0 self-start rounded border w-90",
+    "border-color-accent/80 p-4 prose-sm sticky top-24"
+  ]}>
+    <h2 class="mb-4">Table of Contents</h2>
+    <ul class="space-y-1">
+      {headWithoutFootNotes.map((heading) => {
+        const textSize = heading.depth === 2 ? 'text-base' : heading.depth === 3 ? 'text-sm' : 'text-xs';
+        return (
+          <li
+            style={`padding-left: ${(heading.depth-2)*2}ex; margin-top: ${(heading.depth-2)*2}px;`}
+            class:list={[
+              "toc-list [&.active]:text-accent [&.active]:font-semibold",
+              "[&.active]:bg-accent/10 rounded px-1 py-0.5",
+              `list-square`
+            ]}
+            data-slug={heading.slug}
+          >
+            <a
+              href={`#${heading.slug}`}
+              class:list={[
+                `block ${textSize} hover:text-accent decoration-dashed underline-offset-4`,
+                `hover:underline transition-colors text-nowrap overflow-hidden text-ellipsis`
+              ]}
+            >
+              {heading.text}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </aside>
+)}
+
+<script>
+  function initToc() {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.getAttribute('id');
+          const tokList = document.querySelector(`.toc-list[data-slug="${id}"]`);
+          
+          if (tokList) {
+            if (entry.isIntersecting) {
+              // 他のアクティブなリンクを削除
+              document.querySelectorAll('.toc-list').forEach(link => {
+                link.classList.remove('active');
+              });
+              // 現在のリンクをアクティブに
+              tokList.classList.add('active');
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '-100px 0px -66%',
+        threshold: 0
+      }
+    );
+
+    // すべての見出しを監視
+    document.querySelectorAll('h2[id], h3[id], h4[id], h5[id], h6[id]').forEach((heading) => {
+      observer.observe(heading);
+    });
+  }
+
+  // ページロード時に初期化
+  document.addEventListener('DOMContentLoaded', initToc);
+  
+  // Astroのページ遷移後にも初期化
+  document.addEventListener('astro:page-load', initToc);
+</script>

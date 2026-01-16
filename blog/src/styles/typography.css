@@ -3,15 +3,15 @@
 @layer base {
   /* ===== Override default Tailwind Typography styles ===== */
   .app-prose {
-    @apply prose;
+    @apply prose snap-y;
 
     h1,
     h2,
     h3,
     h4,
     th {
-      @apply mb-3 text-foreground;
-    }
+      @apply mb-3 text-foreground scroll-mt-16;
+    } 
 
     p,
     strong,
