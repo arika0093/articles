@@ -12,8 +12,7 @@ import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
-import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
-import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
+import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
 import Toc from "@/components/Toc.astro";
 
@@ -137,7 +136,7 @@ const nextPost =
             href={getPath(prevPost.id, prevPost.filePath)}
             class="flex w-full gap-1 hover:opacity-75"
           >
-            <IconChevronLeft class="inline-block flex-none rtl:rotate-180" />
+            <Icon name="tabler:chevron-left" class="inline-block flex-none rtl:rotate-180" />
             <div>
               <span>Previous Post</span>
               <div class="text-accent/85">{prevPost.title}</div>
@@ -155,7 +154,7 @@ const nextPost =
               <span>Next Post</span>
               <div class="text-accent/85">{nextPost.title}</div>
             </div>
-            <IconChevronRight class="inline-block flex-none rtl:rotate-180" />
+            <Icon name="tabler:chevron-right" class="inline-block flex-none rtl:rotate-180" />
           </a>
         )
       }

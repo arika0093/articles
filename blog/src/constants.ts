@@ -1,13 +1,10 @@
-import type { Props } from "astro";
-import IconGitHub from "@/assets/icons/IconGitHub.svg";
-import IconTwitter from "@/assets/icons/IconTwitter.svg";
 import { SITE } from "@/config";
 
 interface Social {
   name: string;
   href: string;
   linkTitle: string;
-  icon: (_props: Props) => Element;
+  iconName: string;
 }
 
 export const SOCIALS: Social[] = [
@@ -15,13 +12,13 @@ export const SOCIALS: Social[] = [
     name: "GitHub",
     href: "https://github.com/arika0093",
     linkTitle: `GitHub`,
-    icon: IconGitHub,
+    iconName: "tabler:brand-github",
   },
   {
     name: "X",
     href: "https://x.com/eclair_ptr",
     linkTitle: `Twitter(X)`,
-    icon: IconTwitter,
+    iconName: "tabler:brand-twitter",
   },
   // {
   //   name: "LinkedIn",
@@ -42,6 +39,6 @@ export const SHARE_LINKS: Social[] = [
     name: "Twitter",
     href: "https://x.com/intent/post?url=",
     linkTitle: `Share this post on Twitter(X)`,
-    icon: IconTwitter,
+    iconName: "tabler:brand-x",
   },
 ] as const;

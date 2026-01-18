@@ -1,5 +1,6 @@
 ---
 import { SOCIALS } from "@/constants";
+import { Icon } from "astro-icon/components";
 import LinkButton from "./LinkButton.astro";
 ---
 
@@ -11,7 +12,7 @@ import LinkButton from "./LinkButton.astro";
         class="p-2 hover:rotate-5 sm:p-1"
         title={social.linkTitle}
       >
-        <social.icon class="inline-block size-5 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
+        <Icon name={social.iconName} class="inline-block size-5 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
         <span class="sr-only">{social.linkTitle}</span>
       </LinkButton>
     ))

@@ -1,5 +1,5 @@
 ---
-import IconRss from "@/assets/icons/IconRss.svg";
+import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
 import type { HTMLAttributes } from "astro/types";
 import Socials from "./Socials.astro";
@@ -36,7 +36,8 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
         aria-label="rss feed"
         title="RSS Feed"
       >
-        <IconRss
+        <Icon
+          name="tabler:rss"
           width={16}
           height={16}
           class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"

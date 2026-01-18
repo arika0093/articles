@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
+import icon from "astro-icon";
 import remarkToc from "remark-toc";
 import remarkBreaks from "remark-breaks";
 import remarkLinkCard from "remark-link-card-plus";
@@ -22,6 +23,7 @@ export default defineConfig({
     sitemap({
       filter: page => SITE.showArchives || !page.endsWith("/archives"),
     }),
+    icon(),
   ],
   markdown: {
     remarkPlugins: [
