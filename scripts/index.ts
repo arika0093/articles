@@ -124,6 +124,11 @@ async function main() {
   fs.mkdirSync('books', { recursive: true });
   fs.writeFileSync('books/.keep', '', 'utf-8');
 
+  // Remove other files and folders except articles and images
+  fs.rmSync('blog', { recursive: true, force: true });
+  fs.rmSync('docs', { recursive: true, force: true });
+  fs.rmSync('scripts', { recursive: true, force: true });
+
   // Commit changes
   const now = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
   execSync('git add .', { stdio: 'inherit' });
