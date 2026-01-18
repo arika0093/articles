@@ -1,8 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
+import chokidar from "chokidar";
 import { findMarkdownFiles } from "../../lib/markdown.js";
 
-async function main() {
+async function copyArticles() {
   const articlesDir = path.join(process.cwd(), "..", "articles");
   const blogContentDir = path.join(process.cwd(), "src", "data", "blog");
   const publicImagesDir = path.join(process.cwd(), "public", "images");
@@ -145,6 +146,61 @@ async function main() {
   console.log(
     `Copied ${markdownFiles.length} articles to blog content directory`
   );
+}
+
+async function main() {
+  const watchMode = process.argv.includes("-w") || process.argv.includes("--watch");
+
+  // Run the copy process
+  await copyArticles();
+
+  if (watchMode) {
+    const articlesDir = path.join(process.cwd(), "..", "articles");
+
+    console.log(`\nWatching for changes in ${articlesDir}...\n`);
+
+    const watcher = chokidar.watch(articlesDir, {
+      ignored: /(^|[\/\\])\../, // Ignore dotfiles
+      persistent: true,
+      ignoreInitial: true,
+      awaitWriteFinish: {
+        stabilityThreshold: 300,
+        pollInterval: 100
+      }
+    });
+
+    let timeout: NodeJS.Timeout | null = null;
+
+    const debouncedCopy = () => {
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(async () => {
+        console.log("\nDetected changes, copying articles...");
+        await copyArticles();
+        console.log("Done. Watching for changes...\n");
+      }, 500);
+    };
+
+    watcher
+      .on("add", (path) => {
+        console.log(`File added: ${path}`);
+        debouncedCopy();
+      })
+      .on("change", (path) => {
+        console.log(`File changed: ${path}`);
+        debouncedCopy();
+      })
+      .on("unlink", (path) => {
+        console.log(`File removed: ${path}`);
+        debouncedCopy();
+      });
+
+    // Keep the process alive
+    process.on("SIGINT", () => {
+      console.log("\nStopping watcher...");
+      watcher.close();
+      process.exit(0);
+    });
+  }
 }
 
 main().catch(console.error);
