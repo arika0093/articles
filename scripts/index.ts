@@ -1,39 +1,43 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
-import type { ArticleInfo, ArticleImageInfo } from '../lib/types.js';
-import { parseFrontmatter, generateZennFrontmatter } from '../lib/frontmatter.js';
-import { findMarkdownFiles } from '../lib/markdown.js';
+import type { ArticleInfo, ArticleImageInfo } from './lib/types.js';
+import { parseFrontmatter, generateZennFrontmatter } from './lib/frontmatter.js';
+import { findMarkdownFiles } from './lib/markdown.js';
 
 // Main execution
 async function main() {
-  const articlesDir = path.join(process.cwd(), 'articles');
-  
+  // プロジェクトルートに移動（2階層上）
+  const projectRoot = path.join(process.cwd(), '..', '..');
+  process.chdir(projectRoot);
+
+  const articlesDir = path.join(projectRoot, 'articles');
+
   // Checkout or create publish/zenn branch
   execSync('git checkout -B publish/zenn main', { stdio: 'inherit' });
-  
+
   // Find all markdown files
   const markdownFiles = findMarkdownFiles(articlesDir);
-  
+
   const articleInfos: ArticleInfo[] = [];
-  
+
   for (const file of markdownFiles) {
     const dir = path.dirname(file);
     const dateStr = path.basename(dir);
     const baseName = path.basename(file).replace(/^#/, '');
     const newFile = path.join('articles', `${dateStr}-${baseName}`);
-    
+
     // Find image files in the same directory
     const imageFiles = fs.readdirSync(dir)
       .filter(f => /\.(png|jpg|jpeg|gif|svg|webp)$/i.test(f))
       .map(f => path.join(dir, f));
-    
+
     const containedImages: ArticleImageInfo[] = [];
     for (const img of imageFiles) {
       const stats = fs.statSync(img);
       const isLarge = stats.size > 3 * 1024 * 1024; // 3MB
       const afterPath = isLarge ? img : path.join('images', dateStr, path.basename(img));
-      
+
       containedImages.push({
         currentPath: img,
         afterPath,
@@ -42,7 +46,7 @@ async function main() {
         isLarge,
       });
     }
-    
+
     articleInfos.push({
       currentPath: file,
       afterPath: newFile,
@@ -50,26 +54,26 @@ async function main() {
       containedImages,
     });
   }
-  
+
   // Move files
   for (const article of articleInfos) {
     const beforePath = article.currentPath;
     const afterPath = article.afterPath;
-    
+
     fs.mkdirSync(path.dirname(afterPath), { recursive: true });
-    
+
     if (fs.existsSync(beforePath)) {
       // Read and transform the content
       const content = fs.readFileSync(beforePath, 'utf-8');
       const { frontmatter, body } = parseFrontmatter(content);
-      
+
       // Generate Zenn frontmatter
       const zennFrontmatter = generateZennFrontmatter(frontmatter);
       const newContent = `${zennFrontmatter}\n\n${body}`;
-      
+
       fs.writeFileSync(afterPath, newContent, 'utf-8');
     }
-    
+
     // Move images
     for (const imgInfo of article.containedImages) {
       if (!imgInfo.isLarge && imgInfo.currentPath !== imgInfo.afterPath) {
@@ -80,13 +84,13 @@ async function main() {
       }
     }
   }
-  
+
   // Update image paths in markdown files
   for (const article of articleInfos) {
     const mdPath = article.afterPath;
     if (fs.existsSync(mdPath)) {
       let content = fs.readFileSync(mdPath, 'utf-8');
-      
+
       for (const imgInfo of article.containedImages) {
         const imgName = imgInfo.imageName;
         if (imgInfo.isLarge) {
@@ -106,20 +110,20 @@ async function main() {
           );
         }
       }
-      
+
       fs.writeFileSync(mdPath, content, 'utf-8');
     }
   }
-  
+
   // Create empty books folder
   fs.mkdirSync('books', { recursive: true });
   fs.writeFileSync('books/.keep', '', 'utf-8');
-  
+
   // Commit changes
   const now = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
   execSync('git add .', { stdio: 'inherit' });
   execSync(`git commit -m "Publish to Zenn at ${now}"`, { stdio: 'inherit' });
-  
+
   console.log('Successfully prepared Zenn publication!');
 }
 
