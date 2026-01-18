@@ -66,6 +66,10 @@ async function main() {
       // Read and transform the content
       const content = fs.readFileSync(beforePath, 'utf-8');
       const { frontmatter, body } = parseFrontmatter(content);
+      if (frontmatter.zenn?.published != true) {
+        console.log(`Skipping unpublished article: ${beforePath}`);
+        continue;
+      }
 
       // Generate Zenn frontmatter
       const zennFrontmatter = generateZennFrontmatter(frontmatter);
