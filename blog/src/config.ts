@@ -6,7 +6,7 @@ export const SITE = {
   title: "eclair's note",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
-  postPerIndex: 5,
+  postPerIndex: 8,
   postPerPage: 20,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
   showArchives: true,

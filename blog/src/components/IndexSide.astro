@@ -3,9 +3,10 @@ import Socials from "@/components/Socials.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
+import PinArticles from "./PinArticles.astro";
 ---
 
-<div id="side" class="md:w-[350px]">
+<div id="side" class="mt-8 md:mt-0 md:w-[350px]">
   <section>
     <h2 class="inline-block text-2xl font-semibold">
       About This Blog
@@ -47,4 +48,5 @@ import { SOCIALS } from "@/constants";
       </div>
     </div>
   </section>
+  <PinArticles />
 </div>

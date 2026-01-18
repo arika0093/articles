@@ -20,7 +20,7 @@ const recentPosts = sortedPosts;
   <Header />
   <main id="main-content" data-layout="index" class="app-layout">
     <div class="mt-8 md:flex flex-row gap-8">
-      <div class="md:flex-1 border-r md:pb-8">
+      <div class="md:flex-1 md:border-r md:pb-8">
         {
           recentPosts.length > 0 && (
             <section id="recent-posts" class="pb-2">
@@ -34,7 +34,7 @@ const recentPosts = sortedPosts;
             </section>
           )
         }
-        <div class="my-2 text-left">
+        <div class="mt-2 md:mb-2 text-center md:text-left">
           <LinkButton href="/posts/">
             All Posts
             <IconArrowRight class="inline-block rtl:-rotate-180" />

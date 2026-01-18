@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import IndexSide from "@/components/IndexSide.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import Card from "@/components/Card.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { SITE } from "@/config";
+
+const posts = await getCollection("blog");
+
+const sortedPosts = getSortedPosts(posts);
+const pinPosts = sortedPosts
+  .filter(post => post.data.pin);
+---
+
+<section id="pinned-posts" class="pt-2">
+  {
+    pinPosts.length > 0 && (
+      <section id="recent-posts" class="pb-1">
+      <h2 class="inline-block text-xl font-semibold">
+        Pinned Articles
+      </h2>
+        <ul>
+          {pinPosts.map(
+            (data, index) =>
+              index < SITE.postPerIndex && <Card variant="h4" {...data} />
+          )}
+        </ul>
+      </section>
+    )
+  }
+</section>

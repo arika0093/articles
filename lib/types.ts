@@ -17,7 +17,7 @@ export interface ArticleFrontmatter {
   pubDatetime?: Date | string;
   modDatetime?: Date | string | null;
   author?: string;
-  draft?: boolean;
+  pin?: boolean;
   tags?: string[];
   ogImage?: string;
   canonicalURL?: string;

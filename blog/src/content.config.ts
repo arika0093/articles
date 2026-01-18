@@ -14,7 +14,7 @@ const blog = defineCollection({
       pubDatetime: z.date(),
       modDatetime: z.date().optional().nullable(),
       author: z.string().default(SITE.author),
-      draft: z.boolean().optional(),
+      pin: z.boolean().default(false),
       tags: z.array(z.string()).default([]),
       ogImage: image().or(z.string()).optional(),
       canonicalURL: z.string().optional(),
