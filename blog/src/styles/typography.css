@@ -147,7 +147,7 @@
   }
 
   .remark-link-card-plus__favicon {
-    @apply mt-0 mb-0 mr-0;
+    @apply hidden;
   }
 
   .remark-link-card-plus__url {
