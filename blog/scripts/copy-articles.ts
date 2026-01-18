@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import chokidar from "chokidar";
-import { findMarkdownFiles } from "../../lib/markdown.js";
+import { findMarkdownFiles } from "./markdown.js";
 
 async function copyArticles() {
   const articlesDir = path.join(process.cwd(), "..", "articles");
