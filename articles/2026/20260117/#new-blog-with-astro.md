@@ -7,6 +7,8 @@ tags: ["blog", "astro", "astro-paper"]
 
 ブログを[astro](https://astro.build/)で新しく作ってみました。
 
+https://eclairs.cc/
+
 ## なぜ作ったか
 
 今までは[Zenn](https://zenn.dev/arika)で記事を書いていましたが、以下のような理由で自分のブログを持ちたくなってきました。
