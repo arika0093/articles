@@ -139,11 +139,11 @@
 
   .remark-link-card-plus__description {
     @apply mt-1 mb-2 text-sm opacity-75 font-normal dark:font-light;
-    @apply text-nowrap text-ellipsis overflow-hidden;
+    @apply line-clamp-2 text-foreground;
   }
 
   .remark-link-card-plus__meta {
-    @apply flex flex-row items-end gap-2 text-sm;
+    @apply flex flex-row items-end gap-2 text-sm text-foreground;
   }
 
   .remark-link-card-plus__favicon {
