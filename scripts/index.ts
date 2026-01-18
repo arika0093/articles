@@ -7,8 +7,8 @@ import { findMarkdownFiles } from './lib/markdown.js';
 
 // Main execution
 async function main() {
-  // プロジェクトルートに移動（2階層上）
-  const projectRoot = path.join(process.cwd(), '..', '..');
+  // Move to project root
+  const projectRoot = path.join(process.cwd(), '..');
   process.chdir(projectRoot);
 
   const articlesDir = path.join(projectRoot, 'articles');
