@@ -58,8 +58,11 @@ https://eclairs.cc/
   * M-PLUS2の場合、特にダークテーマ時に線が太いのが気になったので微調整
 * astro-google-analytics
   * 一応埋め込み
+* `astro-icon`+`@iconify-json/tabler`
+  * アイコンをSVGで持つのが面倒だったので導入
 * giscus
   * コメント欄設置
+  * カラーテーマの切り替えが厄介。[ここ](https://astro-paper.pages.dev/posts/how-to-integrate-giscus-comments/)を参考に実装。
 
 ## 記事管理
 基本的に`/articles`以下に記事を配置し、以下のfrontmatterを付与しています。
