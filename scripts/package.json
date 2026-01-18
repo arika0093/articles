@@ -5,6 +5,9 @@
   "scripts": {
     "publish": "tsx index.ts"
   },
+  "dependencies": {
+    "gray-matter": "^4.0.3"
+  },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "tsx": "^4.0.0",

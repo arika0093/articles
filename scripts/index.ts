@@ -71,6 +71,7 @@ async function main() {
       const zennFrontmatter = generateZennFrontmatter(frontmatter);
       const newContent = `${zennFrontmatter}\n\n${body}`;
 
+
       fs.writeFileSync(afterPath, newContent, 'utf-8');
     }
 
