@@ -38,7 +38,9 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
       - name: Run publish_zenn.ts
-        run: npm run publish
+        run: |
+          cd scripts
+          npm run publish
         env:
           TZ: Asia/Tokyo
 
