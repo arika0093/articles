@@ -4,6 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 import remarkToc from "remark-toc";
 import remarkBreaks from "remark-breaks";
+import remarkGfm from "remark-gfm";
 import remarkLinkCard from "remark-link-card-plus";
 import rehypeExternalLinks from "rehype-external-links";
 import {
@@ -14,6 +15,7 @@ import {
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { rehypeGist } from "./src/utils/rehype/rehypeGist";
 import { SITE } from "./src/config";
+import remarkCollapse from "remark-collapse";
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,7 +30,9 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [
       remarkBreaks,
-      [remarkToc, { heading: "目次|Table of contents" }],
+      remarkCollapse,
+      remarkGfm,
+      [remarkToc, { heading: "Table of contents" }],
       [remarkLinkCard, { shortenUrl: true, thumbnailPosition: "left" }],
     ],
     rehypePlugins: [
