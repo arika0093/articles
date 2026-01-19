@@ -32,7 +32,9 @@ import PinArticles from "./PinArticles.astro";
       Written by
     </h2>
     <div class="flex flex-row items-center gap-4">
-      <img src="https://avatars.githubusercontent.com/u/4524647?v=4" alt="arika0093" class="mb-2 h-20 w-20 rounded-full object-cover" />
+      <a href={SITE.profile} target="_blank" rel="noopener">
+        <img src="https://avatars.githubusercontent.com/u/4524647?v=4" alt="arika0093" class="mb-2 h-20 w-20 rounded-full object-cover" />
+      </a>
       <div class="flex flex-col items-start w-full flex-1">
         <div class="font-medium">
           <a target="_blank" href={SITE.profile}>{SITE.author}</a>

@@ -9,7 +9,11 @@ type Props = {
 } & CollectionEntry<"blog">;
 
 const { variant: Heading = "h2", id, data, filePath } = Astro.props;
-
+const textSize = {
+  h2: "text-xl",
+  h3: "text-lg",
+  h4: "text-md",
+}[Heading];
 const { title, description, ...props } = data;
 ---
 
@@ -17,7 +21,7 @@ const { title, description, ...props } = data;
   <a
     href={getPath(id, filePath)}
     class:list={[
-      "inline-block text-lg font-medium text-accent",
+      "inline-block font-medium text-accent", textSize,
       "decoration-dashed underline-offset-4 hover:underline",
       "focus-visible:no-underline focus-visible:underline-offset-0",
     ]}

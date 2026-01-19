@@ -1,7 +1,7 @@
 import satori from "satori";
 import { SITE } from "@/config";
 import loadGoogleFonts from "../loadGoogleFont";
-import { text } from "stream/consumers";
+// import { text } from "stream/consumers";
 
 export default async () => {
   return satori(

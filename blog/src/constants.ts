@@ -1,5 +1,3 @@
-import { SITE } from "@/config";
-
 interface Social {
   name: string;
   href: string;
