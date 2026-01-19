@@ -29,7 +29,7 @@ const {
   modDatetime,
   scrollSmooth = false,
 } = Astro.props;
-const ogImage = "/og.png";
+const ogImage = new URL(Astro.url.origin + "/og.png").href;
 
 const structuredData = {
   "@context": "https://schema.org",
