@@ -36,14 +36,14 @@ async function loadGoogleFonts(
 > {
   const fontsConfig = [
     {
-      name: "M PLUS 2",
-      font: "M+PLUS+2",
+      name: "M PLUS 1p",
+      font: "M+PLUS+1p",
       weight: 400,
       style: "normal",
     },
     {
-      name: "M PLUS 2",
-      font: "M+PLUS+2",
+      name: "M PLUS 1p",
+      font: "M+PLUS+1p",
       weight: 700,
       style: "bold",
     },

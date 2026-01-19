@@ -40,7 +40,7 @@ export default async () => {
             type: "div",
             props: {
               style: {
-                border: "4px solid #186592ff",
+                border: "4px solid #000",
                 background: "#fbfdfeff",
                 borderRadius: "4px",
                 display: "flex",
