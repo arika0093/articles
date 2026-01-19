@@ -5,8 +5,6 @@ import { GoogleAnalytics } from "astro-google-analytics";
 // import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { SITE } from "@/config";
 import "@/styles/global.css";
-import { Console } from "console";
-import { Debug } from "astro:components";
 
 type Props = {
   title?: string;
@@ -26,12 +24,12 @@ const {
   author = SITE.author,
   profile = SITE.profile,
   description = SITE.desc,
-  ogImage = "/og.png",
   canonicalURL = new URL(Astro.url.pathname, Astro.url),
   pubDatetime,
   modDatetime,
   scrollSmooth = false,
 } = Astro.props;
+const ogImage = "/og.png";
 
 const structuredData = {
   "@context": "https://schema.org",
