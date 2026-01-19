@@ -24,7 +24,10 @@ const recentPosts = sortedPosts;
         {
           recentPosts.length > 0 && (
             <section id="recent-posts" class="pb-2">
-              <h2 class="text-2xl font-semibold tracking-wide">Recent Posts</h2>
+              <h2 class="text-2xl font-semibold tracking-wide">
+                <Icon name="tabler:clock" class="inline-block size-6 me-1 mb-1" />
+                Recent Posts
+              </h2>
               <ul>
                 {recentPosts.map(
                   (data, index) =>

@@ -1,6 +1,7 @@
 ---
 import Socials from "@/components/Socials.astro";
 import LinkButton from "@/components/LinkButton.astro";
+import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
 import PinArticles from "./PinArticles.astro";
@@ -9,6 +10,7 @@ import PinArticles from "./PinArticles.astro";
 <div id="side" class="mt-8 md:mt-0 md:w-[350px]">
   <section>
     <h2 class="inline-block text-2xl font-semibold">
+      <Icon name="tabler:info-circle" class="inline-block size-6 me-1 mb-1" />
       About This Blog
     </h2>
     <p class="opacity-80 mt-3">
@@ -26,6 +28,7 @@ import PinArticles from "./PinArticles.astro";
   </section>
   <section id="authors" class="py-4">
     <h2 class="my-4 inline-block text-2xl font-semibold sm:text-xl">
+      <Icon name="tabler:pencil" class="inline-block size-6 me-1 mb-1" />
       Written by
     </h2>
     <div class="flex flex-row items-center gap-4">

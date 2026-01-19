@@ -1,6 +1,7 @@
 import satori from "satori";
 import { SITE } from "@/config";
 import loadGoogleFonts from "../loadGoogleFont";
+import { text } from "stream/consumers";
 
 export default async () => {
   return satori(
@@ -23,8 +24,8 @@ export default async () => {
                 position: "absolute",
                 top: "-1px",
                 right: "-1px",
-                border: "4px solid #000",
-                background: "#ecebeb",
+                border: "4px solid #2f369bff",
+                background: "repeating-linear-gradient(135deg, #b9d2e2ff, #b9d2e2ff 10px, #fbfdfeff 10px, #fbfdfeff 20px)",
                 opacity: "0.9",
                 borderRadius: "4px",
                 display: "flex",
@@ -39,8 +40,8 @@ export default async () => {
             type: "div",
             props: {
               style: {
-                border: "4px solid #000",
-                background: "#fefbfb",
+                border: "4px solid #186592ff",
+                background: "#fbfdfeff",
                 borderRadius: "4px",
                 display: "flex",
                 justifyContent: "center",
@@ -77,7 +78,11 @@ export default async () => {
                           {
                             type: "p",
                             props: {
-                              style: { fontSize: 72, fontWeight: "bold" },
+                              style: {
+                                fontSize: 72,
+                                fontWeight: "bold",
+                                marginBottom: "20px",
+                              },
                               children: SITE.title,
                             },
                           },
