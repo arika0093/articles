@@ -115,7 +115,7 @@ const colorSchemes = {
     4: "#216e39",
   },
   dark: {
-    0: "#161b22",
+    0: "#2f3031",
     1: "#0e4429",
     2: "#006d32",
     3: "#26a641",
@@ -136,18 +136,21 @@ const colorSchemes = {
     <div class="flex items-center gap-1 text-xs">
       <span class="mx-1 text-gray-600 dark:text-gray-400">Low</span>
       {
-        [0, 1, 2, 3, 4].map(level => (
-          <div
-            class:list={[
-              "h-3 w-3 rounded-sm border border-gray-200/60 dark:border-gray-700/40",
-              "bg-[var(--legend-heat)] dark:bg-[var(--legend-heat-dark)]",
-            ]}
-            style={`
-              --legend-heat: light-dark(${colorSchemes.light[level as keyof typeof colorSchemes.light]}, ${colorSchemes.dark[level as keyof typeof colorSchemes.dark]});
-              --legend-heat-dark: light-dark(${colorSchemes.dark[level as keyof typeof colorSchemes.dark]}, ${colorSchemes.light[level as keyof typeof colorSchemes.light]});
-            `}
-          />
-        ))
+        [0, 1, 2, 3, 4].map(level => {
+          var heatStyle = `
+            --heat: ${colorSchemes.light[level as keyof typeof colorSchemes.light]};
+            --heat-dark: ${colorSchemes.dark[level as keyof typeof colorSchemes.dark]};
+          `
+          return (
+            <div
+              class:list={[
+                "h-3 w-3 rounded-sm border border-gray-200/60 dark:border-gray-700/40",
+                "bg-[var(--heat)] dark:bg-[var(--heat-dark)]",
+              ]}
+              style={heatStyle}
+            />
+          )
+        })
       }
       <span class="mx-1 text-gray-600 dark:text-gray-400">High</span>
     </div>
@@ -180,17 +183,18 @@ const colorSchemes = {
               const level = getColorLevel(week.count);
               const date = new Date(week.date);
               const dateStr = date.toLocaleDateString("ja-JP");
+              const heatStyle = `
+                --heat: ${colorSchemes.light[level as keyof typeof colorSchemes.light]};
+                --heat-dark: ${colorSchemes.dark[level as keyof typeof colorSchemes.dark]};
+              `;
               return (
                 <div
                   class:list={[
-                    "h-3 w-3 cursor-pointer rounded-xs border border-gray-200/60 transition-all dark:border-gray-700/40",
+                    "h-3 w-3 cursor-pointer rounded-xs border transition-all dark:border-gray-700/40",
                     "hover:ring-2 hover:ring-gray-400/50 dark:hover:ring-gray-500/50",
                     "bg-[var(--heat)] dark:bg-[var(--heat-dark)]",
                   ]}
-                  style={`
-                  --heat: light-dark(${colorSchemes.light[level as keyof typeof colorSchemes.light]}, ${colorSchemes.dark[level as keyof typeof colorSchemes.dark]});
-                  --heat-dark: light-dark(${colorSchemes.dark[level as keyof typeof colorSchemes.dark]}, ${colorSchemes.light[level as keyof typeof colorSchemes.light]});
-                `}
+                  style={heatStyle}
                   data-date={dateStr}
                   data-count={week.count}
                   title={`${dateStr}の週: ${week.count}件の投稿`}
