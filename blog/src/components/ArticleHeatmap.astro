@@ -17,7 +17,7 @@ function getWeekStart(date: Date): string {
   const diff = d.getDate() - day;
   d.setDate(diff);
   d.setHours(0, 0, 0, 0);
-  return d.toISOString().split('T')[0];
+  return d.toISOString().split("T")[0];
 }
 
 // 週ごとの投稿数を集計
@@ -39,7 +39,7 @@ while (currentWeek <= now) {
   const weekStart = getWeekStart(currentWeek);
   weeks.push({
     date: weekStart,
-    count: weeklyPosts.get(weekStart) || 0
+    count: weeklyPosts.get(weekStart) || 0,
   });
   currentWeek.setDate(currentWeek.getDate() + 7);
 }
@@ -59,7 +59,8 @@ function getColorLevel(count: number): number {
 
 // 週を縦に5つずつ並べるためにグループ化
 const ROWS = 5;
-const columns: Array<Array<{ date: string; count: number; index: number }>> = [];
+const columns: Array<Array<{ date: string; count: number; index: number }>> =
+  [];
 
 for (let col = 0; col < Math.ceil(weeks.length / ROWS); col++) {
   const column: Array<{ date: string; count: number; index: number }> = [];
@@ -68,7 +69,7 @@ for (let col = 0; col < Math.ceil(weeks.length / ROWS); col++) {
     if (index < weeks.length) {
       column.push({ ...weeks[index], index });
     } else {
-      column.push({ date: '', count: -1, index: -1 });
+      column.push({ date: "", count: -1, index: -1 });
     }
   }
   columns.push(column);
@@ -78,9 +79,9 @@ for (let col = 0; col < Math.ceil(weeks.length / ROWS); col++) {
 function getMonthLabels() {
   const labels: Array<{ month: string; colIndex: number }> = [];
   let lastMonth = -1;
-  
+
   columns.forEach((column, colIndex) => {
-    const firstWeek = column.find(w => w.date !== '');
+    const firstWeek = column.find(w => w.date !== "");
     if (firstWeek) {
       const date = new Date(firstWeek.date);
       const month = date.getMonth();
@@ -88,222 +89,117 @@ function getMonthLabels() {
       if (month !== lastMonth && (colIndex === 0 || colIndex % 4 === 0)) {
         labels.push({
           // YY/MM形式に変更
-          month: date.toLocaleDateString('ja-JP', { year: '2-digit', month: '2-digit' }),
-          colIndex
+          month: date.toLocaleDateString("ja-JP", {
+            year: "2-digit",
+            month: "2-digit",
+          }),
+          colIndex,
         });
         lastMonth = month;
       }
     }
   });
-  
+
   return labels;
 }
 
 const monthLabels = getMonthLabels();
+
+// GitHubスタイルのカラースキーム
+const colorSchemes = {
+  light: {
+    0: "#ebedf0",
+    1: "#9be9a8",
+    2: "#40c463",
+    3: "#30a14e",
+    4: "#216e39",
+  },
+  dark: {
+    0: "#161b22",
+    1: "#0e4429",
+    2: "#006d32",
+    3: "#26a641",
+    4: "#39d353",
+  },
+};
 ---
 
-<section class="article-heatmap">
-  <div class="heatmap-header">
-    <h3 class="text-lg font-semibold mb-3">
-      <Icon name="tabler:chart-histogram" class="inline-block size-6 me-1 mb-1" />
+<section class="py-4">
+  <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
+    <h3 class="text-lg font-semibold">
+      <Icon
+        name="tabler:chart-histogram"
+        class="me-1 mb-1 inline-block size-6"
+      />
       Article Heatmap
     </h3>
-    <div class="legend">
-      <span class="legend-label">Low</span>
-      {[0, 1, 2, 3, 4].map(level => (
-        <div class={`level-${level}`}></div>
-      ))}
-      <span class="legend-label">High</span>
+    <div class="flex items-center gap-1 text-xs">
+      <span class="mx-1 text-gray-600 dark:text-gray-400">Low</span>
+      {
+        [0, 1, 2, 3, 4].map(level => (
+          <div
+            class:list={[
+              "h-3 w-3 rounded-sm border border-gray-200/60 dark:border-gray-700/40",
+              "bg-[var(--legend-heat)] dark:bg-[var(--legend-heat-dark)]",
+            ]}
+            style={`
+              --legend-heat: light-dark(${colorSchemes.light[level as keyof typeof colorSchemes.light]}, ${colorSchemes.dark[level as keyof typeof colorSchemes.dark]});
+              --legend-heat-dark: light-dark(${colorSchemes.dark[level as keyof typeof colorSchemes.dark]}, ${colorSchemes.light[level as keyof typeof colorSchemes.light]});
+            `}
+          />
+        ))
+      }
+      <span class="mx-1 text-gray-600 dark:text-gray-400">High</span>
     </div>
   </div>
-  
-  <div class="heatmap-container">
-    <div class="month-labels">
-      {monthLabels.map(label => (
-        <span style={`left: ${label.colIndex * 15}px`}>{label.month}</span>
-      ))}
+
+  <div class="relative overflow-x-auto pt-6">
+    <div
+      class="absolute top-0 left-0 h-5 w-full text-xs text-gray-600 dark:text-gray-400"
+    >
+      {
+        monthLabels.map(label => (
+          <span
+            class="absolute whitespace-nowrap"
+            style={`left: ${label.colIndex * 15}px`}
+          >
+            {label.month}
+          </span>
+        ))
+      }
     </div>
-    
-    <div class="heatmap-grid">
-      {columns.map(column => (
-        <div class="week-column">
-          {column.map(week => {
-            if (week.count === -1) {
-              return <div class="week-cell empty" />;
-            }
-            const level = getColorLevel(week.count);
-            const date = new Date(week.date);
-            const dateStr = date.toLocaleDateString('ja-JP');
-            return (
-              <div 
-                class={`week-cell level-${level}`}
-                data-date={dateStr}
-                data-count={week.count}
-                title={`${dateStr}の週: ${week.count}件の投稿`}
-              />
-            );
-          })}
-        </div>
-      ))}
+
+    <div class="flex flex-nowrap items-start gap-[3px]">
+      {
+        columns.map(column => (
+          <div class="flex flex-col gap-[3px]">
+            {column.map(week => {
+              if (week.count === -1) {
+                return <div class="h-3 w-3 md:h-3 md:w-3" />;
+              }
+              const level = getColorLevel(week.count);
+              const date = new Date(week.date);
+              const dateStr = date.toLocaleDateString("ja-JP");
+              return (
+                <div
+                  class:list={[
+                    "h-3 w-3 cursor-pointer rounded-xs border border-gray-200/60 transition-all dark:border-gray-700/40",
+                    "hover:ring-2 hover:ring-gray-400/50 dark:hover:ring-gray-500/50",
+                    "bg-[var(--heat)] dark:bg-[var(--heat-dark)]",
+                  ]}
+                  style={`
+                  --heat: light-dark(${colorSchemes.light[level as keyof typeof colorSchemes.light]}, ${colorSchemes.dark[level as keyof typeof colorSchemes.dark]});
+                  --heat-dark: light-dark(${colorSchemes.dark[level as keyof typeof colorSchemes.dark]}, ${colorSchemes.light[level as keyof typeof colorSchemes.light]});
+                `}
+                  data-date={dateStr}
+                  data-count={week.count}
+                  title={`${dateStr}の週: ${week.count}件の投稿`}
+                />
+              );
+            })}
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>
-
-<style>
-  .article-heatmap {
-    padding: 1rem 0;
-  }
-
-  .heatmap-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .legend {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-size: 0.75rem;
-  }
-
-  .legend-label {
-    margin: 0 0.25rem;
-    color: var(--color-text-muted, #666);
-  }
-
-  .legend > div {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
-    border: 1px solid rgba(27, 31, 35, 0.06);
-  }
-
-  .heatmap-container {
-    position: relative;
-    overflow-x: auto;
-    padding-top: 24px;
-  }
-
-  .month-labels {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20px;
-    font-size: 0.75rem;
-    color: var(--color-text-muted, #666);
-  }
-
-  .month-labels span {
-    position: absolute;
-    white-space: nowrap;
-  }
-
-  .heatmap-grid {
-    display: flex;
-    gap: 3px;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-  }
-
-  .week-column {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  .week-cell {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
-    border: 1px solid rgba(27, 31, 35, 0.06);
-    cursor: pointer;
-  }
-
-  .week-cell.empty {
-    background-color: transparent;
-    border-color: transparent;
-    cursor: default;
-  }
-
-  .week-cell:not(.empty):hover {
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-  }
-
-  /* GitHubスタイルのカラースキーム（ライトモード） */
-  .level-0 {
-    background-color: #ebedf0;
-  }
-
-  .level-1 {
-    background-color: #9be9a8;
-  }
-
-  .level-2 {
-    background-color: #40c463;
-  }
-
-  .level-3 {
-    background-color: #30a14e;
-  }
-
-  .level-4 {
-    background-color: #216e39;
-  }
-
-  /* ダークモード対応 */
-  :global(.dark) .level-0 {
-    background-color: #161b22;
-    border-color: rgba(240, 246, 252, 0.1);
-  }
-
-  :global(.dark) .level-1 {
-    background-color: #0e4429;
-  }
-
-  :global(.dark) .level-2 {
-    background-color: #006d32;
-  }
-
-  :global(.dark) .level-3 {
-    background-color: #26a641;
-  }
-
-  :global(.dark) .level-4 {
-    background-color: #39d353;
-  }
-
-  :global(.dark) .legend > div {
-    border-color: rgba(240, 246, 252, 0.1);
-  }
-
-  :global(.dark) .week-cell {
-    border-color: rgba(240, 246, 252, 0.1);
-  }
-
-  /* レスポンシブ対応 */
-  @media (max-width: 768px) {
-    .heatmap-header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .heatmap-container {
-      overflow-x: scroll;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .week-cell {
-      width: 10px;
-      height: 10px;
-    }
-
-    .legend > div {
-      width: 10px;
-      height: 10px;
-    }
-  }
-</style>

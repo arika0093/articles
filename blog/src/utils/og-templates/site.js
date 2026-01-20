@@ -25,7 +25,8 @@ export default async () => {
                 top: "-1px",
                 right: "-1px",
                 border: "4px solid #2f369bff",
-                background: "repeating-linear-gradient(135deg, #b9d2e2ff, #b9d2e2ff 10px, #fbfdfeff 10px, #fbfdfeff 20px)",
+                background:
+                  "repeating-linear-gradient(135deg, #b9d2e2ff, #b9d2e2ff 10px, #fbfdfeff 10px, #fbfdfeff 20px)",
                 opacity: "0.9",
                 borderRadius: "4px",
                 display: "flex",

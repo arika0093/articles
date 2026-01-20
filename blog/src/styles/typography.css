@@ -10,8 +10,8 @@
     h3,
     h4,
     th {
-      @apply mb-3 text-foreground scroll-mt-16;
-    } 
+      @apply mb-3 scroll-mt-16 text-foreground;
+    }
 
     p,
     strong,
@@ -110,7 +110,7 @@
 
   /* ===== Link Card Styling ===== */
   .remark-link-card-plus__container {
-    @apply pb-5 w-full;
+    @apply w-full pb-5;
   }
 
   .remark-link-card-plus__card {
@@ -124,7 +124,7 @@
   }
 
   .remark-link-card-plus__image {
-    @apply h-full object-cover mt-0 mb-0 max-w-[250px];
+    @apply mt-0 mb-0 h-full max-w-[250px] object-cover;
   }
 
   .remark-link-card-plus__main {
@@ -133,12 +133,12 @@
   }
 
   .remark-link-card-plus__title {
-    @apply font-semibold text-lg no-underline decoration-0;
-    @apply text-nowrap text-ellipsis overflow-hidden;
+    @apply text-lg font-semibold no-underline decoration-0;
+    @apply overflow-hidden text-nowrap text-ellipsis;
   }
 
   .remark-link-card-plus__description {
-    @apply mt-1 mb-2 text-sm opacity-75 font-normal dark:font-light;
+    @apply mt-1 mb-2 text-sm font-normal opacity-75 dark:font-light;
     @apply line-clamp-2 text-foreground;
   }
 
@@ -151,7 +151,7 @@
   }
 
   .remark-link-card-plus__url {
-    @apply  opacity-70 font-normal dark:font-light;
+    @apply font-normal opacity-70 dark:font-light;
   }
 
   /* Styles for Shiki transformers */

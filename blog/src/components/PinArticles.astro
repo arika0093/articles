@@ -8,18 +8,17 @@ import { SITE } from "@/config";
 const posts = await getCollection("blog");
 
 const sortedPosts = getSortedPosts(posts);
-const pinPosts = sortedPosts
-  .filter(post => post.data.pin);
+const pinPosts = sortedPosts.filter(post => post.data.pin);
 ---
 
 <section id="pinned-posts" class="pt-2">
   {
     pinPosts.length > 0 && (
       <section id="recent-posts" class="pb-1">
-      <h2 class="inline-block text-xl font-semibold">
-        <Icon name="tabler:pin" class="inline-block size-5 me-1 mb-1" />
-        Pinned Articles
-      </h2>
+        <h2 class="inline-block text-xl font-semibold">
+          <Icon name="tabler:pin" class="me-1 mb-1 inline-block size-5" />
+          Pinned Articles
+        </h2>
         <ul>
           {pinPosts.map(
             (data, index) =>

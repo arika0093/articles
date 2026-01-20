@@ -149,7 +149,8 @@ async function copyArticles() {
 }
 
 async function main() {
-  const watchMode = process.argv.includes("-w") || process.argv.includes("--watch");
+  const watchMode =
+    process.argv.includes("-w") || process.argv.includes("--watch");
 
   // Run the copy process
   await copyArticles();
@@ -165,8 +166,8 @@ async function main() {
       ignoreInitial: true,
       awaitWriteFinish: {
         stabilityThreshold: 300,
-        pollInterval: 100
-      }
+        pollInterval: 100,
+      },
     });
 
     let timeout: NodeJS.Timeout | null = null;
@@ -181,15 +182,15 @@ async function main() {
     };
 
     watcher
-      .on("add", (path) => {
+      .on("add", path => {
         console.log(`File added: ${path}`);
         debouncedCopy();
       })
-      .on("change", (path) => {
+      .on("change", path => {
         console.log(`File changed: ${path}`);
         debouncedCopy();
       })
-      .on("unlink", (path) => {
+      .on("unlink", path => {
         console.log(`File removed: ${path}`);
         debouncedCopy();
       });

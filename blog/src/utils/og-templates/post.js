@@ -25,7 +25,8 @@ export default async post => {
                 top: "-1px",
                 right: "-1px",
                 border: "4px solid #2f369bff",
-                background: "repeating-linear-gradient(135deg, #b9d2e2ff, #b9d2e2ff 10px, #fbfdfeff 10px, #fbfdfeff 20px)",
+                background:
+                  "repeating-linear-gradient(135deg, #b9d2e2ff, #b9d2e2ff 10px, #fbfdfeff 10px, #fbfdfeff 20px)",
                 opacity: "0.9",
                 borderRadius: "4px",
                 display: "flex",
@@ -124,19 +125,29 @@ export default async post => {
                                 {
                                   type: "span",
                                   props: {
-                                    style: { color: "transparent", flexGrow: 1 },
+                                    style: {
+                                      color: "transparent",
+                                      flexGrow: 1,
+                                    },
                                     children: '"',
                                   },
                                 },
                                 {
                                   type: "span",
                                   props: {
-                                    style: { overflow: "hidden", fontWeight: "bold" },
+                                    style: {
+                                      overflow: "hidden",
+                                      fontWeight: "bold",
+                                    },
                                     children: SITE.title,
                                   },
-                                }
+                                },
                               ],
-                              style: { display: "flex", alignItems: "flex-end", width: "100%" },
+                              style: {
+                                display: "flex",
+                                alignItems: "flex-end",
+                                width: "100%",
+                              },
                             },
                           },
                         ],

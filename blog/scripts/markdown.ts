@@ -2,8 +2,8 @@
  * Shared utility for finding markdown files
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 
 export function findMarkdownFiles(dir: string): string[] {
   const files: string[] = [];
@@ -16,7 +16,7 @@ export function findMarkdownFiles(dir: string): string[] {
 
       if (entry.isDirectory()) {
         walk(fullPath);
-      } else if (entry.isFile() && entry.name.endsWith('.md')) {
+      } else if (entry.isFile() && entry.name.endsWith(".md")) {
         files.push(fullPath);
       }
     }
