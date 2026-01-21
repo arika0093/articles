@@ -11,7 +11,7 @@ const blog = defineCollection({
       title: z.string(),
       description: z.string().default(""),
       published: z.boolean().default(false),
-      pubDatetime: z.date(),
+      pubDatetime: z.date().default(() => new Date()),
       modDatetime: z.date().optional().nullable(),
       author: z.string().default(SITE.author),
       pin: z.boolean().default(false),
