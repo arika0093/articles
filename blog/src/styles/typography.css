@@ -32,6 +32,15 @@
       @apply overflow-x-clip;
     }
 
+    ul ul,
+    ul ol,
+    ul p,
+    ol ul,
+    ol ol,
+    ol p {
+      @apply my-1;
+    }
+
     li {
       @apply marker:text-accent;
     }
