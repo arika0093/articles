@@ -1,15 +1,11 @@
 ---
 title: "docker-composeでプロキシ環境を再現する"
 published: true
+tags: ["docker", "proxy", "docker-compose", "squid"]
 zenn:
   published: true
   emoji: "🌐"
   type: "tech"
-  topics:
-    - "docker"
-    - "proxy"
-    - "dockercompose"
-    - "squid"
 ---
 
 
@@ -31,6 +27,7 @@ OSSにプロキシ機能を追加する際、お手軽にテストする方法�
 
 ## コード
 ### docker-compose.yaml
+
 ```yaml
 version: '3.8'
 services:
@@ -63,6 +60,7 @@ networks:
 
 ### squid.conf
 そのままだと巨大すぎるので、コメント部分を削除して必要部分だけ抜粋。
+
 ```py
 acl localnet src 10.0.0.0/8	# RFC1918 possible internal network
 acl localnet src 172.16.0.0/12	# RFC1918 possible internal network
@@ -102,6 +100,7 @@ refresh_pattern .		0	20%	4320
 
 ### 別解
 これでもいい。こっちはentrypointで無理やり書き換えるパターン。
+
 ```yaml
 proxy:
     image: sameersbn/squid:3.5.27-2
@@ -127,6 +126,7 @@ proxy:
 コピペして貼り付ける。
 
 ### プロキシを適用する際
+
 ```sh
 export HTTPS_PROXY=http://squid:3128
 export HTTP_PROXY=http://squid:3128
