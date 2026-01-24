@@ -3,7 +3,7 @@ title: "Aspire 13でdocker compose生成機能を試してみる"
 published: true
 tags: ["csharp", "dotnet", "aspire", "docker", "docker-compose"]
 zenn:
-  published: false
+  published: true
   emoji: "🚀"
   type: "tech"
 ---
