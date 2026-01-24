@@ -24,7 +24,7 @@ async function main() {
   for (const file of markdownFiles) {
     const dir = path.dirname(file);
     const dateStr = path.basename(dir);
-    const baseName = path.basename(file).replace(/^#/, '');
+    const baseName = path.basename(file);
     const newFile = path.join('articles', `${dateStr}-${baseName}`);
 
     // Find image files in the same directory

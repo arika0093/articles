@@ -11,7 +11,7 @@ type Props = {
 const { post, class: className = "" } = Astro.props;
 
 // Transform the filePath from copied blog to original articles directory
-// Example: src/data/blog/2026/20260106/source-generator-trap.md -> articles/2026/20260106/#source-generator-trap.md
+// Example: src/data/blog/2026/20260106/source-generator-trap.md -> articles/2026/20260106/source-generator-trap.md
 const transformFilePath = (filePath?: string): string => {
   if (!filePath) return "";
   // Remove 'src/data/blog/' prefix
