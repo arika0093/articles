@@ -1,3 +1,7 @@
+---
+title: memo
+published: false
+---
 
 ## TL;DR
 1. `Microsoft.Extensions.Hosting`の10.0.0以降を使用する
