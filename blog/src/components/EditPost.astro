@@ -23,7 +23,7 @@ const transformFilePath = (filePath?: string): string => {
     const date = parts[1];
     const filename = parts[2];
     // Add # prefix back to filename (it was removed during copy)
-    return `articles/${year}/${date}/%23${filename}`;
+    return `articles/${year}/${date}/${filename}`;
   }
   // Fallback to original path if structure is unexpected
   return filePath;
