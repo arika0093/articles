@@ -74,10 +74,9 @@ async function copyArticles() {
       fs.copyFileSync(imgSource, imgTarget);
 
       // Update image references in markdown
-      const imgRegex = new RegExp(
-        `\\(${img.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\)`,
-        "g"
-      );
+      const escapedImg = img.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      // Match plain filename or ./filename (or .\filename) in markdown links.
+      const imgRegex = new RegExp(`\\((?:\\.\\/|\\.\\\\)?${escapedImg}\\)`, "g");
       content = content.replace(imgRegex, `(/images/${dateFolder}/${img})`);
     }
 
