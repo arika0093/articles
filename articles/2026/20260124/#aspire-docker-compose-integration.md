@@ -1,5 +1,5 @@
 ---
-title: "【Aspire】Aspire 13でdocker compose生成機能を試してみる"
+title: "Aspire 13でdocker compose生成機能を試してみる"
 published: true
 tags: ["csharp", "dotnet", "aspire", "docker", "docker-compose"]
 zenn:
