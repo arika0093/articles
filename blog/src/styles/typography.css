@@ -10,7 +10,19 @@
     h3,
     h4,
     th {
-      @apply mb-3 scroll-mt-16 text-foreground;
+      @apply mb-3 mt-10 scroll-mt-16 text-foreground;
+    }
+
+    h2 {
+      @apply border-b pb-3 text-3xl border-accent/30 dark:border-accent/45;
+    }
+
+    h3 {
+      @apply p-2 rounded text-2xl bg-accent/10 dark:bg-accent/20;
+    }
+
+    h4 {
+      @apply text-lg;
     }
 
     p,

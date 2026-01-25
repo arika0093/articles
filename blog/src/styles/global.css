@@ -24,9 +24,9 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  --background: #232529;
+  --background: #212327;
   --foreground: #eaedf3;
-  --accent: #34c8ec;
+  --accent: #41a6f8;
   --muted: #343f60;
   --border: #173458;
 }
