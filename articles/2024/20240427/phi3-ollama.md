@@ -1,7 +1,7 @@
 ---
 title: "phi3とollamaを使ってローカルでデータ処理を行ってみる① 文章分類"
 pubDatetime: 2025-06-22T21:55:31+09:00
-modDatetime: 2026-01-25T23:20:04+09:00
+modDatetime: 2026-01-25T23:38:59+09:00
 published: true
 tags: []
 zenn:

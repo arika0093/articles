@@ -1,7 +1,7 @@
 ---
 title: "【C#】null判定をコンパイラに適切に伝える[NotNull]"
 pubDatetime: 2025-09-27T22:34:58+09:00
-modDatetime: 2026-01-25T23:20:04+09:00
+modDatetime: 2026-01-25T23:38:59+09:00
 published: true
 tags: ["csharp", "dotnet"]
 zenn:

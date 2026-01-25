@@ -1,7 +1,7 @@
 ---
 title: "Aspire 13でdocker compose生成機能を試してみる"
 pubDatetime: 2026-01-24T21:53:11+09:00
-modDatetime: 2026-01-25T23:20:04+09:00
+modDatetime: 2026-01-25T23:38:59+09:00
 published: true
 tags: ["csharp", "dotnet", "aspire", "docker", "docker-compose"]
 zenn:

@@ -1,7 +1,7 @@
 ---
 title: "2026年コミットメント"
 pubDatetime: 2026-01-20T00:32:03+09:00
-modDatetime: 2026-01-25T23:20:04+09:00
+modDatetime: 2026-01-25T23:38:59+09:00
 pin: true
 published: true
 tags: ["goals", "commitments", "2026"]

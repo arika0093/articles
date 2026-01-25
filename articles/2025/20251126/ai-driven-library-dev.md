@@ -1,7 +1,7 @@
 ---
 title: "【日記】AI駆動でライブラリを作ってみた所感とか"
 pubDatetime: 2025-11-26T11:48:02+09:00
-modDatetime: 2026-01-24T22:42:37+09:00
+modDatetime: 2026-01-25T23:38:59+09:00
 published: true
 ---
 

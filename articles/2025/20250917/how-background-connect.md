@@ -1,7 +1,7 @@
 ---
 title: "【C#】BackgroundServiceをDIして他からデータを取得したい"
 pubDatetime: 2025-09-17T11:07:32+09:00
-modDatetime: 2026-01-25T23:20:04+09:00
+modDatetime: 2026-01-25T23:38:59+09:00
 published: true
 tags: ["csharp", "dotnet", "asp.net", "background"]
 zenn:

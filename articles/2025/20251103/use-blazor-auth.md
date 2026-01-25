@@ -1,7 +1,7 @@
 ---
 title: "【C#】Blazor.Authで認証認可をシンプルに実装する"
 pubDatetime: 2025-11-04T00:00:00+09:00
-modDatetime: 2026-01-25T23:20:04+09:00
+modDatetime: 2026-01-25T23:38:59+09:00
 published: true
 tags: ["csharp", "dotnet", "blazor", "authentication"]
 zenn:

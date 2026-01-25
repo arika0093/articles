@@ -1,7 +1,7 @@
 ---
 title: "【C#】File.Replaceはatomicに更新を行うのか？"
 pubDatetime: 2025-10-10T23:28:40+09:00
-modDatetime: 2026-01-25T23:20:04+09:00
+modDatetime: 2026-01-25T23:38:59+09:00
 published: true
 tags: ["csharp", "dotnet"]
 zenn:

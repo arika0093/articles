@@ -1,7 +1,7 @@
 ---
 title: "【C#】Aspireで単純な3層アーキテクチャを構築する（With 便利機能）"
 pubDatetime: 2026-01-21T00:42:19+09:00
-modDatetime: 2026-01-24T22:42:37+09:00
+modDatetime: 2026-01-25T23:38:59+09:00
 published: false
 tags: ["csharp", "dotnet", "aspire", "architecture"]
 zenn:

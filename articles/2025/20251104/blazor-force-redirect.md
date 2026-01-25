@@ -1,7 +1,7 @@
 ---
 title: "【C#】Blazorで強制リダイレクトを実装する方法"
 pubDatetime: 2025-11-05T21:41:21+09:00
-modDatetime: 2026-01-25T23:20:04+09:00
+modDatetime: 2026-01-25T23:38:59+09:00
 published: true
 tags: ["csharp", "dotnet", "blazor"]
 zenn:
