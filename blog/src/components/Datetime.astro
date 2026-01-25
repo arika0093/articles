@@ -27,14 +27,14 @@ const {
 /* ========== Formatted Datetime ========== */
 const isModified = modDatetime && modDatetime > pubDatetime;
 
-const datetime = dayjs(isModified ? modDatetime : pubDatetime).tz(
-  postTimezone || SITE.timezone
-);
+var tz = postTimezone || SITE.timezone;
+const pubDt = dayjs(pubDatetime).tz(tz);
+const modDt = dayjs(modDatetime).tz(tz);
 
-const date = datetime.format("YYYY/MM/DD");
+const date = pubDt.format("YYYY/MM/DD");
 ---
 
-<div class:list={["flex items-center gap-x-2 opacity-80", className]}>
+<div class:list={["flex items-center gap-x-2 opacity-70", className]}>
   <Icon
     name="tabler:calendar"
     class:list={[
@@ -42,15 +42,26 @@ const date = datetime.format("YYYY/MM/DD");
       { "scale-90": size === "sm" },
     ]}
   />
-  {
-    isModified && (
-      <span class:list={["text-sm", { "sm:text-base": size === "lg" }]}>
-        Updated:
-      </span>
-    )
-  }
   <time
-    class:list={["text-sm", { "sm:text-base": size === "lg" }]}
-    datetime={datetime.toISOString()}>{date}</time
+    class:list={["text-sm me-2", { "sm:text-base": size === "lg" }]}
+    datetime={pubDt.toISOString()}>{date}</time
   >
+  {
+    // isModified && (
+    //   <>
+    //     <Icon
+    //       name="tabler:refresh"
+    //       class:list={[
+    //         "inline-block size-5 min-w-5.5",
+    //         { "scale-90": size === "sm" },
+    //       ]}
+    //     />
+    //     <time
+    //       class:list={["text-sm", { "sm:text-base": size === "lg" }]}
+    //       datetime={modDt.toISOString()}
+    //       >{modDt.format("YYYY/MM/DD")}</time
+    //     >
+    //   </>
+    // )
+  }
 </div>
