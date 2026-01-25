@@ -1,5 +1,6 @@
 ---
 title: "【C#】null判定をコンパイラに適切に伝える[NotNull]"
+pubDatetime: 2025-09-27
 published: true
 tags: ["csharp", "dotnet"]
 zenn:

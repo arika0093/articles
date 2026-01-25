@@ -1,5 +1,6 @@
 ---
 title: "drizzleでできることをprismaと比較しながら確認する"
+pubDatetime: 2024-05-08
 published: false
 tags: []
 zenn:

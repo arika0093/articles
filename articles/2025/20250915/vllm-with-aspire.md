@@ -1,5 +1,6 @@
 ---
 title: "【C#】vLLMをAspireで動かしてAIを使える開発環境を作ってみる"
+pubDatetime: 2025-09-15
 published: true
 tags: ["AI", "vllm", "aspire", "csharp"]
 zenn:

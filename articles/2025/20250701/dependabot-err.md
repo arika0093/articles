@@ -1,5 +1,6 @@
 ---
 title: "dependabotのエラーを解決する備忘録"
+pubDatetime: 2025-07-01
 published: true
 tags: ["dotnet", "github", "dependabot"]
 zenn:

@@ -1,5 +1,6 @@
 ---
 title: "【C#】HttpClientとその設定方法を理解しよう"
+pubDatetime: 2025-09-18
 published: true
 tags: ["csharp", "dotnet", "http", "httpclient"]
 zenn:

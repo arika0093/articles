@@ -1,5 +1,6 @@
 ---
 title: "【C#】タブレットのカメラで画像を読み取ってAIにOCRしてもらう(カメラ編)"
+pubDatetime: 2025-09-11
 published: true
 tags: ["dotnet", "csharp", "blazor", "ai", "ocr"]
 zenn:

@@ -1,5 +1,6 @@
 ---
 title: "【C#】BlazorでもTailwindcssを'手軽に'使おう"
+pubDatetime: 2025-10-16
 published: true
 tags: ["csharp", "dotnet", "blazor", "tailwindcss"]
 zenn:

@@ -1,5 +1,6 @@
 ---
 title: "【C#】NuGet公開パッケージを作る際のTips"
+pubDatetime: 2025-06-23
 published: false
 tags: []
 zenn:

@@ -1,5 +1,6 @@
 ---
 title: "【C#】MagicOnionのJsonTranscodingを使ってみる"
+pubDatetime: 2025-08-28
 published: true
 tags: ["dotnet", "magiconion", "debug"]
 zenn:

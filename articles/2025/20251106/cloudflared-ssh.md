@@ -1,5 +1,6 @@
 ---
 title: "【日記】Cliudflared経由で外部からSSH接続するメモ"
+pubDatetime: 2025-11-06
 published: true
 ---
 

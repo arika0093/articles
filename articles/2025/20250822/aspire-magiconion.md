@@ -1,5 +1,6 @@
 ---
 title: "【C#】Aspire+MagicOnionで快適にアプリ開発する"
+pubDatetime: 2025-08-22
 published: true
 tags: ["dotnet", "aspire", "magiconion", "api"]
 zenn:

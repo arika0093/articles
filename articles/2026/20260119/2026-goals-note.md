@@ -1,5 +1,6 @@
 ---
 title: "2026年コミットメント"
+pubDatetime: 2026-01-19
 pin: true
 published: true
 tags: ["goals", "commitments", "2026"]

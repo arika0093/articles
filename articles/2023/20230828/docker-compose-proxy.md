@@ -1,5 +1,6 @@
 ---
 title: "docker-composeでプロキシ環境を再現する"
+pubDatetime: 2023-08-28
 published: true
 tags: ["docker", "proxy", "docker-compose", "squid"]
 zenn:
