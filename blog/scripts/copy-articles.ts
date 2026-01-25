@@ -3,10 +3,77 @@ import * as path from "path";
 import chokidar from "chokidar";
 import { findMarkdownFiles } from "./markdown.js";
 
+type ContentsMenuItem = {
+  title: string;
+  href: string;
+  sourcePath: string;
+};
+
+function extractTitleFromMarkdown(content: string, fallback: string): string {
+  const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+  if (frontmatterMatch) {
+    const frontmatter = frontmatterMatch[1];
+    const titleMatch = frontmatter.match(/^\s*title\s*:\s*(.+)\s*$/m);
+    if (titleMatch) {
+      return titleMatch[1].trim().replace(/^['"]|['"]$/g, "");
+    }
+  }
+
+  const body = frontmatterMatch
+    ? content.slice(frontmatterMatch[0].length)
+    : content;
+  const headingMatch = body.match(/^\s*#\s+(.+)\s*$/m);
+  if (headingMatch) {
+    return headingMatch[1].trim();
+  }
+
+  return fallback;
+}
+
+function toContentsHref(relativePath: string): string {
+  const withoutExt = relativePath.replace(/\.md$/i, "");
+  const slug = withoutExt.split(path.sep).join("/");
+  if (slug === "index") return "/contents";
+  if (slug.endsWith("/index")) return `/contents/${slug.replace(/\/index$/, "")}`;
+  return `/contents/${slug}`;
+}
+
+function ensureLayoutFrontmatter(
+  content: string,
+  layoutPath: string
+): string {
+  const normalized = content.replace(/\r\n/g, "\n");
+  const frontmatterMatch = normalized.match(/^---\n([\s\S]*?)\n---\n?/);
+
+  if (frontmatterMatch) {
+    const fm = frontmatterMatch[1];
+    if (!/^\s*layout\s*:/m.test(fm)) {
+      const newFm = `layout: ${layoutPath}\n${fm}`;
+      return normalized.replace(frontmatterMatch[0], `---\n${newFm}\n---\n`);
+    }
+    return normalized;
+  }
+
+  return `---\nlayout: ${layoutPath}\n---\n\n${normalized}`;
+}
+
 async function copyArticles() {
   const articlesDir = path.join(process.cwd(), "..", "articles");
   const blogContentDir = path.join(process.cwd(), "src", "data", "blog");
   const publicImagesDir = path.join(process.cwd(), "public", "images");
+  const contentsDir = path.join(process.cwd(), "..", "articles", "contents");
+  const blogContentsPagesDir = path.join(
+    process.cwd(),
+    "src",
+    "pages",
+    "contents"
+  );
+  const contentsMenuPath = path.join(
+    process.cwd(),
+    "src",
+    "data",
+    "contents-menu.json"
+  );
 
   // Clear blog content directory
   if (fs.existsSync(blogContentDir)) {
@@ -141,6 +208,61 @@ async function copyArticles() {
 
     fs.writeFileSync(finalPath, content, "utf-8");
   }
+
+  // Copy /contents markdown into pages/contents and build menu
+  const contentsMenu: ContentsMenuItem[] = [];
+  if (fs.existsSync(blogContentsPagesDir)) {
+    fs.rmSync(blogContentsPagesDir, { recursive: true, force: true });
+  }
+  fs.mkdirSync(blogContentsPagesDir, { recursive: true });
+
+  if (fs.existsSync(contentsDir)) {
+    const contentsFiles = findMarkdownFiles(contentsDir).sort((a, b) =>
+      a.localeCompare(b)
+    );
+
+    for (const file of contentsFiles) {
+      const relativePath = path.relative(contentsDir, file);
+      const targetPath = path.join(blogContentsPagesDir, relativePath);
+      fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+
+      const rawContent = fs.readFileSync(file, "utf-8");
+      const layoutRelative = path
+        .relative(
+          path.dirname(targetPath),
+          path.join(process.cwd(), "src", "layouts", "ContentDetails.astro")
+        )
+        .split(path.sep)
+        .join("/");
+      let content = ensureLayoutFrontmatter(rawContent, layoutRelative);
+      if (/\r\n/.test(rawContent)) {
+        content = content.replace(/\n/g, "\r\n");
+      }
+      fs.writeFileSync(targetPath, content, "utf-8");
+
+      const titleBase = path.basename(file, path.extname(file));
+      const titlePascalCase = titleBase
+        .replace(/[-_]/g, " ")
+        .replace(/\b\w/g, c => c.toUpperCase());
+      const baseName = path.basename(file, path.extname(file));
+      contentsMenu.push({
+        title: titlePascalCase,
+        href: toContentsHref(relativePath),
+        sourcePath: relativePath,
+      });
+    }
+  }
+
+  contentsMenu.sort((a, b) => a.sourcePath.localeCompare(b.sourcePath));
+  fs.writeFileSync(
+    contentsMenuPath,
+    `${JSON.stringify(
+      contentsMenu.map(({ title, href }) => ({ title, href })),
+      null,
+      2
+    )}\n`,
+    "utf-8"
+  );
 
   console.log(
     `Copied ${markdownFiles.length} articles to blog content directory`
