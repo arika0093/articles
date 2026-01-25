@@ -1,9 +1,11 @@
 name: Deploy Astro Blog to GitHub Pages
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows:
+      - "Update Article Dates"
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
@@ -17,6 +19,7 @@ concurrency:
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
