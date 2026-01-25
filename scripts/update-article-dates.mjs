@@ -2,15 +2,18 @@ import fs from "fs";
 import path from "path";
 import { execSync } from "child_process";
 
+// CLI flags control date source and target scope.
 const args = new Set(process.argv.slice(2));
 const useGit = args.has("--from-git") || !args.has("--from-folder");
 const useFolder = args.has("--from-folder");
 const useStaged = args.has("--staged");
 const force = args.has("--force");
 
+// Repo root is the current working directory; articles are under articles/.
 const repoRoot = process.cwd();
 const articlesDir = path.join(repoRoot, "articles");
 
+// Depth-first traversal without recursion to avoid call stack limits.
 function listMarkdownFiles(dir) {
   const results = [];
   const stack = [dir];
@@ -29,6 +32,7 @@ function listMarkdownFiles(dir) {
   return results;
 }
 
+// Resolve staged markdown files under articles/ (ACM diff-filter).
 function getStagedMarkdownFiles() {
   const output = execSync("git diff --name-only --cached --diff-filter=ACM", {
     encoding: "utf8",
@@ -41,6 +45,7 @@ function getStagedMarkdownFiles() {
     .map(file => path.join(repoRoot, file));
 }
 
+// Extract date from articles/<category>/<YYYYMMDD>/... path segments.
 function getDateFromFolder(filePath) {
   const relative = path.relative(articlesDir, filePath);
   const parts = relative.split(path.sep);
@@ -54,19 +59,40 @@ function getDateFromFolder(filePath) {
   return `${year}-${month}-${day}`;
 }
 
+// Read commit timestamps for a file, filtering out bot/chore commits.
 function getGitDates(filePath) {
   const relative = path.relative(repoRoot, filePath).replace(/\\/g, "/");
   try {
     const output = execSync(
-      `git log --follow --format=%cI -- "${relative}"`,
+      `git log --follow --format=%cI%x09%an%x09%s -- "${relative}"`,
       { encoding: "utf8" }
     )
       .trim()
       .split(/\r?\n/)
-      .filter(Boolean);
+      .filter(Boolean)
+      .map(line => {
+        const [date, author, subject] = line.split("\t");
+        return { date, author, subject };
+      })
+      .filter(entry => {
+        if (!entry.date) {
+          return false;
+        }
+        const author = entry.author || "";
+        const subject = entry.subject || "";
+        if (/^github-actions(?:\[bot\])?$/i.test(author)) {
+          return false;
+        }
+        if (/\bchore\b/i.test(subject)) {
+          return false;
+        }
+        return true;
+      })
+      .map(entry => entry.date);
     if (output.length === 0) {
       return { first: null, last: null };
     }
+    // "first" is oldest (publish), "last" is newest (modified).
     return { first: output[output.length - 1], last: output[0] };
   } catch {
     return { first: null, last: null };
@@ -74,12 +100,14 @@ function getGitDates(filePath) {
 }
 
 function updateFrontmatter(content, updates) {
+  // Preserve original CRLF/LF to avoid churn in diffs.
   const hasCrlf = content.includes("\r\n");
   const normalized = content.replace(/\r\n/g, "\n");
   const fmMatch = normalized.match(/^---\n([\s\S]*?)\n---\n?/);
 
   const ensureLineEndings = text => (hasCrlf ? text.replace(/\n/g, "\r\n") : text);
 
+  // If no frontmatter exists, only create it when we actually insert fields.
   if (!fmMatch) {
     const fmLines = [];
     if (updates.insertPub) {
@@ -100,6 +128,7 @@ function updateFrontmatter(content, updates) {
   let keptPub = false;
   let keptMod = false;
 
+  // Drop pub/mod lines unless explicitly kept.
   for (const line of fmLines) {
     if (/^pubDatetime\s*:/.test(line)) {
       if (updates.keepPubLine) {
@@ -126,6 +155,7 @@ function updateFrontmatter(content, updates) {
     insertLines.push(`modDatetime: ${updates.mod}`);
   }
 
+  // Insert new pub/mod after title when present to keep metadata grouped.
   if (insertLines.length > 0) {
     const titleIndex = keptLines.findIndex(line => /^title\s*:/.test(line));
     const insertAt = titleIndex >= 0 ? titleIndex + 1 : 0;
@@ -146,6 +176,7 @@ function updateFrontmatter(content, updates) {
 }
 
 function updateFile(filePath) {
+  // Decide candidate dates, then update frontmatter accordingly.
   const content = fs.readFileSync(filePath, "utf8");
   const hasPub = /^pubDatetime\s*:/m.test(content);
   const hasMod = /^modDatetime\s*:/m.test(content);
@@ -170,6 +201,7 @@ function updateFile(filePath) {
     mod: "",
   };
 
+  // When using git or --force, overwrite pubDatetime in frontmatter.
   if (pubDatetime) {
     updates.pub = pubDatetime;
     if (useGit || force) {
@@ -181,6 +213,7 @@ function updateFile(filePath) {
     }
   }
 
+  // modDatetime is only set when it differs from pubDatetime.
   if (useGit && gitDates.last) {
     if (pubDatetime && gitDates.last !== pubDatetime) {
       modDatetime = gitDates.last;
@@ -205,6 +238,7 @@ function main() {
     process.exit(1);
   }
 
+  // Choose file set: staged-only or full articles tree.
   const files = useStaged ? getStagedMarkdownFiles() : listMarkdownFiles(articlesDir);
   let updated = 0;
   const changedFiles = [];
@@ -217,6 +251,7 @@ function main() {
     }
   }
 
+  // Re-stage files when operating on staged inputs.
   if (useStaged && changedFiles.length > 0) {
     const relativeFiles = changedFiles.map(file =>
       path.relative(repoRoot, file).replace(/\\/g, "/")
