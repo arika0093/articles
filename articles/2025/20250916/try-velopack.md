@@ -1,6 +1,7 @@
 ---
 title: "【C#】実行ファイルの自動アップデートを提供するVelopackを試してみる"
-pubDatetime: 2025-09-16
+pubDatetime: 2025-09-16T14:35:04+09:00
+modDatetime: 2026-01-25T23:20:04+09:00
 published: true
 tags: ["csharp", "dotnet", "velopack"]
 zenn:

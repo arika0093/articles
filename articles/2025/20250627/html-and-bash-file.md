@@ -1,6 +1,7 @@
 ---
 title: "Bashで実行可能なHTMLファイルを作成する"
-pubDatetime: 2025-06-27
+pubDatetime: 2025-06-27T15:31:03Z
+modDatetime: 2026-01-25T23:20:04+09:00
 published: true
 tags: ["html", "bash", "dotfiles"]
 zenn:

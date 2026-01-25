@@ -1,6 +1,7 @@
 ---
 title: "【Blazor】バーコードリーダー対応の入力フォームを作成する"
-pubDatetime: 2025-09-10
+pubDatetime: 2025-09-10T15:34:03+09:00
+modDatetime: 2026-01-25T23:20:04+09:00
 published: true
 tags: ["dotnet", "blazor", "barcode"]
 zenn:

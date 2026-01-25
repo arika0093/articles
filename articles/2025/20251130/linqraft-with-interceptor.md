@@ -1,6 +1,7 @@
 ---
 title: "【C#】Prismaのような書き心地をEFCoreでも実現！Linqraftの紹介"
-pubDatetime: 2025-11-30
+pubDatetime: 2025-11-30T16:59:48+09:00
+modDatetime: 2026-01-25T23:20:04+09:00
 published: true
 tags: ["csharp", "dotnet", "interceptor", "source-generator"]
 zenn:

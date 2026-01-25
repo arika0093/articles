@@ -1,6 +1,7 @@
 ---
 title: "ZennのGitHub連携で柔軟なフォルダ構成を使う"
-pubDatetime: 2025-09-14
+pubDatetime: 2025-09-14T21:22:33+09:00
+modDatetime: 2026-01-25T23:20:04+09:00
 published: true
 tags: ["zenn", "python"]
 zenn:

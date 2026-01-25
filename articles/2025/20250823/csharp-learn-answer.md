@@ -1,6 +1,7 @@
 ---
 title: "【C#】同じ5行のコードが全く違って見える12の瞬間、に対するC#での回答"
-pubDatetime: 2025-08-23
+pubDatetime: 2025-08-23T23:13:54+09:00
+modDatetime: 2026-01-25T23:20:04+09:00
 published: true
 tags: ["dotnet"]
 zenn:

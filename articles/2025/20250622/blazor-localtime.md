@@ -1,6 +1,7 @@
 ---
 title: "【BlazorLocalTime】Blazor Serverでタイムゾーンを考慮した日時を正しく表示/編集する"
-pubDatetime: 2025-06-22
+pubDatetime: 2025-06-22T21:55:31+09:00
+modDatetime: 2026-01-25T23:20:04+09:00
 published: true
 tags: []
 zenn:

@@ -1,6 +1,7 @@
 ---
 title: "【C#】バージョン管理とリリースを自動化する【Nerdbank.GitVersioning】"
-pubDatetime: 2025-06-23
+pubDatetime: 2025-06-24T00:47:24+09:00
+modDatetime: 2026-01-25T23:20:04+09:00
 published: true
 tags: []
 zenn:

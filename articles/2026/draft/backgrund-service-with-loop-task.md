@@ -1,5 +1,7 @@
 ---
 title: memo
+pubDatetime: 2025-12-22T09:53:16+09:00
+modDatetime: 2026-01-24T22:42:37+09:00
 published: false
 ---
 
