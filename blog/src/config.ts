@@ -4,7 +4,7 @@ export const SITE = {
   profile: "https://github.com/arika0093",
   desc: "テックの世界をてくてく歩く",
   title: "eclair's note",
-  ogImage: "astropaper-og.jpg",
+  ogImage: "og.png",
   lightAndDarkMode: true,
   postPerIndex: 8,
   postPerPage: 20,
