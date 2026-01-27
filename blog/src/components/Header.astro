@@ -14,6 +14,10 @@ const isActive = (path: string) => {
   const currentPathArray = currentPath.split("/").filter(p => p.trim());
   const pathArray = path.split("/").filter(p => p.trim());
 
+  if (pathArray[0] === "contents") {
+    return currentPath === path;
+  }
+
   return currentPath === path || currentPathArray[0] === pathArray[0];
 };
 

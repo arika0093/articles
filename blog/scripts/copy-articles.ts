@@ -220,7 +220,14 @@ async function copyArticles() {
       fs.writeFileSync(targetPath, content, "utf-8");
 
       const titleBase = path.basename(file, path.extname(file));
-      const titlePascalCase = titleBase
+      const titleSeed =
+        titleBase.toLowerCase() === "index"
+          ? (() => {
+              const parentDir = path.basename(path.dirname(relativePath));
+              return parentDir && parentDir !== "." ? parentDir : "contents";
+            })()
+          : titleBase;
+      const titlePascalCase = titleSeed
         .replace(/[-_]/g, " ")
         .replace(/\b\w/g, c => c.toUpperCase());
       contentsMenu.push({
