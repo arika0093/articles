@@ -86,14 +86,13 @@
 
     code {
       @apply rounded bg-muted/75 p-1 wrap-break-word text-foreground before:content-none after:content-none;
-      font-size: 15px;
-      line-height: 1.4;
+      font-size: 14.5px;
+      line-height: 1.5;
+      letter-spacing: 0.2px;
     }
 
     .astro-code code {
       @apply flex-[1_0_100%] bg-inherit p-0;
-      font-size: 15px;
-      line-height: 1.4;
     }
 
     blockquote {
@@ -121,8 +120,6 @@
   /* ===== Code Blocks & Syntax Highlighting ===== */
   .astro-code {
     @apply flex border bg-(--shiki-light-bg) text-(--shiki-light) outline-border [&_span]:text-(--shiki-light);
-    font-size: 15px;
-    line-height: 1.4;
   }
 
   html[data-theme="dark"] .astro-code {

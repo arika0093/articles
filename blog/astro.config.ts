@@ -30,7 +30,7 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [
       remarkBreaks,
-      [remarkCollapse, { test: "詳細" }],
+      [remarkCollapse, { test: "Details" }],
       remarkGfm,
       [remarkToc, { heading: "Table of contents" }],
       [remarkLinkCard, { shortenUrl: true, thumbnailPosition: "left" }],
@@ -47,7 +47,7 @@ export default defineConfig({
     ],
     shikiConfig: {
       themes: {
-        light: "light-plus",
+        light: "slack-dark",
         dark: "dark-plus",
       },
       defaultColor: false,
