@@ -30,7 +30,7 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [
       remarkBreaks,
-      remarkCollapse,
+      [remarkCollapse, { test: "詳細" }],
       remarkGfm,
       [remarkToc, { heading: "Table of contents" }],
       [remarkLinkCard, { shortenUrl: true, thumbnailPosition: "left" }],

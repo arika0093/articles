@@ -18,18 +18,18 @@ type Props = {
 
 const {
   pubDatetime,
-  modDatetime,
+  modDatetime: _modDatetime,
   size = "sm",
   class: className = "",
   timezone: postTimezone,
 } = Astro.props;
 
 /* ========== Formatted Datetime ========== */
-const isModified = modDatetime && modDatetime > pubDatetime;
+// const isModified = modDatetime && modDatetime > pubDatetime;
 
 var tz = postTimezone || SITE.timezone;
 const pubDt = dayjs(pubDatetime).tz(tz);
-const modDt = dayjs(modDatetime).tz(tz);
+// const modDt = dayjs(modDatetime).tz(tz);
 
 const date = pubDt.format("YYYY/MM/DD");
 ---

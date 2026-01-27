@@ -1,6 +1,12 @@
 name: Deploy Astro Blog to GitHub Pages
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'blog/**'
+      - 'scripts/**'
   workflow_run:
     workflows:
       - "Update Article Dates"

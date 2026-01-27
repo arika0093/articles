@@ -30,9 +30,9 @@ const timezone = frontmatter.timezone ?? SITE.timezone;
 const layoutProps = {
   title: `${title} | ${SITE.title}`,
   description,
-  pubDatetime,
-  modDatetime,
-  canonicalURL: Astro.url,
+  pubDatetime: pubDatetime ? new Date(pubDatetime) : undefined,
+  modDatetime: modDatetime ? new Date(modDatetime) : undefined,
+  canonicalURL: Astro.url.toString(),
   scrollSmooth: true,
 };
 ---

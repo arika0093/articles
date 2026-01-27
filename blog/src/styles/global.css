@@ -8,8 +8,7 @@
     Meiryo, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";
   --font-mono:
-    "JetBrains Mono", "Consolas", "Hiragino Kaku Gothic ProN", "M PLUS 2",
-    "Meiryo", sans-serif;
+    "JetBrains Mono", "Consolas", var(--font-sans);
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

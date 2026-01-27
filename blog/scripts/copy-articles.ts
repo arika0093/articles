@@ -9,27 +9,6 @@ type ContentsMenuItem = {
   sourcePath: string;
 };
 
-function extractTitleFromMarkdown(content: string, fallback: string): string {
-  const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
-  if (frontmatterMatch) {
-    const frontmatter = frontmatterMatch[1];
-    const titleMatch = frontmatter.match(/^\s*title\s*:\s*(.+)\s*$/m);
-    if (titleMatch) {
-      return titleMatch[1].trim().replace(/^['"]|['"]$/g, "");
-    }
-  }
-
-  const body = frontmatterMatch
-    ? content.slice(frontmatterMatch[0].length)
-    : content;
-  const headingMatch = body.match(/^\s*#\s+(.+)\s*$/m);
-  if (headingMatch) {
-    return headingMatch[1].trim();
-  }
-
-  return fallback;
-}
-
 function toContentsHref(relativePath: string): string {
   const withoutExt = relativePath.replace(/\.md$/i, "");
   const slug = withoutExt.split(path.sep).join("/");
@@ -150,7 +129,7 @@ async function copyArticles() {
     // Remove references to non-existent images
     const imageRefPattern =
       /!\[([^\]]*)\]\(([^)]+\.(png|jpg|jpeg|gif|svg|webp))\)/gi;
-    content = content.replace(imageRefPattern, (match, alt, filename) => {
+    content = content.replace(imageRefPattern, (match, _alt, filename) => {
       const justFilename = path.basename(filename);
 
       if (match.includes("http")) {
@@ -244,7 +223,6 @@ async function copyArticles() {
       const titlePascalCase = titleBase
         .replace(/[-_]/g, " ")
         .replace(/\b\w/g, c => c.toUpperCase());
-      const baseName = path.basename(file, path.extname(file));
       contentsMenu.push({
         title: titlePascalCase,
         href: toContentsHref(relativePath),
