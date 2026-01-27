@@ -108,9 +108,17 @@ async function main() {
             );
           }
         } else {
-          // Replace image paths
+          // Replace image paths (matches both ./image.png and image.png)
+          // Escape special regex characters in the image name
+          const escapedImgName = imgName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          // Use a single regex that matches both formats with an optional ./ prefix
+          // Pattern explanation: (?:\.\/escapedImgName|escapedImgName)
+          //   - Non-capturing group with two alternatives separated by |
+          //   - First alternative: \./ (literal ./) followed by the image name
+          //   - Second alternative: just the image name
+          //   - This matches both (./image.png) and (image.png)
           content = content.replace(
-            new RegExp(`\\(${imgName}\\)`, 'g'),
+            new RegExp(`\\((?:\\.\\/${escapedImgName}|${escapedImgName})\\)`, 'g'),
             `(/images/${imgInfo.dateStr}/${imgName})`
           );
         }
