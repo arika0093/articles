@@ -111,12 +111,9 @@ async function main() {
           // Replace image paths (matches both ./image.png and image.png)
           // Escape special regex characters in the image name
           const escapedImgName = imgName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          // Use a single regex that matches both formats with an optional ./ prefix
           content = content.replace(
-            new RegExp(`\\(\\.\\/${escapedImgName}\\)`, 'g'),
-            `(/images/${imgInfo.dateStr}/${imgName})`
-          );
-          content = content.replace(
-            new RegExp(`\\(${escapedImgName}\\)`, 'g'),
+            new RegExp(`\\((?:\\.\\/${escapedImgName}|${escapedImgName})\\)`, 'g'),
             `(/images/${imgInfo.dateStr}/${imgName})`
           );
         }
