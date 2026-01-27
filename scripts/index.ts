@@ -108,9 +108,15 @@ async function main() {
             );
           }
         } else {
-          // Replace image paths
+          // Replace image paths (matches both ./image.png and image.png)
+          // Escape special regex characters in the image name
+          const escapedImgName = imgName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
           content = content.replace(
-            new RegExp(`\\(${imgName}\\)`, 'g'),
+            new RegExp(`\\(\\.\\/${escapedImgName}\\)`, 'g'),
+            `(/images/${imgInfo.dateStr}/${imgName})`
+          );
+          content = content.replace(
+            new RegExp(`\\(${escapedImgName}\\)`, 'g'),
             `(/images/${imgInfo.dateStr}/${imgName})`
           );
         }
