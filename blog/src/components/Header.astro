@@ -17,7 +17,7 @@ const isActive = (path: string) => {
   return currentPath === path || currentPathArray[0] === pathArray[0];
 };
 
-const contentsMenuItems = Array.isArray(contentsMenu) ? contentsMenu : [];
+const contentsMenuItems: Array<{ title: string; href: string }> = Array.isArray(contentsMenu) ? contentsMenu : [];
 ---
 
 <a
