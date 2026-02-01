@@ -303,6 +303,7 @@ public void GenerateAnotherMethod(IndentedStringBuilder builder)
 ```
 
 このように、別の関数にコード生成を任せる場合でも、builderを渡すことでインデントを維持できます。
+また、その2のように都度戻り値で受け取る必要もないのでコードの見栄えが良くなります。
 
 ### さらに改良する
 
