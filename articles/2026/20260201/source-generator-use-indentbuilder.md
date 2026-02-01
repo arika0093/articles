@@ -1,5 +1,6 @@
 ---
 title: "Source Generator Tips(#1): コード整形にIndentStringBuilderを使う"
+pubDatetime: 2026-02-02T00:14:40+09:00
 published: true
 tags: ["csharp", "dotnet", "source-generator"]
 zenn:

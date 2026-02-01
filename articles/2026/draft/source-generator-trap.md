@@ -1,7 +1,7 @@
 ---
 title: "【C#】SourceGeneratorを作成するときに気をつけるポイント"
 pubDatetime: 2026-01-06T16:31:52+09:00
-modDatetime: 2026-01-25T23:38:59+09:00
+modDatetime: 2026-02-02T00:14:35+09:00
 published: false
 tags: ["csharp", "dotnet", "source-generator"]
 zenn:

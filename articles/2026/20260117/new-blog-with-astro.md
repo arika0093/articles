@@ -1,7 +1,7 @@
 ---
 title: "【Astro】新しいブログを作ってみました"
 pubDatetime: 2026-01-18T16:23:11+09:00
-modDatetime: 2026-01-25T23:38:59+09:00
+modDatetime: 2026-02-02T00:14:35+09:00
 pin: false
 published: true
 tags: ["blog", "astro", "astro-paper"]
