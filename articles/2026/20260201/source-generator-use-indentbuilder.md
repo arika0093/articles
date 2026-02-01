@@ -412,7 +412,7 @@ internal class IndentedStringBuilder(StringBuilder stringBuilder, int indentLeve
 ```
 
 `AppendLineIf`は条件付きで行を追加するメソッドです。
-`IndentScopeWithCullyBrace`はusingステートメントと組み合わせてインデントスコープを管理するためのメソッドです。
+`IndentScopeWithBraceIf`はusingステートメントと組み合わせてインデントスコープを管理するためのメソッドです。
 
 これらを使うと、namespace対応コードは以下のように書けます。
 
