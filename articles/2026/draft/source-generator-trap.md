@@ -3,12 +3,12 @@ title: "【C#】SourceGeneratorを作成するときに気をつけるポイン�
 pubDatetime: 2026-01-06T16:31:52+09:00
 modDatetime: 2026-01-25T23:38:59+09:00
 published: false
-tags: ["csharp", "dotnet", "sourcegenerator"]
+tags: ["csharp", "dotnet", "source-generator"]
 zenn:
   published: false
   emoji: "⚠️"
   type: "tech"
-  topics: ["csharp", "dotnet", "sourcegenerator"]
+  topics: ["csharp", "dotnet", "source-generator"]
 ---
 
 

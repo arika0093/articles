@@ -75,12 +75,12 @@ https://eclairs.cc/
 ---
 title: "記事のタイトル"
 published: false # blogに公開するかどうか
-tags: ["csharp", "dotnet", "sourcegenerator"] # タグ一覧
+tags: ["csharp", "dotnet", "source-generator"] # タグ一覧
 zenn: # Zenn公開用設定
   published: false # Zennに公開するかどうか
   emoji: "⚠️" # Zenn記事のアイコン
   type: "tech" # Zenn記事の種類(techかidea)
-  topics: ["csharp", "dotnet", "sourcegenerator"] # Zenn記事のトピック一覧
+  topics: ["csharp", "dotnet", "source-generator"] # Zenn記事のトピック一覧
 ---
 ```
 
