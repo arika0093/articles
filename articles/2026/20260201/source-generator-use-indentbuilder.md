@@ -51,7 +51,7 @@ context.AddSource("GeneratedFile.g.cs", source);
 var namespaceName = GetNamespaceFromUserCode(parseRecordObject);
 
 var source = $$"""
-    namespace {namespaceName}
+    namespace {{namespaceName}}
     {
         public class GeneratedClass
         {
@@ -93,7 +93,7 @@ else {
 }
 ```
 
-このようにすると…… 生成されたコードは以下のようになります。
+このようにすると、 生成されたコードは以下のようになります。
 
 ```csharp
 // 生成されたコード例
@@ -110,8 +110,7 @@ public class GeneratedClass
 ```
 
 間違ってはいないですし、このままで問題なく動作しますが、コードのインデントが崩れています。
-
-さらに内部処理の生成を別関数で実施したりすると、インデントがさらに崩れていきます。
+ここで内部処理の生成を別関数で実施したりすると、インデントがさらに崩れていきます。
 
 ```csharp
 // 生成されたコード例
@@ -131,6 +130,8 @@ Console.WriteLine(source);
 }
 }
 ```
+
+別に自動生成なので気にしなくても良いと言われればそうですが、何となく嫌ですよね？
 
 ## 対策
 ### その1: インデントをあらかじめ埋め込んでおく
@@ -154,7 +155,7 @@ var source = $$"""
 ```
 
 確かに機能しますが、保守が辛くなっていきます。
-また、上記のnamespaceのように、動的にインデントが変わる場合はさらに辛くなります。
+また、上記のnamespaceのように動的にインデントが変わる場合はさらに辛くなります。
 
 ### その2: 関数の結果に対して都度インデントを付与する
 
@@ -211,7 +212,7 @@ https://github.com/dotnet/roslyn/issues/52914
 そして、これを高速で実施する良い方法は提供されていません。
 
 ### その4: csharpierを使う
-それならば……というわけで、要するに外部のコード整形ツールを使う方法です。
+それならば、外部のコード整形ツールを使えばいいと考えるかもしれません。
 [csharpier](https://csharpier.com/)は.NET向けのコード整形ツールで、ライブラリとしても利用できます。
 
 なので以下のように書けば良さそうに見えますが……
@@ -278,7 +279,7 @@ public void Generate()
     var builder = new IndentedStringBuilder();
     builder.AppendLine("public class GeneratedClass {");
     builder.IncreaseIndent();
-    var generatedMethod = GenerateMethodCode(builder);
+    GenerateMethodCode(builder);
     builder.DecreaseIndent();
     builder.AppendLine("}");
 }
