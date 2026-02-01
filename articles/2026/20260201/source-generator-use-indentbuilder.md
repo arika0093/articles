@@ -381,7 +381,7 @@ internal class IndentedStringBuilder(StringBuilder stringBuilder, int indentLeve
         }
     }
 
-    public IDisposable IndentScopeWithBraceIf(bool condition, string open = "{", string close = "}")
+    public IDisposable? IndentScopeWithBraceIf(bool condition, string open = "{", string close = "}")
     {
         if (condition)
         {
@@ -389,16 +389,10 @@ internal class IndentedStringBuilder(StringBuilder stringBuilder, int indentLeve
             IncreaseIndent();
             return new IndentScopeDisposable(this, close);
         }
-        else
-        {
-            return new IndentScopeDisposable(this, null);
-        }
+        return null;
     }
 
-    private sealed class IndentScopeDisposable(
-        IndentedStringBuilder builder,
-        string? closeBraceText = null
-    ) : IDisposable
+    private sealed class IndentScopeDisposable(IndentedStringBuilder builder, string? closeBraceText = null) : IDisposable
     {
         public void Dispose()
         {
