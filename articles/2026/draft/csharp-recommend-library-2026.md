@@ -14,6 +14,7 @@ zenn:
 * ZLogger
 * FluentResults
 * FluentValidation
+* Mapperly
 
 ## Web関係
 * Refit
