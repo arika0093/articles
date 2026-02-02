@@ -1,5 +1,6 @@
 ---
 title: "【C#】2026年版 個人的おすすめライブラリ集"
+pubDatetime: 2026-02-02T11:41:34+09:00
 published: false
 tags: ["csharp", "dotnet", "library"]
 zenn:
