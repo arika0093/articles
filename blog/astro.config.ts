@@ -14,6 +14,7 @@ import {
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { rehypeGist } from "./src/utils/rehype/rehypeGist";
+import { rehypeMessage } from "./src/utils/rehype/rehypeMessage";
 import { SITE } from "./src/config";
 import remarkCollapse from "remark-collapse";
 
@@ -44,6 +45,7 @@ export default defineConfig({
         },
       ],
       rehypeGist,
+      rehypeMessage,
     ],
     shikiConfig: {
       themes: {
