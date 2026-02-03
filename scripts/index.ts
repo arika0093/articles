@@ -73,7 +73,12 @@ async function main() {
 
       // Generate Zenn frontmatter
       const zennFrontmatter = generateZennFrontmatter(frontmatter);
-      const newContent = `${zennFrontmatter}\n\n${body}`;
+      const blogUrl = beforePath
+        .replace(articlesDir + path.sep, 'https://eclairs.cc/posts/')
+        .replace(/\\/g, '/')
+        .replace(/\.mdx?$/, '');
+      const navigateMessage = `:::message\nこの記事は[ブログ](${blogUrl})でも公開しています。\n:::\n`;
+      const newContent = `${zennFrontmatter}\n\n${navigateMessage}${body}`;
 
 
       fs.writeFileSync(afterPath, newContent, 'utf-8');
