@@ -21,14 +21,12 @@ function toContentsHref(relativePath: string): string {
   const withoutExt = relativePath.replace(/\.md$/i, "");
   const slug = withoutExt.split(path.sep).join("/");
   if (slug === "index") return "/contents";
-  if (slug.endsWith("/index")) return `/contents/${slug.replace(/\/index$/, "")}`;
+  if (slug.endsWith("/index"))
+    return `/contents/${slug.replace(/\/index$/, "")}`;
   return `/contents/${slug}`;
 }
 
-function ensureLayoutFrontmatter(
-  content: string,
-  layoutPath: string
-): string {
+function ensureLayoutFrontmatter(content: string, layoutPath: string): string {
   const normalized = content.replace(/\r\n/g, "\n");
   const frontmatterMatch = normalized.match(/^---\n([\s\S]*?)\n---\n?/);
 
@@ -90,7 +88,9 @@ function copyArticleFile(
   }
 
   // Copy and process markdown file
-  let content = fs.readFileSync(file, "utf-8");
+  const originalContent = fs.readFileSync(file, "utf-8");
+  const hasCRLF = /\r\n/.test(originalContent);
+  let content = originalContent;
 
   // Find all existing images in the source directory
   const sourceDir = path.dirname(file);
@@ -159,7 +159,7 @@ function copyArticleFile(
       content = `---\npubDatetime: ${pubDatetime}\n---\n\n${normalized}`;
     }
     // Restore original CRLF if the file originally used it
-    if (/\r\n/.test(fs.readFileSync(file, "utf-8"))) {
+    if (hasCRLF) {
       content = content.replace(/\n/g, "\r\n");
     }
   }
@@ -177,6 +177,33 @@ function copyArticleFile(
           /^---\n/,
           `---\ntags: [${topics.map(t => `"${t}"`).join(", ")}]\n`
         );
+      }
+    }
+  }
+
+  // Add Zenn article link if published to Zenn
+  const normalized = content.replace(/\r\n/g, "\n");
+  const frontmatterMatch = normalized.match(/^---\n([\s\S]*?)\n---\n/);
+  if (frontmatterMatch) {
+    const frontmatter = frontmatterMatch[1];
+    // Check if zenn.published is true (with various formatting possibilities)
+    const zennPublishedMatch = frontmatter.match(
+      /zenn:\s*\n(?:.*\n)*?\s*published:\s*(true)/m
+    );
+    if (zennPublishedMatch) {
+      // Get the original filename without extension
+      const originalFilename = path.basename(file, path.extname(file));
+      const zennUrl = `https://zenn.dev/arika/articles/${originalFilename}`;
+
+      // Insert the link after the frontmatter
+      const afterFrontmatter = normalized.substring(frontmatterMatch[0].length);
+      const zennLinkSection = `:::message\nこの記事は [Zenn](${zennUrl}) にも投稿されています。\n:::\n\n`;
+
+      content = frontmatterMatch[0] + zennLinkSection + afterFrontmatter;
+
+      // Restore original CRLF if the file originally used it
+      if (hasCRLF) {
+        content = content.replace(/\n/g, "\r\n");
       }
     }
   }
@@ -289,12 +316,7 @@ async function copyArticles() {
   const blogContentDir = path.join(blogRoot, "src", "data", "blog");
   const publicImagesDir = path.join(blogRoot, "public", "images");
   const contentsDir = path.join(blogRoot, "..", "articles", "contents");
-  const blogContentsPagesDir = path.join(
-    blogRoot,
-    "src",
-    "pages",
-    "contents"
-  );
+  const blogContentsPagesDir = path.join(blogRoot, "src", "pages", "contents");
   const contentsMenuPath = path.join(
     blogRoot,
     "src",
