@@ -383,9 +383,10 @@ Arrayと同様に、`SampleSubClass`をディープコピー(Clone関数の呼�
 方法としては
 
 1. foreachで1要素ずつCloneしてAdd
-2. forループで1要素ずつCloneして代入
-3. `Enumerable.ToList(original.Select(x => x.Clone()))`
-4. `CollectionsMarshal.AsSpan(original)`+forループでCloneしてAdd
+2. forループで1要素ずつCloneしてAdd
+3. `SetCount`+forループで1要素ずつCloneして代入
+4. `Enumerable.ToList(original.Select(x => x.Clone()))`
+5. `CollectionsMarshal.AsSpan(original)`+forループでCloneしてAdd
 
 ```csharp
 [MemoryDiagnoser]
@@ -442,6 +443,24 @@ public class ListCopyWithClass
     }
 
     [Benchmark]
+    public List<SampleSubClass> CopyForIndex()
+    {
+#if NET7_0_OR_GREATER
+        var a = SampleList.Count;
+        var c = new List<SampleSubClass>(a);
+        CollectionsMarshal.SetCount(c, a);
+        for (int i = 0; i < a; i++)
+        {
+            c[i] = SampleList[i].Clone();
+        }
+        return c;
+#endif
+        throw new NotSupportedException(
+            "CollectionsMarshal.SetCount is not supported in this .NET version."
+        );
+    }
+
+    [Benchmark]
     public List<SampleSubClass> CopyUsingLinq()
     {
         return System.Linq.Enumerable.ToList(SampleList.Select(item => item.Clone()));
@@ -472,17 +491,22 @@ public class ListCopyWithClass
 
 | Method         | Job       | Runtime   | ArraySize | Mean     | Error    | StdDev   | Gen0   | Allocated |
 |--------------- |---------- |---------- |---------- |---------:|---------:|---------:|-------:|----------:|
-| CopyForAdd     | .NET 10.0 | .NET 10.0 | 5         | 26.54 ns | 0.222 ns | 0.207 ns | 0.0148 |     256 B |
-| CopyForeachAdd | .NET 8.0  | .NET 8.0  | 5         | 29.88 ns | 0.396 ns | 0.351 ns | 0.0148 |     256 B |
-| CopyForeachAdd | .NET 10.0 | .NET 10.0 | 5         | 32.28 ns | 0.664 ns | 0.711 ns | 0.0148 |     256 B |
-| CopyForAdd     | .NET 8.0  | .NET 8.0  | 5         | 32.33 ns | 0.606 ns | 0.943 ns | 0.0148 |     256 B |
-| CopyUsingSpan  | .NET 8.0  | .NET 8.0  | 5         | 33.20 ns | 3.921 ns | 11.56 ns | 0.0148 |     256 B |
-| CopyUsingLinq  | .NET 10.0 | .NET 10.0 | 5         | 37.60 ns | 0.440 ns | 0.368 ns | 0.0190 |     328 B |
-| CopyUsingSpan  | .NET 10.0 | .NET 10.0 | 5         | 38.69 ns | 5.161 ns | 15.22 ns | 0.0148 |     256 B |
-| CopyForeachAdd | .NET 6.0  | .NET 6.0  | 5         | 41.76 ns | 0.411 ns | 0.385 ns | 0.0148 |     256 B |
-| CopyForAdd     | .NET 6.0  | .NET 6.0  | 5         | 42.47 ns | 0.466 ns | 0.413 ns | 0.0148 |     256 B |
-| CopyUsingLinq  | .NET 8.0  | .NET 8.0  | 5         | 53.81 ns | 0.497 ns | 0.465 ns | 0.0190 |     328 B |
-| CopyUsingLinq  | .NET 6.0  | .NET 6.0  | 5         | 60.15 ns | 0.424 ns | 0.354 ns | 0.0190 |     328 B |
+| CopyForIndex   | .NET 6.0  | .NET 6.0  | 5         |       NA |       NA |       NA |     NA |        NA |
+| CopyUsingSpan  | .NET 6.0  | .NET 6.0  | 5         |       NA |       NA |       NA |     NA |        NA |
+| CopyUsingSpan  | .NET 8.0  | .NET 8.0  | 5         | 26.61 ns | 0.569 ns | 1.187 ns | 0.0148 |     256 B |
+| CopyForIndex   | .NET 10.0 | .NET 10.0 | 5         | 27.13 ns | 0.578 ns | 1.085 ns | 0.0148 |     256 B |
+| CopyUsingSpan  | .NET 10.0 | .NET 10.0 | 5         | 27.67 ns | 0.585 ns | 0.674 ns | 0.0148 |     256 B |
+| CopyForAdd     | .NET 10.0 | .NET 10.0 | 5         | 30.59 ns | 0.476 ns | 0.422 ns | 0.0148 |     256 B |
+| CopyForeachAdd | .NET 8.0  | .NET 8.0  | 5         | 30.91 ns | 0.616 ns | 0.605 ns | 0.0148 |     256 B |
+| CopyForeachAdd | .NET 10.0 | .NET 10.0 | 5         | 31.03 ns | 0.657 ns | 0.922 ns | 0.0148 |     256 B |
+| CopyForIndex   | .NET 8.0  | .NET 8.0  | 5         | 31.34 ns | 0.490 ns | 0.434 ns | 0.0148 |     256 B |
+| CopyForAdd     | .NET 8.0  | .NET 8.0  | 5         | 33.21 ns | 0.579 ns | 0.541 ns | 0.0148 |     256 B |
+| CopyForAdd     | .NET 6.0  | .NET 6.0  | 5         | 41.43 ns | 0.597 ns | 0.559 ns | 0.0148 |     256 B |
+| CopyUsingLinq  | .NET 10.0 | .NET 10.0 | 5         | 43.21 ns | 0.894 ns | 1.339 ns | 0.0190 |     328 B |
+| CopyForeachAdd | .NET 6.0  | .NET 6.0  | 5         | 43.36 ns | 0.513 ns | 0.480 ns | 0.0148 |     256 B |
+| CopyUsingLinq  | .NET 8.0  | .NET 8.0  | 5         | 56.47 ns | 1.057 ns | 1.175 ns | 0.0190 |     328 B |
+| CopyUsingLinq  | .NET 6.0  | .NET 6.0  | 5         | 64.31 ns | 0.438 ns | 0.388 ns | 0.0190 |     328 B |
 
-地道に追加するのがベターっぽい。
+.NET7以降であれば`SetCount`を使う(Span or Index指定追加)が最速。
+.NET6の場合は`foreach`か`for`で良さそう。
 
