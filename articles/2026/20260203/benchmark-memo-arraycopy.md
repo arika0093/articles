@@ -457,7 +457,7 @@ public class ListCopyWithClass
         var c = CollectionsMarshal.AsSpan(r);
         for (var i = 0; i < a; i++)
         {
-            c[i] = SampleList[i];
+            c[i] = SampleList[i].Clone();
         }
         return r;
 #endif
@@ -472,17 +472,17 @@ public class ListCopyWithClass
 
 | Method         | Job       | Runtime   | ArraySize | Mean     | Error    | StdDev   | Gen0   | Allocated |
 |--------------- |---------- |---------- |---------- |---------:|---------:|---------:|-------:|----------:|
-| CopyUsingSpan  | .NET 8.0  | .NET 8.0  | 5         | 10.28 ns | 0.122 ns | 0.114 ns | 0.0056 |      96 B |
-| CopyUsingSpan  | .NET 10.0 | .NET 10.0 | 5         | 11.62 ns | 0.097 ns | 0.091 ns | 0.0056 |      96 B |
 | CopyForAdd     | .NET 10.0 | .NET 10.0 | 5         | 26.54 ns | 0.222 ns | 0.207 ns | 0.0148 |     256 B |
 | CopyForeachAdd | .NET 8.0  | .NET 8.0  | 5         | 29.88 ns | 0.396 ns | 0.351 ns | 0.0148 |     256 B |
 | CopyForeachAdd | .NET 10.0 | .NET 10.0 | 5         | 32.28 ns | 0.664 ns | 0.711 ns | 0.0148 |     256 B |
 | CopyForAdd     | .NET 8.0  | .NET 8.0  | 5         | 32.33 ns | 0.606 ns | 0.943 ns | 0.0148 |     256 B |
+| CopyUsingSpan  | .NET 8.0  | .NET 8.0  | 5         | 33.20 ns | 3.921 ns | 11.56 ns | 0.0148 |     256 B |
 | CopyUsingLinq  | .NET 10.0 | .NET 10.0 | 5         | 37.60 ns | 0.440 ns | 0.368 ns | 0.0190 |     328 B |
+| CopyUsingSpan  | .NET 10.0 | .NET 10.0 | 5         | 38.69 ns | 5.161 ns | 15.22 ns | 0.0148 |     256 B |
 | CopyForeachAdd | .NET 6.0  | .NET 6.0  | 5         | 41.76 ns | 0.411 ns | 0.385 ns | 0.0148 |     256 B |
 | CopyForAdd     | .NET 6.0  | .NET 6.0  | 5         | 42.47 ns | 0.466 ns | 0.413 ns | 0.0148 |     256 B |
 | CopyUsingLinq  | .NET 8.0  | .NET 8.0  | 5         | 53.81 ns | 0.497 ns | 0.465 ns | 0.0190 |     328 B |
 | CopyUsingLinq  | .NET 6.0  | .NET 6.0  | 5         | 60.15 ns | 0.424 ns | 0.354 ns | 0.0190 |     328 B |
 
-.NET7以上なら`Span`経由が最速。使えないなら地道に追加するのがベター。
+地道に追加するのがベターっぽい。
 
