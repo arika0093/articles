@@ -88,7 +88,9 @@ function copyArticleFile(
   }
 
   // Copy and process markdown file
-  let content = fs.readFileSync(file, "utf-8");
+  const originalContent = fs.readFileSync(file, "utf-8");
+  const hasCRLF = /\r\n/.test(originalContent);
+  let content = originalContent;
 
   // Find all existing images in the source directory
   const sourceDir = path.dirname(file);
@@ -157,7 +159,7 @@ function copyArticleFile(
       content = `---\npubDatetime: ${pubDatetime}\n---\n\n${normalized}`;
     }
     // Restore original CRLF if the file originally used it
-    if (/\r\n/.test(fs.readFileSync(file, "utf-8"))) {
+    if (hasCRLF) {
       content = content.replace(/\n/g, "\r\n");
     }
   }
@@ -200,7 +202,7 @@ function copyArticleFile(
       content = frontmatterMatch[0] + zennLinkSection + afterFrontmatter;
 
       // Restore original CRLF if the file originally used it
-      if (/\r\n/.test(fs.readFileSync(file, "utf-8"))) {
+      if (hasCRLF) {
         content = content.replace(/\n/g, "\r\n");
       }
     }
