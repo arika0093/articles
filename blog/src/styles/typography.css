@@ -188,4 +188,13 @@
       @apply rounded-sm border border-border px-0.5 py-px;
     }
   }
+
+  /* Styles for Zenn message blocks */
+  .zenn-message {
+    @apply my-4 rounded-md border border-blue-500/30 bg-blue-50/50 p-4 dark:bg-blue-950/20;
+  }
+
+  .zenn-message p {
+    @apply my-2 first:mt-0 last:mb-0;
+  }
 }

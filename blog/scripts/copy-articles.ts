@@ -191,9 +191,9 @@ function copyArticleFile(
       /zenn:\s*\n(?:.*\n)*?\s*published:\s*(true)/m
     );
     if (zennPublishedMatch) {
-      // Get the original filename without extension
+      // Get the original filename without extension and the date folder (YYMMDD)
       const originalFilename = path.basename(file, path.extname(file));
-      const zennUrl = `https://zenn.dev/arika/articles/${originalFilename}`;
+      const zennUrl = `https://zenn.dev/arika/articles/${dateFolder}-${originalFilename}`;
 
       // Insert the link after the frontmatter
       const afterFrontmatter = normalized.substring(frontmatterMatch[0].length);

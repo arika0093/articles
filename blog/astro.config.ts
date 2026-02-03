@@ -14,6 +14,7 @@ import {
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { rehypeGist } from "./src/utils/rehype/rehypeGist";
+import { remarkMessage } from "./src/utils/remark/remarkMessage";
 import { SITE } from "./src/config";
 import remarkCollapse from "remark-collapse";
 
@@ -29,6 +30,7 @@ export default defineConfig({
   ],
   markdown: {
     remarkPlugins: [
+      remarkMessage,
       remarkBreaks,
       [remarkCollapse, { test: "Details" }],
       remarkGfm,
