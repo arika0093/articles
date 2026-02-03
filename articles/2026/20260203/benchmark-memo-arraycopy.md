@@ -1,5 +1,6 @@
 ---
 title: "【C#】配列のDeepCopyを高速化するベンチマーク調査結果"
+pubDatetime: 2026-02-04T01:05:15+09:00
 published: true
 tags: ["csharp", "dotnet", "deepcopy", "benchmark"]
 ---
