@@ -1,5 +1,6 @@
 ---
 title: "【C#】Decorator/Interceptorの自動実装を試みる方法メモ"
+pubDatetime: 2026-02-11T22:02:09+09:00
 published: true
 tags: ["csharp", "dotnet", "interface", "decorator"]
 zenn:
