@@ -380,7 +380,7 @@ partial class ServiceDecorator : IService
 
 ## 方法6: 自動生成クラスから自動生成インターフェースを参照
 
-方法5-1を元に、インターセプター処理を組み込めるようにします。
+方法5-1を元に、インターセプター処理を組み込めるように改良したもの。
 
 ```csharp
 // ユーザーが書く必要のあるコード
@@ -455,14 +455,31 @@ public interface IServiceDecorator__Generated : IService
 ```
 
 注目すべきポイントとして、`ServiceDecorator`のユーザー記述部分が以下のようにシンプルなコードになっていること。
-SourceGeneratorを動かすために属性は付与されていますが、それ以外はあまりにも自然なコードといえるでしょう。
-まあ`Base`プロパティが突然現れるのはちょっと違和感がありますが。
+SourceGeneratorを動かすために属性は付与されていますが、それ以外はあまりにも自然なコードといえるはず。
+まあ`Base`プロパティが突然現れるのはちょっと違和感があるが。
 
 ```csharp
 // [AutoImplDecorator]的な属性が付与されている
 public partial class ServiceDecorator(IService innerService) : IService
 {
     public void DoSomething() => Base.DoSomething();
+}
+```
+
+また、全ての処理の前後にフック処理を差し込むだけなら、`Intercept`メソッドだけを書けば良い。
+
+```csharp
+public partial class ServiceDecorator(IService innerService) : IService
+{
+    // 例えば処理時間を簡易的に計測する例
+    public IEnumerable<bool> Intercept(string methodName, object[] args)
+    {
+        var start = Stopwatch.GetTimestamp();
+        yield return true; // yield return trueを返すと本体処理が実行される
+        var end = Stopwatch.GetTimestamp();
+        var elapsed = (end - start) * 1000.0 / Stopwatch.Frequency;
+        Console.WriteLine($"[{methodName}]: Elapsed {elapsed} ms");
+    }
 }
 ```
 
