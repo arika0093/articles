@@ -401,7 +401,7 @@ public partial class ServiceDecorator(IService innerService) : IService
 partial class ServiceDecorator : IServiceDecorator__Generated
 {
     // フィールドだとthisを渡す都合上うまくいかないのでBaseをプロパティとし
-    // 毎回生成しないようにキャッシュする
+    // なおかつ毎回生成しないようにキャッシュして、基本はそれを使うようにする
     private IServiceDecorator__Generated.__BaseImpl? __baseCache;
     private IServiceDecorator__Generated.__BaseImpl Base => __baseCache ??= new(innerService, this);
     IServiceDecorator__Generated.__BaseImpl IServiceDecorator__Generated.__Base => Base;
@@ -458,13 +458,15 @@ public interface IServiceDecorator__Generated : IService
 
 注目すべきポイントとして、`ServiceDecorator`のユーザー記述部分が以下のようにシンプルなコードになっていること。
 SourceGeneratorを動かすために属性は付与されていますが、それ以外はあまりにも自然なコードといえるはず。
-まあ`Base`プロパティが突然現れるのはちょっと違和感があるが。
+まあ`Base`プロパティが突然現れるのはちょっと違和感があるが、基底クラス（風）の呼び出しとしてまだ理解しやすい。
 
 ```csharp
 // [AutoImplDecorator]的な属性が付与されている
 public partial class ServiceDecorator(IService innerService) : IService
 {
     public void DoSomething() => Base.DoSomething();
+    // ちなみに、ただ共通処理を呼び出すだけならインターフェースの自動実装があるため
+    // 何も書かなくても良い。
 }
 ```
 
