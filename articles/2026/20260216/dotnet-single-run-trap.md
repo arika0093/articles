@@ -85,13 +85,10 @@ Preview 6以降ではプロジェクト参照が使えるようになってい�
   * これは`Directory.Build.props`や`nuget.config`などの話。
 
 参照プロジェクトだけをビルドし直した場合、変更が反映されずにあれ？となります。AIもこれに戸惑っていたので注意したほうが良さそうです。
-なお、以下のコマンドで明示的にビルドし直せます。
+なお、以下のコマンドで明示的にビルドし直したうえで実行することができます。
 
 ```bash
-dotnet clean file-based-apps
-# or
-dotnet clean file.cs
-dotnet build file.cs
+dotnet run app.cs --no-cache
 ```
 
 ### Analyzerを参照できない
@@ -112,3 +109,8 @@ https://github.com/dotnet/sdk/issues/52399
 
 * [人気がありそうなIssue](https://github.com/dotnet/sdk/issues?q=label%3A%22Area-run-file%22%20is%3Aissue%20comments%3A%3E5)
 * [上記のうちOpenなやつ](https://github.com/dotnet/sdk/issues?q=label%3A%22Area-run-file%22%20is%3Aissue%20comments%3A%3E5%20state%3Aopen)
+
+
+## 編集履歴
+* 2026-02-17: 公開
+* 2026-02-19: `dotnet run app.cs --no-cache`の情報を追加
