@@ -1,6 +1,7 @@
 ---
 title: "【C#】dotnet app.cs(File-based apps)のメモ+罠ポイント"
 pubDatetime: 2026-02-17T00:13:43+09:00
+modDatetime: 2026-02-19T00:47:40+09:00
 published: true
 tags: ["csharp", "dotnet"]
 zenn:
