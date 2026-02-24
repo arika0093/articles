@@ -1,5 +1,6 @@
 ---
 title: "コンソール出力をSVGに変換する"
+pubDatetime: 2026-02-25T00:19:41+09:00
 published: true
 tags: ["console", "asciinema", "terminal"]
 ---
