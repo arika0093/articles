@@ -54,7 +54,7 @@ dotnet tool install -g ConsoleToSvg
 console2svg -- dotnet
 ```
 
-![](./1.svg)
+![](https://raw.githubusercontent.com/arika0093/articles/refs/heads/main/articles/2026/20260225/1.svg)
 
 そのまま実行すると幅80、高さ24のSVGが生成されます。変更したいときは`-w`と`-h`で指定します。
 また、よくあるmac風のwindowをつけることもできます。
@@ -63,7 +63,7 @@ console2svg -- dotnet
 console2svg -w 120 -h 16 --window macos -- dotnet
 ```
 
-![](./2.svg)
+![](https://raw.githubusercontent.com/arika0093/articles/refs/heads/main/articles/2026/20260225/2.svg)
 
 出力が長い場合、そのうちの一部を切り取って使いたいこともあるかと思います。その場合、`crop-top`/`crop-bottom`オプションで切り取りを指定できます。指定方法もいくつかあり、`ch`(行数or文字), `px`(ピクセル), テキスト指定(指定したテキストが出てくるまで)から選べます。
 
@@ -74,7 +74,7 @@ console2svg -w 120 -h 16 --window macos -- dotnet
 console2svg -w 60 -h 16 --window macos --crop-top "Host" --crop-bottom ".NET runtimes installed:-2" -- dotnet --info
 ```
 
-![](./4.svg)
+![](https://raw.githubusercontent.com/arika0093/articles/refs/heads/main/articles/2026/20260225/4.svg)
 
 `-m video`を指定することで動画も生成できます。`--loop`をつけると動画がループします。
 
@@ -82,7 +82,7 @@ console2svg -w 60 -h 16 --window macos --crop-top "Host" --crop-bottom ".NET run
 console2svg -m video --window macos --loop -- copilot --banner
 ```
 
-![](./3.svg)
+![](https://raw.githubusercontent.com/arika0093/articles/refs/heads/main/articles/2026/20260225/3.svg)
 
 自分用のツールですが、比較的汎用的に使えるように作ったつもりなので、もし興味があれば使ってみてください。
 
