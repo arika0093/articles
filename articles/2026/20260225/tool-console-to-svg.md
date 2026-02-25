@@ -1,7 +1,7 @@
 ---
 title: "コンソール出力をsvgに変換するツールを作ってみた"
 pubDatetime: 2026-02-26T01:01:21+09:00
-modDatetime: 2026-02-26T01:12:33+09:00
+modDatetime: 2026-02-26T01:22:43+09:00
 published: true
 tags: ["csharp", "dotnet", "console", "terminal"]
 zenn:
