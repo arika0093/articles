@@ -1,16 +1,16 @@
 ---
 title: "コンソール出力をsvgに変換するツールを作ってみた"
 pubDatetime: 2026-02-26T01:01:21+09:00
-published: false
+published: true
 tags: ["csharp", "dotnet", "console", "terminal"]
 zenn:
-  published: false
+  published: true
   emoji: "🎨"
   type: "tech"
 ---
 
 ライブラリの実行結果をREADMEに貼り付けるにあたり、png等の貼り付けだと画質が微妙になりがちです。
-そこでsvgで出力できるツールがないか探してみたのですが、ほしいものが見つからなかったのでさくっと作ってみました。
+そこでsvgで出力できるツールを調べて、ほしいものが見つからなかったのでさくっと作ってみました。
 
 ## 従来の方法/問題点
 コンソール出力をSVGに変換する方法としては、`asciinema`と`svg-term`を組み合わせる方法が一般的です。
@@ -83,6 +83,7 @@ console2svg -m video --window macos --loop -- copilot --banner
 
 ![](./3.svg)
 
+自分用のツールですが、比較的汎用的に使えるように作ったつもりなので、もし興味があれば使ってみてください。
 
 ## 感想
 1日でできました。AIすごい。
