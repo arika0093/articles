@@ -65,10 +65,11 @@ console2svg -w 120 -h 16 --window macos -- dotnet
 
 出力が長い場合、そのうちの一部を切り取って使いたいこともあるかと思います。その場合、`crop-top`/`crop-bottom`オプションで切り取りを指定できます。指定方法もいくつかあり、`ch`(行数or文字), `px`(ピクセル), テキスト指定(指定したテキストが出てくるまで)から選べます。
 
-例えば`dotnet --info`の出力は非常に長いので、Hostの情報だけを切り取ってみます。
+例えば`dotnet --info`の出力は非常に長いので、HostおよびSDKsの情報だけ切り取ってみます。
+この際、sdkの情報をピンポイントで切り取るのは難しいので、その下にいる`.NET runtimes installed`の行を基準にして、そこから2行上に切り取ることにします。
 
 ```bash
-console2svg -w 40 -h 16 --window macos --crop-top "Host:" --crop-bottom "Commit:" -- dotnet --info
+console2svg -w 60 -h 16 --window macos --crop-top "Host" --crop-bottom ".NET runtimes installed:-2" -- dotnet --info
 ```
 
 ![](./4.svg)
