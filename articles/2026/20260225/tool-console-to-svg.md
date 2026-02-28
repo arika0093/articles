@@ -20,7 +20,7 @@ zenn:
 ![](https://raw.githubusercontent.com/arika0093/articles/refs/heads/main/articles/2026/20260225/cmd-hero.svg)
 
 動画も吐き出せます。
-![](https://raw.githubusercontent.com/arika0093/articles/refs/heads/main/articles/2026/20260225/cmd-logo.svg)
+![](https://raw.githubusercontent.com/arika0093/articles/refs/heads/main/articles/2026/20260225/cmd-loop.svg)
 
 ## 従来の方法/問題点
 コンソール出力をSVGに変換する方法としては、`asciinema`と`svg-term`を組み合わせる方法が一般的です。
