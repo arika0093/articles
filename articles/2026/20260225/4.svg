@@ -1,208 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 546 195" role="img" aria-label="console2svg output">
-<style>.crt{font-family:ui-monospace,"Cascadia Mono","Segoe UI Mono","SFMono-Regular",Menlo,monospace;font-size:14px;}text{dominant-baseline:alphabetic;}</style>
-<rect x="0.5" y="0.5" rx="10" ry="10" width="545" height="194" fill="#1f1f1f" stroke="#3a3a3a"/>
-<rect x="1" y="1" rx="9" ry="9" width="544" height="27" fill="#2c2c2c"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 690 261" role="img" aria-label="console2svg output">
+<style>.crt{font-family:ui-monospace,"Cascadia Mono","Segoe UI Mono","SFMono-Regular",Menlo,monospace;font-size:14px;}text{dominant-baseline:alphabetic;}.bg{shape-rendering:crispEdges;}</style>
+<rect x="0.5" y="0.5" rx="10" ry="10" width="689" height="260" fill="#1f1f1f" stroke="#3a3a3a"/>
+<rect x="1" y="1" rx="9" ry="9" width="688" height="27" fill="#2c2c2c"/>
 <circle cx="14" cy="14" r="5" fill="#ff5f57"/>
 <circle cx="30" cy="14" r="5" fill="#febc2e"/>
 <circle cx="46" cy="14" r="5" fill="#28c840"/>
-<rect x="3" y="30" width="540" height="162" fill="#1e1e1e"/>
-<g transform="translate(3 30)">
-<rect width="540" height="162" fill="#1e1e1e"/>
-<text class="crt" x="0" y="14" fill="#d4d4d4">H</text>
-<text class="crt" x="9" y="14" fill="#d4d4d4">o</text>
-<text class="crt" x="18" y="14" fill="#d4d4d4">s</text>
-<text class="crt" x="27" y="14" fill="#d4d4d4">t</text>
-<text class="crt" x="36" y="14" fill="#d4d4d4">:</text>
-<text class="crt" x="18" y="32" fill="#d4d4d4">V</text>
-<text class="crt" x="27" y="32" fill="#d4d4d4">e</text>
-<text class="crt" x="36" y="32" fill="#d4d4d4">r</text>
-<text class="crt" x="45" y="32" fill="#d4d4d4">s</text>
-<text class="crt" x="54" y="32" fill="#d4d4d4">i</text>
-<text class="crt" x="63" y="32" fill="#d4d4d4">o</text>
-<text class="crt" x="72" y="32" fill="#d4d4d4">n</text>
-<text class="crt" x="81" y="32" fill="#d4d4d4">:</text>
-<text class="crt" x="144" y="32" fill="#d4d4d4">1</text>
-<text class="crt" x="153" y="32" fill="#d4d4d4">0</text>
-<text class="crt" x="162" y="32" fill="#d4d4d4">.</text>
-<text class="crt" x="171" y="32" fill="#d4d4d4">0</text>
-<text class="crt" x="180" y="32" fill="#d4d4d4">.</text>
-<text class="crt" x="189" y="32" fill="#d4d4d4">2</text>
-<text class="crt" x="18" y="50" fill="#d4d4d4">A</text>
-<text class="crt" x="27" y="50" fill="#d4d4d4">r</text>
-<text class="crt" x="36" y="50" fill="#d4d4d4">c</text>
-<text class="crt" x="45" y="50" fill="#d4d4d4">h</text>
-<text class="crt" x="54" y="50" fill="#d4d4d4">i</text>
-<text class="crt" x="63" y="50" fill="#d4d4d4">t</text>
-<text class="crt" x="72" y="50" fill="#d4d4d4">e</text>
-<text class="crt" x="81" y="50" fill="#d4d4d4">c</text>
-<text class="crt" x="90" y="50" fill="#d4d4d4">t</text>
-<text class="crt" x="99" y="50" fill="#d4d4d4">u</text>
-<text class="crt" x="108" y="50" fill="#d4d4d4">r</text>
-<text class="crt" x="117" y="50" fill="#d4d4d4">e</text>
-<text class="crt" x="126" y="50" fill="#d4d4d4">:</text>
-<text class="crt" x="144" y="50" fill="#d4d4d4">x</text>
-<text class="crt" x="153" y="50" fill="#d4d4d4">6</text>
-<text class="crt" x="162" y="50" fill="#d4d4d4">4</text>
-<text class="crt" x="18" y="68" fill="#d4d4d4">C</text>
-<text class="crt" x="27" y="68" fill="#d4d4d4">o</text>
-<text class="crt" x="36" y="68" fill="#d4d4d4">m</text>
-<text class="crt" x="45" y="68" fill="#d4d4d4">m</text>
-<text class="crt" x="54" y="68" fill="#d4d4d4">i</text>
-<text class="crt" x="63" y="68" fill="#d4d4d4">t</text>
-<text class="crt" x="72" y="68" fill="#d4d4d4">:</text>
-<text class="crt" x="144" y="68" fill="#d4d4d4">4</text>
-<text class="crt" x="153" y="68" fill="#d4d4d4">4</text>
-<text class="crt" x="162" y="68" fill="#d4d4d4">5</text>
-<text class="crt" x="171" y="68" fill="#d4d4d4">2</text>
-<text class="crt" x="180" y="68" fill="#d4d4d4">5</text>
-<text class="crt" x="189" y="68" fill="#d4d4d4">0</text>
-<text class="crt" x="198" y="68" fill="#d4d4d4">2</text>
-<text class="crt" x="207" y="68" fill="#d4d4d4">4</text>
-<text class="crt" x="216" y="68" fill="#d4d4d4">5</text>
-<text class="crt" x="225" y="68" fill="#d4d4d4">9</text>
-<text class="crt" x="0" y="104" fill="#d4d4d4">.</text>
-<text class="crt" x="9" y="104" fill="#d4d4d4">N</text>
-<text class="crt" x="18" y="104" fill="#d4d4d4">E</text>
-<text class="crt" x="27" y="104" fill="#d4d4d4">T</text>
-<text class="crt" x="45" y="104" fill="#d4d4d4">S</text>
-<text class="crt" x="54" y="104" fill="#d4d4d4">D</text>
-<text class="crt" x="63" y="104" fill="#d4d4d4">K</text>
-<text class="crt" x="72" y="104" fill="#d4d4d4">s</text>
-<text class="crt" x="90" y="104" fill="#d4d4d4">i</text>
-<text class="crt" x="99" y="104" fill="#d4d4d4">n</text>
-<text class="crt" x="108" y="104" fill="#d4d4d4">s</text>
-<text class="crt" x="117" y="104" fill="#d4d4d4">t</text>
-<text class="crt" x="126" y="104" fill="#d4d4d4">a</text>
-<text class="crt" x="135" y="104" fill="#d4d4d4">l</text>
-<text class="crt" x="144" y="104" fill="#d4d4d4">l</text>
-<text class="crt" x="153" y="104" fill="#d4d4d4">e</text>
-<text class="crt" x="162" y="104" fill="#d4d4d4">d</text>
-<text class="crt" x="171" y="104" fill="#d4d4d4">:</text>
-<text class="crt" x="18" y="122" fill="#d4d4d4">8</text>
-<text class="crt" x="27" y="122" fill="#d4d4d4">.</text>
-<text class="crt" x="36" y="122" fill="#d4d4d4">0</text>
-<text class="crt" x="45" y="122" fill="#d4d4d4">.</text>
-<text class="crt" x="54" y="122" fill="#d4d4d4">3</text>
-<text class="crt" x="63" y="122" fill="#d4d4d4">0</text>
-<text class="crt" x="72" y="122" fill="#d4d4d4">3</text>
-<text class="crt" x="90" y="122" fill="#d4d4d4">[</text>
-<text class="crt" x="99" y="122" fill="#d4d4d4">C</text>
-<text class="crt" x="108" y="122" fill="#d4d4d4">:</text>
-<text class="crt" x="117" y="122" fill="#d4d4d4">\</text>
-<text class="crt" x="126" y="122" fill="#d4d4d4">P</text>
-<text class="crt" x="135" y="122" fill="#d4d4d4">r</text>
-<text class="crt" x="144" y="122" fill="#d4d4d4">o</text>
-<text class="crt" x="153" y="122" fill="#d4d4d4">g</text>
-<text class="crt" x="162" y="122" fill="#d4d4d4">r</text>
-<text class="crt" x="171" y="122" fill="#d4d4d4">a</text>
-<text class="crt" x="180" y="122" fill="#d4d4d4">m</text>
-<text class="crt" x="198" y="122" fill="#d4d4d4">F</text>
-<text class="crt" x="207" y="122" fill="#d4d4d4">i</text>
-<text class="crt" x="216" y="122" fill="#d4d4d4">l</text>
-<text class="crt" x="225" y="122" fill="#d4d4d4">e</text>
-<text class="crt" x="234" y="122" fill="#d4d4d4">s</text>
-<text class="crt" x="243" y="122" fill="#d4d4d4">\</text>
-<text class="crt" x="252" y="122" fill="#d4d4d4">d</text>
-<text class="crt" x="261" y="122" fill="#d4d4d4">o</text>
-<text class="crt" x="270" y="122" fill="#d4d4d4">t</text>
-<text class="crt" x="279" y="122" fill="#d4d4d4">n</text>
-<text class="crt" x="288" y="122" fill="#d4d4d4">e</text>
-<text class="crt" x="297" y="122" fill="#d4d4d4">t</text>
-<text class="crt" x="306" y="122" fill="#d4d4d4">\</text>
-<text class="crt" x="315" y="122" fill="#d4d4d4">s</text>
-<text class="crt" x="324" y="122" fill="#d4d4d4">d</text>
-<text class="crt" x="333" y="122" fill="#d4d4d4">k</text>
-<text class="crt" x="342" y="122" fill="#d4d4d4">]</text>
-<text class="crt" x="18" y="140" fill="#d4d4d4">9</text>
-<text class="crt" x="27" y="140" fill="#d4d4d4">.</text>
-<text class="crt" x="36" y="140" fill="#d4d4d4">0</text>
-<text class="crt" x="45" y="140" fill="#d4d4d4">.</text>
-<text class="crt" x="54" y="140" fill="#d4d4d4">3</text>
-<text class="crt" x="63" y="140" fill="#d4d4d4">0</text>
-<text class="crt" x="72" y="140" fill="#d4d4d4">1</text>
-<text class="crt" x="90" y="140" fill="#d4d4d4">[</text>
-<text class="crt" x="99" y="140" fill="#d4d4d4">C</text>
-<text class="crt" x="108" y="140" fill="#d4d4d4">:</text>
-<text class="crt" x="117" y="140" fill="#d4d4d4">\</text>
-<text class="crt" x="126" y="140" fill="#d4d4d4">P</text>
-<text class="crt" x="135" y="140" fill="#d4d4d4">r</text>
-<text class="crt" x="144" y="140" fill="#d4d4d4">o</text>
-<text class="crt" x="153" y="140" fill="#d4d4d4">g</text>
-<text class="crt" x="162" y="140" fill="#d4d4d4">r</text>
-<text class="crt" x="171" y="140" fill="#d4d4d4">a</text>
-<text class="crt" x="180" y="140" fill="#d4d4d4">m</text>
-<text class="crt" x="198" y="140" fill="#d4d4d4">F</text>
-<text class="crt" x="207" y="140" fill="#d4d4d4">i</text>
-<text class="crt" x="216" y="140" fill="#d4d4d4">l</text>
-<text class="crt" x="225" y="140" fill="#d4d4d4">e</text>
-<text class="crt" x="234" y="140" fill="#d4d4d4">s</text>
-<text class="crt" x="243" y="140" fill="#d4d4d4">\</text>
-<text class="crt" x="252" y="140" fill="#d4d4d4">d</text>
-<text class="crt" x="261" y="140" fill="#d4d4d4">o</text>
-<text class="crt" x="270" y="140" fill="#d4d4d4">t</text>
-<text class="crt" x="279" y="140" fill="#d4d4d4">n</text>
-<text class="crt" x="288" y="140" fill="#d4d4d4">e</text>
-<text class="crt" x="297" y="140" fill="#d4d4d4">t</text>
-<text class="crt" x="306" y="140" fill="#d4d4d4">\</text>
-<text class="crt" x="315" y="140" fill="#d4d4d4">s</text>
-<text class="crt" x="324" y="140" fill="#d4d4d4">d</text>
-<text class="crt" x="333" y="140" fill="#d4d4d4">k</text>
-<text class="crt" x="342" y="140" fill="#d4d4d4">]</text>
-<text class="crt" x="18" y="158" fill="#d4d4d4">1</text>
-<text class="crt" x="27" y="158" fill="#d4d4d4">0</text>
-<text class="crt" x="36" y="158" fill="#d4d4d4">.</text>
-<text class="crt" x="45" y="158" fill="#d4d4d4">0</text>
-<text class="crt" x="54" y="158" fill="#d4d4d4">.</text>
-<text class="crt" x="63" y="158" fill="#d4d4d4">2</text>
-<text class="crt" x="72" y="158" fill="#d4d4d4">0</text>
-<text class="crt" x="81" y="158" fill="#d4d4d4">0</text>
-<text class="crt" x="90" y="158" fill="#d4d4d4">-</text>
-<text class="crt" x="99" y="158" fill="#d4d4d4">p</text>
-<text class="crt" x="108" y="158" fill="#d4d4d4">r</text>
-<text class="crt" x="117" y="158" fill="#d4d4d4">e</text>
-<text class="crt" x="126" y="158" fill="#d4d4d4">v</text>
-<text class="crt" x="135" y="158" fill="#d4d4d4">i</text>
-<text class="crt" x="144" y="158" fill="#d4d4d4">e</text>
-<text class="crt" x="153" y="158" fill="#d4d4d4">w</text>
-<text class="crt" x="162" y="158" fill="#d4d4d4">.</text>
-<text class="crt" x="171" y="158" fill="#d4d4d4">0</text>
-<text class="crt" x="180" y="158" fill="#d4d4d4">.</text>
-<text class="crt" x="189" y="158" fill="#d4d4d4">2</text>
-<text class="crt" x="198" y="158" fill="#d4d4d4">6</text>
-<text class="crt" x="207" y="158" fill="#d4d4d4">1</text>
-<text class="crt" x="216" y="158" fill="#d4d4d4">0</text>
-<text class="crt" x="225" y="158" fill="#d4d4d4">3</text>
-<text class="crt" x="234" y="158" fill="#d4d4d4">.</text>
-<text class="crt" x="243" y="158" fill="#d4d4d4">1</text>
-<text class="crt" x="252" y="158" fill="#d4d4d4">1</text>
-<text class="crt" x="261" y="158" fill="#d4d4d4">9</text>
-<text class="crt" x="279" y="158" fill="#d4d4d4">[</text>
-<text class="crt" x="288" y="158" fill="#d4d4d4">C</text>
-<text class="crt" x="297" y="158" fill="#d4d4d4">:</text>
-<text class="crt" x="306" y="158" fill="#d4d4d4">\</text>
-<text class="crt" x="315" y="158" fill="#d4d4d4">P</text>
-<text class="crt" x="324" y="158" fill="#d4d4d4">r</text>
-<text class="crt" x="333" y="158" fill="#d4d4d4">o</text>
-<text class="crt" x="342" y="158" fill="#d4d4d4">g</text>
-<text class="crt" x="351" y="158" fill="#d4d4d4">r</text>
-<text class="crt" x="360" y="158" fill="#d4d4d4">a</text>
-<text class="crt" x="369" y="158" fill="#d4d4d4">m</text>
-<text class="crt" x="387" y="158" fill="#d4d4d4">F</text>
-<text class="crt" x="396" y="158" fill="#d4d4d4">i</text>
-<text class="crt" x="405" y="158" fill="#d4d4d4">l</text>
-<text class="crt" x="414" y="158" fill="#d4d4d4">e</text>
-<text class="crt" x="423" y="158" fill="#d4d4d4">s</text>
-<text class="crt" x="432" y="158" fill="#d4d4d4">\</text>
-<text class="crt" x="441" y="158" fill="#d4d4d4">d</text>
-<text class="crt" x="450" y="158" fill="#d4d4d4">o</text>
-<text class="crt" x="459" y="158" fill="#d4d4d4">t</text>
-<text class="crt" x="468" y="158" fill="#d4d4d4">n</text>
-<text class="crt" x="477" y="158" fill="#d4d4d4">e</text>
-<text class="crt" x="486" y="158" fill="#d4d4d4">t</text>
-<text class="crt" x="495" y="158" fill="#d4d4d4">\</text>
-<text class="crt" x="504" y="158" fill="#d4d4d4">s</text>
-<text class="crt" x="513" y="158" fill="#d4d4d4">d</text>
-<text class="crt" x="522" y="158" fill="#d4d4d4">k</text>
-<text class="crt" x="531" y="158" fill="#d4d4d4">]</text>
+<g transform="translate(9 36)">
+<rect width="672" height="162" fill="#1e1e1e"/>
+<text class="crt" x="0" y="14" fill="#d4d4d4" textLength="42" lengthAdjust="spacingAndGlyphs">Host:</text>
+<text class="crt" x="16.8" y="32" fill="#d4d4d4" textLength="67.2" lengthAdjust="spacingAndGlyphs">Version:</text>
+<text class="crt" x="134.4" y="32" fill="#d4d4d4" textLength="50.4" lengthAdjust="spacingAndGlyphs">10.0.2</text>
+<text class="crt" x="16.8" y="50" fill="#d4d4d4" textLength="109.2" lengthAdjust="spacingAndGlyphs">Architecture:</text>
+<text class="crt" x="134.4" y="50" fill="#d4d4d4" textLength="25.2" lengthAdjust="spacingAndGlyphs">x64</text>
+<text class="crt" x="16.8" y="68" fill="#d4d4d4" textLength="58.8" lengthAdjust="spacingAndGlyphs">Commit:</text>
+<text class="crt" x="134.4" y="68" fill="#d4d4d4" textLength="84" lengthAdjust="spacingAndGlyphs">4452502459</text>
+<text class="crt" x="0" y="104" fill="#d4d4d4" textLength="33.6" lengthAdjust="spacingAndGlyphs">.NET</text>
+<text class="crt" x="42" y="104" fill="#d4d4d4" textLength="33.6" lengthAdjust="spacingAndGlyphs">SDKs</text>
+<text class="crt" x="84" y="104" fill="#d4d4d4" textLength="84" lengthAdjust="spacingAndGlyphs">installed:</text>
+<text class="crt" x="16.8" y="122" fill="#d4d4d4" textLength="58.8" lengthAdjust="spacingAndGlyphs">8.0.303</text>
+<text class="crt" x="84" y="122" fill="#d4d4d4" textLength="92.4" lengthAdjust="spacingAndGlyphs">[C:\Program</text>
+<text class="crt" x="184.8" y="122" fill="#d4d4d4" textLength="142.8" lengthAdjust="spacingAndGlyphs">Files\dotnet\sdk]</text>
+<text class="crt" x="16.8" y="140" fill="#d4d4d4" textLength="58.8" lengthAdjust="spacingAndGlyphs">9.0.301</text>
+<text class="crt" x="84" y="140" fill="#d4d4d4" textLength="92.4" lengthAdjust="spacingAndGlyphs">[C:\Program</text>
+<text class="crt" x="184.8" y="140" fill="#d4d4d4" textLength="142.8" lengthAdjust="spacingAndGlyphs">Files\dotnet\sdk]</text>
+<text class="crt" x="16.8" y="158" fill="#d4d4d4" textLength="235.2" lengthAdjust="spacingAndGlyphs">10.0.200-preview.0.26103.119</text>
+<text class="crt" x="260.4" y="158" fill="#d4d4d4" textLength="92.4" lengthAdjust="spacingAndGlyphs">[C:\Program</text>
+<text class="crt" x="361.2" y="158" fill="#d4d4d4" textLength="142.8" lengthAdjust="spacingAndGlyphs">Files\dotnet\sdk]</text>
 </g>
 </svg>
