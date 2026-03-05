@@ -1,5 +1,6 @@
 ---
 title: "GitHub Codespace(風)環境をセルフホストしてAgentを使い倒す"
+pubDatetime: 2026-03-05T07:48:48Z
 published: true
 tags: ["devcontainers", "ai", "copilot"]
 zenn:
