@@ -9,6 +9,10 @@ type ContentsMenuItem = {
   sourcePath: string;
 };
 
+function isImageFile(filePath: string): boolean {
+  return /\.(png|jpg|jpeg|gif|svg|webp)$/i.test(filePath);
+}
+
 function getBlogRoot(): string {
   const cwd = process.cwd();
   if (path.basename(cwd) === "blog") return cwd;
@@ -52,9 +56,9 @@ function toContentsTitle(relativePath: string, filePath: string): string {
   const titleSeed =
     titleBase.toLowerCase() === "index"
       ? (() => {
-          const parentDir = path.basename(path.dirname(relativePath));
-          return parentDir && parentDir !== "." ? parentDir : "contents";
-        })()
+        const parentDir = path.basename(path.dirname(relativePath));
+        return parentDir && parentDir !== "." ? parentDir : "contents";
+      })()
       : titleBase;
   return titleSeed.replace(/[-_]/g, " ").replace(/\b\w/g, c => c.toUpperCase());
 }
@@ -235,6 +239,45 @@ function copyContentsFile(
   fs.writeFileSync(targetPath, content, "utf-8");
 }
 
+function copyContentsAssetFile(
+  file: string,
+  contentsDir: string,
+  blogContentsPagesDir: string
+) {
+  const relativePath = path.relative(contentsDir, file);
+  const targetPath = path.join(blogContentsPagesDir, relativePath);
+  fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+  fs.copyFileSync(file, targetPath);
+}
+
+function copyContentsAssets(
+  contentsDir: string,
+  blogContentsPagesDir: string
+) {
+  if (!fs.existsSync(contentsDir)) {
+    return;
+  }
+
+  const walk = (directory: string) => {
+    const entries = fs.readdirSync(directory, { withFileTypes: true });
+
+    for (const entry of entries) {
+      const fullPath = path.join(directory, entry.name);
+
+      if (entry.isDirectory()) {
+        walk(fullPath);
+        continue;
+      }
+
+      if (entry.isFile() && isImageFile(entry.name)) {
+        copyContentsAssetFile(fullPath, contentsDir, blogContentsPagesDir);
+      }
+    }
+  };
+
+  walk(contentsDir);
+}
+
 function buildContentsMenu(
   contentsDir: string,
   contentsMenuPath: string,
@@ -286,6 +329,18 @@ function deleteCopiedMarkdown(
 }
 
 function deleteCopiedContentsPage(
+  file: string,
+  contentsDir: string,
+  blogContentsPagesDir: string
+) {
+  const relativePath = path.relative(contentsDir, file);
+  const targetPath = path.join(blogContentsPagesDir, relativePath);
+  if (fs.existsSync(targetPath)) {
+    fs.unlinkSync(targetPath);
+  }
+}
+
+function deleteCopiedContentsAsset(
   file: string,
   contentsDir: string,
   blogContentsPagesDir: string
@@ -352,6 +407,7 @@ async function copyArticles() {
   fs.mkdirSync(blogContentsPagesDir, { recursive: true });
   // Copy /contents markdown into pages/contents and build menu
   buildContentsMenu(contentsDir, contentsMenuPath, blogContentsPagesDir);
+  copyContentsAssets(contentsDir, blogContentsPagesDir);
 
   console.log(
     `Copied ${markdownFiles.length} articles to blog content directory`
@@ -409,7 +465,7 @@ async function main() {
         const relativePath = path.relative(articlesDir, file);
         const isContents = relativePath.split(path.sep)[0] === "contents";
         const isMarkdown = /\.md$/i.test(file);
-        const isImage = /\.(png|jpg|jpeg|gif|svg|webp)$/i.test(file);
+        const isImage = isImageFile(file);
 
         if (event === "unlink") {
           if (isMarkdown) {
@@ -419,6 +475,9 @@ async function main() {
             } else {
               deleteCopiedMarkdown(file, articlesDir, blogContentDir);
             }
+          }
+          if (isImage && isContents) {
+            deleteCopiedContentsAsset(file, contentsDir, blogContentsPagesDir);
           }
           continue;
         }
@@ -434,7 +493,11 @@ async function main() {
         }
 
         if (isImage) {
-          copyImageFile(file, articlesDir, publicImagesDir);
+          if (isContents) {
+            copyContentsAssetFile(file, contentsDir, blogContentsPagesDir);
+          } else {
+            copyImageFile(file, articlesDir, publicImagesDir);
+          }
         }
       }
     };
