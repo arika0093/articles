@@ -1,5 +1,6 @@
 ---
 title: "dotnet publishでマルチプラットフォーム向けにNativeAOT発行する"
+pubDatetime: 2026-03-07T15:07:48+09:00
 published: true
 tags: ["dotnet", "nativeaot", "github-actions", "cross-platform"]
 zenn:
