@@ -1,5 +1,6 @@
 ---
 title: "LLMに狙ったコードを書かせるためにLinterを自作してみたら体験が良かった"
+pubDatetime: 2026-03-21T23:56:18+09:00
 published: true
 tags: ["dotnet", "AI", "source-generator", "linter"]
 zenn:
