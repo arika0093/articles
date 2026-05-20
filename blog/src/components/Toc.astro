@@ -16,12 +16,12 @@ const headWithoutFootNotes = headings.filter(
     <aside
       id="toc"
       class:list={[
-        "hidden w-90 shrink-0 self-start rounded border xl:block",
+        "hidden w-80 shrink-0 self-start rounded border xl:block",
         "border-color-accent/80 sticky top-24 prose-sm p-4",
       ]}
     >
       <h2 class="mb-4">Table of Contents</h2>
-      <ul class="space-y-1">
+      <ul class="pl-1">
         {headWithoutFootNotes.map(heading => {
           const textSize =
             heading.depth === 2

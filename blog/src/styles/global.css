@@ -16,7 +16,7 @@
 :root,
 html[data-theme="light"] {
   --background: #fdfdfd;
-  --foreground: #282728;
+  --foreground: #1f1f1f;
   --accent: #0e79dd;
   --muted: #e6e6e6;
   --border: #ece9e9;
@@ -24,10 +24,10 @@ html[data-theme="light"] {
 
 html[data-theme="dark"] {
   --background: #292929;
-  --foreground: #f3f5f9;
+  --foreground: #dadde2;
   --accent: #53d3f9;
   --muted: #314658;
-  --border: #335964;
+  --border: #27464e;
 }
 
 @theme inline {
@@ -62,7 +62,7 @@ html[data-theme="dark"] {
 }
 
 @utility max-w-app {
-  @apply max-w-6xl;
+  @apply max-w-7xl;
 }
 
 @utility app-layout {
@@ -75,9 +75,13 @@ html[data-theme="dark"] {
 }
 
 p {
-  @apply font-normal dark:font-light;
-  letter-spacing: 0.5px;
-  font-size: 0.95rem;
+  @apply font-normal;
+  letter-spacing: 0.4px;
+  font-size: 0.96rem;
+}
+
+blockquote {
+  quotes: none;
 }
 
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
