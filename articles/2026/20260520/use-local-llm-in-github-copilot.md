@@ -1,5 +1,6 @@
 ---
 title: "GitHubCopilot(VSCode/CLI)でローカルLLMを使う"
+pubDatetime: 2026-05-20T12:41:21+09:00
 published: true
 tags: ["github-copilot", "llm"]
 zenn:
