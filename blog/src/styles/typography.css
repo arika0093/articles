@@ -14,18 +14,18 @@
     }
 
     h2 {
-      @apply border-b pb-3 text-3xl border-accent/30 dark:border-accent/45;
+      @apply border-b pb-3 text-2xl border-accent/30 dark:border-accent/45;
     }
 
     h3 {
-      @apply p-2 rounded text-2xl bg-accent/10 dark:bg-accent/20;
+      @apply p-2 rounded text-xl bg-accent/10 dark:bg-accent/20;
     }
 
     h4 {
       @apply text-lg;
     }
 
-    p,
+    p,      
     strong,
     ol,
     ul,
@@ -193,7 +193,7 @@
 
   /* Styles for Zenn message blocks */
   .zenn-message {
-    @apply my-4 rounded-md border border-blue-500/30 bg-blue-50/50 p-4 dark:bg-blue-950/20;
+    @apply my-4 text-foreground rounded-md border border-blue-500/30 bg-blue-50/50 p-4 dark:bg-blue-950/20;
   }
 
   .zenn-message p {

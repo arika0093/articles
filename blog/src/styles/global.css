@@ -23,11 +23,11 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  --background: #212327;
-  --foreground: #eaedf3;
-  --accent: #41a6f8;
-  --muted: #343f60;
-  --border: #173458;
+  --background: #292929;
+  --foreground: #f3f5f9;
+  --accent: #53d3f9;
+  --muted: #314658;
+  --border: #335964;
 }
 
 @theme inline {
@@ -77,6 +77,7 @@ html[data-theme="dark"] {
 p {
   @apply font-normal dark:font-light;
   letter-spacing: 0.5px;
+  font-size: 0.95rem;
 }
 
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
