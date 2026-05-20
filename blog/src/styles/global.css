@@ -76,8 +76,8 @@ html[data-theme="dark"] {
 
 p {
   @apply font-normal;
-  letter-spacing: 0.4px;
-  font-size: 0.96rem;
+  letter-spacing: 0.2px;
+  /* font-size: 0.96rem; */
 }
 
 blockquote {
