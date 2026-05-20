@@ -4,8 +4,8 @@ pubDatetime: 2026-05-20T12:41:21+09:00
 published: true
 tags: ["github-copilot", "llm"]
 zenn:
-  published: false
-  emoji: "📐"
+  published: true
+  emoji: "🤖"
   type: "tech"
 ---
 
@@ -104,7 +104,7 @@ copilot
 ```
 
 
-### Q. ローカルLLMでエージェント呼び出しできる？
+## Q. ローカルLLMでエージェント呼び出しできる？
 
 A. できる。
 
