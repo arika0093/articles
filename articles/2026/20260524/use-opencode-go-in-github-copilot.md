@@ -1,5 +1,6 @@
 ---
 title: "GitHubCopilot(VSCode/CLI)でOpenCode Goを使う"
+pubDatetime: 2026-05-24T19:28:35+09:00
 published: true
 tags: ["github-copilot", "opencode", "llm"]
 zenn:
