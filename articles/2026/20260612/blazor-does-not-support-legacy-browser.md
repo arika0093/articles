@@ -1,5 +1,6 @@
 ---
 title: ""
+pubDatetime: 2026-06-12T19:35:56+09:00
 published: false
 tags: ["github-copilot", "opencode", "llm"]
 zenn:
