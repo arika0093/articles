@@ -1,6 +1,7 @@
 ---
 title: "【定額LLM】OpenCode Goを3ヶ月使ってみたので、使い方と感想をまとめる"
 pubDatetime: 2026-09-13T00:47:41+09:00
+modDatetime: 2026-09-13T00:54:39+09:00
 published: true
 tags: ["opencode", "llm"]
 zenn:
