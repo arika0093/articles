@@ -1,5 +1,6 @@
 ---
 title: "【Blazor】2026年にIE11対応をやる謎のプロジェクトがあるらしい"
+pubDatetime: 2026-09-13T00:47:45+09:00
 published: false
 tags: ["dotnet", "csharp", "blazor"]
 zenn:
