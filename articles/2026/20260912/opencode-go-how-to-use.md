@@ -5,7 +5,7 @@ modDatetime: 2026-09-13T00:54:39+09:00
 published: true
 tags: ["opencode", "llm"]
 zenn:
-  published: false
+  published: true
   emoji: "🌤️"
   type: "tech"
 ---
