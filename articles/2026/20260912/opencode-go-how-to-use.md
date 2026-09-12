@@ -144,7 +144,6 @@ wire_api              = "responses"
 requires_openai_auth  = false
 ```
 
-> [!TIP]
 > codexの仕様上`/responses`に対応しているモデル(現時点だと`grok-4.6`, `gpt-5.6-luna`, `muse-spark-1.3-contributor`)しか使えません。
 
 
@@ -234,5 +233,4 @@ claude
 というわけで、癖は強めですが個人的にはだいぶ満足しているサービスです。
 興味がある方は試してみてください。
 
-> [!NOTE]
 > [このリンク](https://opencode.ai/go?ref=5TRCSNFQ0X)から契約すると$5(初回1ヶ月分)のクレジットがもらえます(再掲).
