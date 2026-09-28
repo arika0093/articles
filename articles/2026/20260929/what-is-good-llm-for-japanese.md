@@ -1,5 +1,6 @@
 ---
 title: "日本語が一番うまいLLMは誰なのか調べる"
+pubDatetime: 2026-09-29T03:54:45+09:00
 published: true
 tags: ["llm", "opencode"]
 zenn:
