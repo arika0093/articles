@@ -9,7 +9,13 @@ export function rehypeGist() {
       if (
         node.tagName === "a" &&
         node.properties &&
-        typeof node.properties.href === "string"
+        typeof node.properties.href === "string" &&
+        parent?.tagName === "p" &&
+        parent.children.length === 1 &&
+        parent.children[0] === node &&
+        node.children.length === 1 &&
+        node.children[0].type === "text" &&
+        node.children[0].value === node.properties.href
       ) {
         const href = node.properties.href;
         const gistMatch = href.match(
