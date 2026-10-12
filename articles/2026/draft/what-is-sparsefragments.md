@@ -1,5 +1,6 @@
 ---
 title: "【C#】EFモデルとUI画面の橋渡しを効率化！【SparseFragments】"
+pubDatetime: 2026-10-13T02:19:45+09:00
 published: false
 tags: ["dotnet", "csharp", "entityframework", "library"]
 zenn:
